@@ -1,18 +1,13 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @using ContentModels = Umbraco.Web.PublishedContentModels;
-@using umbraco.cms.businesslogic.member
-@using System.Web
-@using System.Web.Security
-
 @{
     Layout = "Master.cshtml";
-    //var service = Services.MemberService;
-    var currentMember = Umbraco.MembershipHelper.CurrentUserName;
 }
 <style>
     div#banner-wrapper {
-        display:none;
+        display: none;
     }
+
     button {
         border: 2px solid;
         background: transparent;
@@ -24,14 +19,15 @@
         text-transform: uppercase;
         -webkit-transition-duration: 0.5s; /* Safari */
         transition-duration: 0.5s;
-        margin-top:29px;
+        margin-top: 29px;
     }
-    button:hover {
-        color:#fff;
-        background:#000;
-        border:2px solid;
-        
-    }
+
+        button:hover {
+            color: #fff;
+            background: #000;
+            border: 2px solid;
+        }
+
     input#Username {
         border: 0;
         background: transparent;
@@ -39,6 +35,7 @@
         padding: 5px;
         font-family: Open Sans;
     }
+
     input#Password {
         border: 0;
         background: transparent;
@@ -46,9 +43,11 @@
         padding: 5px;
         font-family: Open Sans;
     }
+
     input:-webkit-autofill {
         -webkit-box-shadow: 0 0 0 30px white inset;
     }
+
     label {
         text-transform: uppercase;
         padding: 10px;
@@ -56,16 +55,60 @@
         margin-top: 10px;
     }
 </style>
-    <div style="">
-        <div style="width:30%;margin-left:35%;">
-@if (Umbraco.MemberIsLoggedOn())
-{
-    //Html.RenderAction("RenderLogout", "Member");
-    Html.RenderAction("RenderLogin", "Profile", new { userName = currentMember });
-}
-else
-{
-    Html.RenderAction("RenderLogin", "Member");
-}
-        </div>
+<div style="">
+    <div style="width: 30%; margin-left: 35%;">
+        <div id="fb-root"></div>
+        @if (Umbraco.MemberIsLoggedOn())
+        {
+            //Html.RenderAction("RenderLogout", "Member");
+            Html.RenderAction("RenderLogin", "Profile", new { userName = "mauroldanr" });
+        }
+        else
+        {
+            Html.RenderAction("RenderLogin", "Member");
+            <div class="fb-login-button" autologoutlink="true" scope="email">Login with Facebook</div>           
+        }
     </div>
+</div>
+
+@section scripts{
+    @if (!Umbraco.MemberIsLoggedOn())
+    {
+        <script>
+            $("document").ready(function () {
+                // Initialize the SDK upon load
+                FB.init({
+                    appId: '620901621386387', // App ID
+                    channelUrl: '//' + window.location.hostname + '/channel', // Path to your
+                    // Channel File
+                    scope: 'id,name,email', // This to get the user details back
+                    // from Facebook
+                    status: true, // check login status
+                    cookie: true, // enable cookies to allow the server to access the session
+                    xfbml: true // parse XFBML
+                });
+                // listen for and handle auth.statusChange events
+                FB.Event.subscribe('auth.statusChange', OnLogin);
+            });
+
+            // This method will be called after the user login into facebook.
+            function OnLogin(response) {
+                if (response.authResponse) {
+                  var data = { accessToken: response.authResponse.accessToken };
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("LogUserIn", "FacebookLogin")',
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                    }).done(function (response) {
+                        //alert("Success");
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    });                   
+                }
+            }                   
+        </script>
+    }
+}
+
+
