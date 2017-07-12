@@ -1,0 +1,65 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+<style>
+    .foot{
+        text-align: center;
+        font-family: "Open Sans";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        letter-spacing: 0px;
+        line-height: 1.8em;
+    }
+    
+    #socialmedia_accounts{
+        margin: 0 auto;
+    }
+    
+    #socialmedia_footer {
+	display: flex;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	opacity: 1;
+	align-items: center;
+    justify-content: center;
+    }
+    
+    #socialmedia_footer:hover .socialmedia_item .socialmedia_link{
+    	opacity: .2;
+    	transition: opacity .3s;
+    }
+    #socialmedia_footer .socialmedia_item .socialmedia_link:hover {
+    	opacity: 1;
+    	transition: opacity .3s;
+    }
+    
+    .socialmedia_item{
+        width: 40px;
+    }
+</style>
+<div>
+    <p class="foot">Banner images provided by <a href="http://www.classic-sailing.co.uk/">Classic Sailin</a>g or <a href="https://www.flickr.com/photos/20581458@N00/4089180923/">GollyGforce</a>, for demo purposes only. Powered by <a href="https://www.squarespace.com/">Squarespace</a></p>
+</div>
+
+
+
+<div class="socialmedia_accounts" align="center"> 
+    <ul id="socialmedia_footer">
+        <li class="socialmedia_item">
+        <a href="https://twitter.com/pharoslondon" target="_blank" class="socialmedia_link">
+        <img  src="http://pharoslondon.co.uk/media/1020/twitter_logo.png" height="30" width="30" />
+        </a>
+        </li>
+        <li class="socialmedia_item">
+        <a href="https://www.facebook.com/Pharos-377810605733832/timeline/" target="_blank" class="socialmedia_link">
+        <img src="http://pharoslondon.co.uk/media/1021/facebook_logo.png" height="30" width="30"/>
+        </a> 
+        </li>
+        <li class="socialmedia_item">
+        <a href="https://www.instagram.com/pharoslondon/" target="_blank" class="socialmedia_link">
+        <img src="http://pharoslondon.co.uk/media/1023/instagram_logo.png" height="30" width="30"/>
+        </a>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,118 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+<style type="text/css">a {text-decoration: none}
+
+#socialmedia_menu {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	opacity: .15;
+}
+
+#socialmedia_menu:hover li a {
+	opacity: .2;
+	transition: opacity .3s;
+}
+#socialmedia_menu li a:hover {
+	opacity: 1;
+	transition: opacity .3s;
+}
+
+</style>
+@{
+    @* Get the root of the website *@
+    var root = CurrentPage.AncestorOrSelf(1);
+    var menuName = "";
+
+/*bool isMedia = false;
+if (Umbraco.MemberIsLoggedOn())
+{
+    var myUser = System.Web.Security.Membership.GetUser();
+    isMedia = System.Web.Security.Roles.IsUserInRole(myUser.ToString(), "media");
+}*/
+}
+
+<style>
+    .site-title-wrapper {
+        float: left;
+        line-height: 96px;
+        margin-right: 50px;
+    }
+    
+</style>
+
+<div class="site-title-wrapper"><a id="logo" href="@root.Url">PHAROS</a></div>
+<table style="text-align:left;" border="0">
+    <tr>
+       <!-- <td class="menuBit menuLogoG"><a id="logo" href="root.Url">PHAROS</a></td> -->
+        @foreach (var page in root.Children.Where("Visible"))
+        {
+            menuName = page.Name;
+            /*if(@page.Name != "UPLOAD")
+            {*/
+            if (page.Name == "Login" && Umbraco.MemberIsLoggedOn())
+            {
+                menuName = "Profile";
+            }
+            <td class="menuBit menuItemG" style="font-weight: 700;color:#000;width: 3em;font-size: 12px;padding:1em;text-transform:uppercase;" align="center" class="@(page.IsAncestorOrSelf(CurrentPage) ? "current" : null)">
+                <a href="@page.Url">@menuName</a>
+            </td>
+            if (@page.Name != "Login" /*|| isMedia*/) {
+                <td align="center">/</td>
+                }
+            /*}
+            else
+            {
+                //if (isMedia)
+                //{
+                    <td align="right" class="@(page.IsAncestorOrSelf(CurrentPage) ? "current" : null)">
+                        <a href="@page.Url" style="text-transform: uppercase;">@page.Name</a>
+                    </td>
+                //}
+            }*/
+        }
+    <td style="width:10%">@Html.Partial("Header")</td>
+    <td>
+        <ul id="socialmedia_menu">
+        <li>
+            <a href="https://twitter.com/pharoslondon" target="_blank">
+        <img  src="http://pharoslondon.co.uk/media/1020/twitter_logo.png" height="20" width="20" />
+        </a>
+        </li>
+        <li>
+           <a href="https://www.facebook.com/Pharos-377810605733832/timeline/" target="_blank" >
+        <img src="http://pharoslondon.co.uk/media/1021/facebook_logo.png" height="18" width="18"/>
+        </a> 
+        </li>
+        <li>
+            <a href="https://www.instagram.com/pharoslondon/" target="_blank" >
+        <img src="http://pharoslondon.co.uk/media/1023/instagram_logo.png" height="18" width="18"/>
+        </a>
+        </li>
+    </ul>
+    </td>
+    
+    
+    </tr>
+    
+</table>
+<div>@Html.ValidationSummary()</div>
+
+@*if (Umbraco.MemberIsLoggedOn())
+{
+    using (Html.BeginUmbracoForm("SubmitLogout", "Member", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
+    {
+        @Html.AntiForgeryToken()
+        var myUser = System.Web.Security.Membership.GetUser();
+        if (myUser != null)
+        {
+            <p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>
+            <button name="login" type="submit"><span>logout</span> <i class="fa fa-arrow-right"></i></button>
+        }
+    }   
+}
+else
+{
+    <p>not loged</p>
+}*@

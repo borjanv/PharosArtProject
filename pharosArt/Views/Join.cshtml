@@ -1,0 +1,73 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Join>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = null;
+}
+<style>
+    .join-form { 
+        color: #fff;
+        position: relative;
+        top: 30%;
+        text-align: center;
+        	font-family: 'Open Sans', sans-serif;
+
+    }
+    .join-form h1 {
+        font-size: 110px;
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: -.01em;
+        line-height: 1em;
+        text-transform: none;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+    .join-form h3 {
+        font-size: 20px;
+        line-height: 1.4em;
+        text-transform: none;
+        letter-spacing: .04em;
+        font-weight: 400;
+    }
+    .join-form div {
+        margin-bottom: 55px;
+        font-size: 20px;
+        line-height: 1.4em;
+        letter-spacing: .04em;
+        font-weight: 400;
+        
+    }
+    .join-form a {
+        border: 2px solid #fff;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2.8px;
+        line-height: 14px;
+        padding: 12px 14px;
+        text-transform: uppercase;
+        -webkit-transition-duration: 0.5s; /* Safari */
+        transition-duration: 0.5s;
+    }
+    .join-form a:hover {
+        background:rgba(255, 255, 255, 0.55);
+        color:#000;
+        font-weight: 700;
+    }
+    
+</style>
+<!DOCTYPE html>
+<html>
+    <head >
+    </head>
+    <body style="background: url(../media/1007/scanplus3.jpeg) center center no-repeat; background-size: cover; min-height: 100vh; overflow: hidden;">
+        <div class="container join-form">
+            <h1>Join Pharos</h1>
+            <h3>Want to see your work here?</h3>
+            <div>Be featured online and represented as a contributor of Pharos.</div>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeT2RNiCcX7QXfL-GkEVXNZWyjKROwspia1-pHgo0hEU3EF_Q/viewform" target="_blank">Sign up</a>
+        </div>
+    </body>
+</html>

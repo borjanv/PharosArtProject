@@ -1,0 +1,51 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = null;
+	var home = @CurrentPage.Site();
+}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-------- Meta Tags ---->
+        
+        <!-------- Fonts -------->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <!-------- CSS ---------->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        
+        <!-------- Javascript ---> 
+        <script src="/scripts/jQuery 3.1.1.min.js"></script>
+        <script src="/scripts/bootstrap.min.js"></script>
+        
+        <meta charset="utf-8">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        
+        @RenderSection("header", false) @* TODO *@
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <nav>
+                    @Html.Partial("Menu")
+                </nav>
+            </div>
+            <div class="container-fluid full-width">
+                @Html.Partial("Banner")
+            </div>
+        </header>
+        <div id="container-wrapper" class="container">
+            @RenderBody()
+        </div>
+        <footer>
+            <div class="container-fluid footer-wrapper">
+                @Html.Partial("Footer")
+            </div>
+        </footer>
+    </body>
+</html>
+

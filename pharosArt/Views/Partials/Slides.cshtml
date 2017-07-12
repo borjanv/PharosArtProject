@@ -1,0 +1,31 @@
+﻿@using umbraco.MacroEngines;
+@using umbraco.cms.businesslogic.media;
+@*{
+ var n = @Model;
+    if(!String.IsNullOrEmpty(n.slide)){ // check is mediaPicker is not empty
+                            
+        int Id = Convert.ToInt32(@Model.slide); // converting the value to int
+        var StartMedia = new Media(@Id); 
+        var count = 0;                        
+                                                                  
+        IEnumerable<Media> nodes = StartMedia.GetChildMedia().Where(x => x.ContentType.Alias == "Image"); // pulling all images from the folder with DocumentType "Image"
+        foreach(var f in nodes){                                                  
+            <a href="@f.getProperty("umbracoFile").Value"></a>
+        }
+    }
+}*@
+
+@*
+@{
+ if (!String.IsNullOrEmpty(Parameter.slideFolder))
+{
+var slideFolder = Library.MediaById(Parameter.slideFolder);
+
+    <ul class="rslides">
+            @foreach(var slide in slideFolder.Children) {
+            <li><img src="@slide.umbracoFile" alt=""></li>
+            }
+    </ul>
+    }
+}
+*@

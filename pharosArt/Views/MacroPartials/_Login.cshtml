@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.LoginModel>
+    @using Umbraco.Web
+
+    @if(!Umbraco.MemberIsLoggedOn())
+    {
+        using (Html.BeginUmbracoForm("SubmitLogin", "Member", System.Web.Mvc.FormMethod.Post, new { id="login" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.LabelFor(m => m.Username)
+            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
+
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+
+            @Html.ValidationSummary()
+            <button name="login" type="submit">Login</button>
+        }
+    }
+    else
+    {
+        Html.RenderAction("RenderLogout", "Member");
+    }
+

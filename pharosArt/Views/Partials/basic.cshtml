@@ -1,0 +1,34 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+
+@if (Umbraco.MemberIsLoggedOn())
+{
+    using (Html.BeginUmbracoForm("SubmitLogout", "Member", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
+    {
+        @Html.AntiForgeryToken()
+        var myUser = System.Web.Security.Membership.GetUser();
+        if (myUser != null)
+        {
+            <div>
+                <p>you do not have the permission to acess</p>
+                   <nav id="main-navigation" class="main-nav" data-content-field="navigation">
+                        <ul>
+                            <li class="page-collection active-link"><a href="/">Home</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/art/">Art</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/music-1/">Music</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/fashion/">Fashion</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/film-1/">Film</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/photography/">Photography</a><span class="delimiter">/</span></li>
+                            <li class="page-collection"><a href="/events/">Events</a><span class="delimiter">/</span></li>
+                            <li class="splash-page-collection"><a href="/join/">Join</a><span class="delimiter">/</span></li>
+                        </ul>
+                    </nav>
+            </div>
+             <p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>
+            <button name="login" type="submit"><span>logout</span> <i class="fa fa-arrow-right"></i></button>
+        }
+    }   
+}
+
+ 
+

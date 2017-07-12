@@ -1,0 +1,57 @@
+﻿@*inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Post>
+@using ContentModels = Umbraco.Web.PublishedContentModels;*@
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+	
+	var bannerTitle = (CurrentPage.bannerTitle != null ? CurrentPage.bannerTitle : CurrentPage.title ); 
+}
+<style>
+    body
+    {
+        margin: 3px;
+        margin-left: 0px;
+        margin-right: 0px;
+        font-family:"open sans";
+    }
+    
+    #banner-title {
+        font-family:"open sans";
+        text-align: center;
+        line-height: 77.5px;
+        font-size: 62px;
+        font-style: normal;
+        font-weight: 100;
+        color: fff;
+        position: absolute;
+        top: 327px;
+        width: 100%;
+    }
+    
+</style>
+
+        @*<section id="main" class="container">*@
+@{
+    if (Model.Content.HasValue("postPicker"))
+    {
+        var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("postPicker");
+        foreach (var item in typedMultiNodeTreePicker)
+        {
+        	<p>@item.Name</p>
+        }
+    }
+}            @if(Umbraco.MemberIsLoggedOn())
+                {
+                    @CurrentPage.bodyArt
+                }
+                
+            @foreach(var page in @CurrentPage.Children) {
+              <a href=@page.Url>@page.Name</a>
+            }
+            @CurrentPage.GetGridHtml(Html, "gridContent")
+                
+                @*else
+                {
+                    @Html.Partial("Header")
+                }
+        @*</section>*@

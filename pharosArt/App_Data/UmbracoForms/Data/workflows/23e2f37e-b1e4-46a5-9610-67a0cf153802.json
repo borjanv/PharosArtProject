@@ -1,0 +1,16 @@
+{
+  "id": "23e2f37e-b1e4-46a5-9610-67a0cf153802",
+  "name": "surface control",
+  "form": "c7e8ff54-292b-4e58-bcfa-6821370f43da",
+  "active": true,
+  "workflowTypeId": "fd02c929-4e7d-4f90-b9fa-13d074a76688",
+  "executesOn": "Submitted",
+  "settings": {
+    "Url": "/umbraco/surface/ImageUpload/upload",
+    "Method": "POST",
+    "Fields": "[{\"alias\":\"imageUpload\",\"value\":\"a4fbd8e8-e38b-4e13-9a88-94e5bfa8b566\",\"staticValue\":\"\",\"$$hashKey\":\"0GT\"}]",
+    "Username": "",
+    "Password": ""
+  },
+  "sortOrder": 0
+}

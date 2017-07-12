@@ -1,0 +1,96 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+	var root = CurrentPage;
+    @*var toHide = true;
+    if(root == "login")
+    {
+        toHide = false;
+    }*@
+    var ite = 0;
+}
+
+<div class="row">
+    <div class="col-md-12 search search-input">
+        <span style="margin-left:6em;" class="fa fa-search"></span>
+        <input type="search" placeholder="Search">
+    </div>
+</div>
+<div style="text-align:center;">
+    @{
+        var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker");
+        foreach (var item in typedMultiNodeTreePicker)
+        {
+            var content = Umbraco.NiceUrl(Int32.Parse(item.ToString()));
+            var imgFront = Int32.Parse(item.GetPropertyValue("Thumbnail").ToString());
+            var img = Umbraco.Media(imgFront);
+            <a href="@content">
+                <img src="@img.url" /><br/>
+            </a>
+            <br/><br/>
+            @*mauro<p>name: @item.Name</p>
+            <p>title: @item.GetPropertyValue("title")</p>*@
+        }
+    }
+</div>
+        @*<section id="main" class="container">
+            <header>
+               <h2>@Umbraco.Field("title")</h2>
+            </header>*@
+            @*<div class="box">*@
+                @*<span><img src="@Umbraco.Media(CurrentPage.leadImage).Url"/></span>*@
+        
+        
+        
+                @if(Umbraco.MemberIsLoggedOn())
+                {
+                    @CurrentPage.body
+                }
+                
+                 <div class="content articles-wrapper">
+                @foreach(var article in @CurrentPage.Descendants("post")) {
+                    ite++;
+                    if(ite ==5 || ite==6 || ite ==7) {
+                        if(ite ==7) {
+                          ite = 0;
+                        }
+                        <div class="medium-article">
+                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
+                            <div class="artcile">
+                                <a>
+                                    <div class="image-wrapper">
+                                        <img src=@article.thumbnail.Url>
+                                    </div>
+                                </a>
+                                <div class="text-wrapper">
+                                    <div class="article-title"><a>@article.Name</a></div>
+                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
+                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
+                                </div>
+                            </div>
+                        </div>
+                    } else {
+                        <div class="small-article">
+                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
+                            <div class="artcile">
+                                <a>
+                                    <div class="image-wrapper">
+                                        <img src=@article.thumbnail.Url>
+                                    </div>
+                                </a>
+                                <div class="text-wrapper">
+                                    <div class="article-title"><a>@article.Name</a></div>
+                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
+                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") &#183; <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+                @*else
+                {
+                    @Html.Partial("Header")
+                }
+            </div>
+        </section>*@

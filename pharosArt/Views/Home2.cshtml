@@ -1,0 +1,26 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Home>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = null;
+}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport">
+        <title>Test</title>
+        @*Html.Partial("Header")*@
+        
+        <nav id="nav">
+            @Html.Partial("Menu", Model)
+        </nav>
+    </head>
+    <body>
+        <section id="main" class="container">
+            <div class="box">
+                <span><img src="@Umbraco.Media(CurrentPage.image).Url"/></span>
+                    @CurrentPage.bodyArt
+            </div>
+        </section>
+    </body>
+</html>

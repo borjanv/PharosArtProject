@@ -1,0 +1,27 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.ProfileMember>
+@if (Umbraco.MemberIsLoggedOn())
+{
+    if(Umbraco.MemberIsLoggedOn())
+    {
+        using (Html.BeginUmbracoForm("editProfile", "Profile", System.Web.Mvc.FormMethod.Post, new { id="login" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.LabelFor(m => m.memberName)
+            @Html.TextBoxFor(m => m.memberName, new { placeholder = "memberName", @style="width:90%" })
+        
+            @Html.LabelFor(m => m.memberLastName)
+            @Html.PasswordFor(m => m.memberLastName, new { placeholder = "memberLastName", @style="width:90%" })
+            @Html.LabelFor(m => m.description)
+            @Html.PasswordFor(m => m.description, new { placeholder = "description", @style="width:90%" })
+            
+            @Html.LabelFor(m => m.profile.Username)
+            @Html.TextBoxFor(m => m.profile.Username, new { placeholder = "Username", @style="width:90%" })
+        
+            @Html.LabelFor(m => m.profile.Password)
+            @Html.PasswordFor(m => m.profile.Password, new { placeholder = "Password", @style="width:90%" })
+        
+            @*Html.ValidationSummary()*@
+            <button name="login" type="submit">Edit</button>
+        }
+    }
+}

@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+
+    var CurrentPage = Umbraco.Content(umbraco.NodeFactory.Node.GetCurrent().Id);
+    var bannerTitle = (!String.IsNullOrEmpty(CurrentPage.bannerTitle) ? CurrentPage.bannerTitle : CurrentPage.title ); 
+}
+<div id="banner-wrapper">
+    @if (CurrentPage.image != null && !(CurrentPage.image is Umbraco.Core.Dynamics.DynamicNull))
+    {
+        <img id="banner-image" height="" width="100%" src="@Umbraco.Media(Model.Content.GetPropertyValue("image").ToString()).Url" />
+        <div class="banner-overlay"></div>
+        <h1 id="banner-title">@bannerTitle</h1>
+    }
+</div>

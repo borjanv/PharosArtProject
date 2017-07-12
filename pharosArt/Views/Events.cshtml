@@ -1,0 +1,141 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Events>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = "Master.cshtml";
+}
+
+<style>
+    .title{
+        color: blue;
+    }
+    
+    .image{
+        
+    }
+    
+    div.events {
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    display:table-cell; 
+    vertical-align:middle; 
+    text-align:center;
+    }
+    
+    div.events:hover {
+        border: 1px solid #777;
+    }
+    
+    div.events img {
+        max-height: 100%;
+        position: relative;
+    }
+    
+    .clear
+    {
+        clear: both;
+    }
+    
+    .main-div
+    {
+        width: 850px;
+        margin: auto;
+    }
+    
+    .opacity-div{
+        background-color: black;
+        position: relative;
+        bottom: 300px;
+        height: 300px;
+        opacity: 0.6;
+        z-index: 1;
+    }
+    
+    .event-name{
+        position: relative;
+        bottom: 600px;
+        z-index: 2;
+        opacity: 1;
+    }
+    
+    .event-name a:hover, .button a:hover{
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    .button{
+        position: relative;
+        bottom: 400px;
+        z-index: 2;
+        opacity: 1;
+        background-color: black;
+        height: 50px;
+        vertical-align: middle;
+        text-align:center;
+        line-height: 45px;
+        transition: bottom .5s, height .5s, line-height .5s;
+    }
+    
+    .button .text{
+        font-size: 15px;
+    }
+    
+    .text{
+        color: white;
+        font-size: 30px;
+    }
+    
+    .find-out-more{
+        z-index:3;
+        position: relative;
+        bottom: 375px;
+        transition: bottom .5s;
+    }
+    
+    .find-out-more a{
+        text-decoration: none;
+        color: white;
+        transition: font-size .5s;
+    }
+    
+    .find-out-more:hover{
+        bottom: 380px;
+    }
+    
+    .find-out-more:hover + .button{
+        height: 55px;
+        bottom: 410px;
+        line-height: 55px
+    }
+    
+    .find-out-more:hover a{
+        font-size: 17px;
+        
+    }
+    
+</style>
+
+<!-- <h1 class = "title">test</h1><br /> -->
+
+
+
+<div class="main-div">
+
+@foreach(var e in @CurrentPage.children.OrderBy("CreateDate desc")){
+
+    <div class="events">
+        <img src="@e.image.Url"/>
+        <div class="opacity-div"></div>
+        <div class="event-name"><a href="@e.Url"><h class="text">@e.eventName</h></a></div>
+        <h class="find-out-more"><a href="@e.Url">Find out more ></a></h>
+        <div class="button"></div>
+        
+    </div>
+      
+    
+}
+
+</div>

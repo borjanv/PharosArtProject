@@ -1,0 +1,95 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{      
+<p>hola0</p>
+    if (CurrentPage.HasValue("slide")){                                         
+    <p>hola1</p>
+        var dynamicMediaFolder = Umbraco.Media(CurrentPage.slide2);
+<p>hola2</p>
+         <ul>
+
+            @foreach (var picture in dynamicMediaFolder.Children)
+            {
+<p>hola3</p>
+                <li>
+
+                    <a href="@picture.Url">
+
+                        <img src="@picture.umbracoFile" alt="@picture.Name" />
+
+                    </a>
+
+                </li>
+
+            }
+
+        </ul>
+
+    }
+    else
+    {
+        @CurrentPage.HasValue("slide2")
+    }
+}
+
+@*inherits umrbaco.MacroEngines.DynamicNodeContext
+
+@{
+    var CurrentNode = @Model.NodeById(4142);
+}
+
+@CurrentNode.upload
+foreach(var item in @CurrentNode.upload.Split(','))
+{
+    <img src="@Model.MediaById(@item).umbracoFile"/>
+}*@
+
+@*
+    Macro to display a gallery of images from media the media section.
+    Works with either a 'Single Media Picker' or a 'Multiple Media Picker' macro parameter (see below).
+
+    How it works:
+        - Confirm the macro parameter has been passed in with a value
+        - Loop through all the media Id's passed in (might be a single item, might be many)
+        - Display any individual images, as well as any folders of images
+
+    Macro Parameters To Create, for this macro to work:
+    Alias:mediaIds     Name:Select folders and/or images    Type: Multiple Media Picker
+                                                            Type: (note: you can use a Single Media Picker if that's more appropriate to your needs)
+*@
+
+@*{ var mediaIds = Model.MacroParameters["mediaIds"]; }
+@if (mediaIds != null)
+{
+    <ul class="thumbnails">
+        @foreach (var mediaId in mediaIds.ToString().Split(','))
+        {
+            var media = Umbraco.Media(mediaId);
+
+            @* a single image @
+            if (media.DocumentTypeAlias == "Image")
+            {
+                @Render(media);
+            }
+
+            @* a folder with images under it @
+            if (media.Children("Image").Any())
+            {
+                foreach (var image in media.Children("Image"))
+                {
+                    @Render(image);
+                }
+            }
+
+        }
+    </ul>
+}
+
+@helper Render(dynamic item)
+{
+    <li class="span2">
+        <a href="@item.umbracoFile.src" class="thumbnail">
+            <img src="@item.umbracoFile.src" alt="@item.Name" />
+        </a>
+    </li>
+}*@

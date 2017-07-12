@@ -1,0 +1,69 @@
+﻿@inherits UmbracoTemplatePage
+<style>
+        span {
+            position: relative;
+            top: -300px;
+            left: -700px;
+            color: white;
+            font-family: "proxima-nova";
+            font-size: 56px;
+            line-height: 1.6em;
+            font-weight: 300;
+            width: 100%;
+        }
+
+</style>
+
+@if (Model.Content.HasValue("slide"))
+{
+    var dynamicMediaFolder = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("slide");
+    @*@CurrentPage.slide;*@
+        foreach (var imageItem in dynamicMediaFolder)
+        {
+                <div align="center"><img src="@imageItem.Url" />
+                    <h1>@imageItem.GetPropertyValue("title")</h1>
+                    <h3 style="width: 100%">@imageItem.GetPropertyValue("shortDescription")</h3>
+                </div>
+                <br/><br/>
+        }
+}
+
+@*var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("multiPicker");
+    foreach (var item in typedMultiNodeTreePicker)
+    {
+        <p>@item.Name</p>
+    }*@
+
+    //var bannerList1 = CurrentPage.multiPicker.ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+    //var bannerCollection1 = Umbraco.Content(bannerList1);
+    @*foreach (var item in bannerCollection1)
+    {
+        <p>@item.Name</p>
+
+
+    }*@
+    @*if (Model.Content.HasValue("multiPicker"))
+    {
+        var bannerListValue = Model.Content.GetPropertyValue<string>("multiPicker");
+        var bannerList = bannerListValue.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+        var bannerCollection = Umbraco.TypedContent(bannerList).Where(x => x != null);
+        foreach (var item in bannerCollection)
+        {
+            <p>@item.Name</p>
+        }
+    }*@
+
+@*var bannerNode = Umbraco.TypedContent(Model.Content.GetPropertyValue<int>("contPicker"));
+var a = Umbraco.Content(bannerNode);
+var img = Umbraco.Media(bannerNode.GetPropertyValue("image")).Url;
+
+    if (Model.Content.HasValue("contPicker"))
+    {
+        var node = Umbraco.Content(CurrentPage.contPicker);
+        <a href="node.Url">hello @node.title</a>
+    }*@
+
+
+    
+@*<div>Umbraco.RenderMacro("slide3")</div>*@
+

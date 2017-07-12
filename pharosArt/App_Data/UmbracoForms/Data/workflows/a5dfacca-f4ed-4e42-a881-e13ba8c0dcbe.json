@@ -1,0 +1,16 @@
+{
+  "id": "a5dfacca-f4ed-4e42-a881-e13ba8c0dcbe",
+  "name": "Send template email to mauroldanr@gmail.com",
+  "form": "c7e8ff54-292b-4e58-bcfa-6821370f43da",
+  "active": true,
+  "workflowTypeId": "17c61629-d984-4e86-b43b-a8407b3efea9",
+  "executesOn": "Submitted",
+  "settings": {
+    "Email": "mauroldanr@gmail.com",
+    "SenderEmail": "",
+    "Subject": "The Form '{form_name}' was submitted",
+    "RazorViewFilePath": "Forms/Emails/Example-Template.cshtml",
+    "Attachment": ""
+  },
+  "sortOrder": 1
+}
