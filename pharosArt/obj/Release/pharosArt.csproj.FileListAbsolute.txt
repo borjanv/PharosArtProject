@@ -114,3 +114,6 @@ G:\pharosArt\pharosArt\bin\UmbracoExamine.xml
 G:\pharosArt\pharosArt\obj\Release\pharosArt.csprojResolveAssemblyReference.cache
 G:\pharosArt\pharosArt\obj\Release\pharosArt.dll
 G:\pharosArt\pharosArt\obj\Release\pharosArt.pdb
+E:\Websites\Pharos all\Pharos Git repository\pharosArt\obj\Release\pharosArt.csprojResolveAssemblyReference.cache
+E:\Websites\Pharos all\Pharos Git repository\pharosArt\obj\Release\pharosArt.dll
+E:\Websites\Pharos all\Pharos Git repository\pharosArt\obj\Release\pharosArt.pdb
