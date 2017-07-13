@@ -70,7 +70,7 @@ namespace pharosArt.Controllers
                 Services.MemberService.AssignRole(member.Email, "regular");
 
                 var dbMember = Services.MemberService.GetByUsername(member.Email);
-                member.Id = dbMember.Id;
+                member.UmbracoId = dbMember.Id;
                 dbMember.SetValue("mediaRoot", CreateParentMediaFolderForMember(member).ToString());
             }
             return status;
@@ -84,7 +84,7 @@ namespace pharosArt.Controllers
         public int CreateParentMediaFolderForMember(IUmbracoMember member)
         {
             var newMediaFolder = Services.MediaService.CreateMediaWithIdentity(member.FirstName + " " + member.LastName, 5830, ParentFolder.ModelTypeAlias);
-            newMediaFolder.SetValue("member", member.Id);
+            newMediaFolder.SetValue("member", member.UmbracoId);
             Services.MediaService.Save(newMediaFolder);
 
             Services.MediaService.CreateMediaWithIdentity("Music", newMediaFolder,
