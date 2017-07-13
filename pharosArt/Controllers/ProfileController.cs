@@ -23,6 +23,7 @@ namespace pharosArt.Controllers
     {
         public ActionResult RenderLogin(string userName)
         {
+			/**/
             ProfileMember profile = new ProfileMember();
             var service = Services.MemberService;
             var member = service.GetByUsername(userName);
