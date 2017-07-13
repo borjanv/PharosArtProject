@@ -214,6 +214,7 @@
       <HintPath>..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.7.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
@@ -315,13 +316,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\EventPage.generated.cs" />
+    <Compile Include="App_Data\Models\Events.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\Home.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
+    <Compile Include="App_Data\Models\Join.generated.cs" />
+    <Compile Include="App_Data\Models\Login.generated.cs" />
+    <Compile Include="App_Data\Models\Media.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\Menu.generated.cs" />
+    <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
+    <Compile Include="App_Data\Models\ParentFolder.generated.cs" />
+    <Compile Include="App_Data\Models\Post.generated.cs" />
+    <Compile Include="App_Data\Models\PostContainer.generated.cs" />
+    <Compile Include="App_Data\Models\ProfileFolder.generated.cs" />
+    <Compile Include="App_Data\Models\ProfileMember.generated.cs" />
+    <Compile Include="App_Data\Models\Slide2.generated.cs" />
+    <Compile Include="App_Data\Models\Upload.generated.cs" />
+    <Compile Include="App_Data\Models\Video.generated.cs" />
+    <Compile Include="Controllers\AppHelper.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
+    <Compile Include="Controllers\IRegister.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\ProfileMember.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +384,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="App_Start\" />
     <Folder Include="Views\ImageUpload\" />
     <Folder Include="Views\Login\" />
@@ -563,6 +588,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Join.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Models\all.dll.path" />
+    <Content Include="App_Data\Models\models.hash" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Registration\RegistrationPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
