@@ -3,7 +3,7 @@
 
     @if(!Umbraco.MemberIsLoggedOn())
     {
-        using (Html.BeginUmbracoForm("SubmitLogin", "Member", System.Web.Mvc.FormMethod.Post, new { id="login" }))
+        using (Html.BeginUmbracoForm("SubmitLogin", "Login", System.Web.Mvc.FormMethod.Post, new { id="login" }))
         {
             @Html.AntiForgeryToken()
             @Html.LabelFor(m => m.Username)
@@ -18,6 +18,6 @@
     }
     else
     {
-        Html.RenderAction("RenderLogout", "Member");
+        Html.RenderAction("RenderLogout", "Login");
     }
 

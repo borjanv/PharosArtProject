@@ -11,7 +11,7 @@ using Umbraco.Core.Services;
 
 namespace pharosArt.Controllers
 {
-    public class MemberController : SurfaceController
+    public class LoginController : SurfaceController
     {
         public ActionResult RenderLogin()
         {
@@ -68,34 +68,13 @@ namespace pharosArt.Controllers
                     /** CREATE MEMBERS - GET USR BY NAME **/                    
                     service.FindMembersInRole("media", model.Username);
                     service.GetByUsername(model.Username);
-                    if (model.Username == "mauricio")
-                        model.Username = "testdelete";
                     if (!service.Exists(model.Username))
                     {
                         creteMember(model.Username);
-                        /*var newMember = service.CreateMember(model.Username, "test@gmail.com", "test mauro", "Member");  //get from the form
-                        newMember.SetValue("NameMember", "Mauricio 2"); //get from the form
-                        newMember.SetValue("LastName", "Roldan");       //get from the form
-                        service.Save(newMember);
-                        var member = service.GetByUsername(model.Username);
-                        Services.MemberService.AssignRole(member.Id, "media");
-                        
-                        var mediaService = ApplicationContext.Current.Services.MediaService;
-                        var profileFoler = mediaService.CreateMedia(model.Username, Constants.System.Root, "Folder");
-                        mediaService.Save(profileFoler);
-                        var idProfileFolder = profileFoler.Id;
-
-                        var profileImages = mediaService.CreateMedia("Images", idProfileFolder, "Folder");
-                        mediaService.Save(profileImages);
-
-                        var profileMusic = mediaService.CreateMedia("Music", idProfileFolder, "Folder");
-                        mediaService.Save(profileMusic);
-                        member.SetValue("mediaRoot", profileFoler.Id.ToString());
-                        service.Save(member);*/
                     }
                     else
                     {
-                        return RedirectToAction("RenderLogin","Profile",  new { userName = model.Username});
+                        return RedirectToAction("getProfile","Profile",  new { userName = model.Username});
                     }
                     /************************/
 
@@ -121,7 +100,7 @@ namespace pharosArt.Controllers
 
         public ActionResult RenderLogout()
         {
-            return PartialView("_Logout");
+            return PartialView("~/Views/MacroPartials/Profile.cshtml");
         }
         
         public ActionResult SubmitLogout()
@@ -129,7 +108,7 @@ namespace pharosArt.Controllers
             TempData.Clear();
             Session.Clear();
             FormsAuthentication.SignOut();
-            return RedirectToCurrentUmbracoPage();
+            return Redirect("/");
         }
     }
 }
