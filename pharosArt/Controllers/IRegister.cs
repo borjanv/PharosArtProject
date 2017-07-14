@@ -12,7 +12,8 @@ namespace pharosArt.Controllers
 
     public interface IUmbracoMember
     {
-        int Id { get; set; }
+        string Id { get; set; }
+        int UmbracoId { get; set; }
         string Genre { get; set; }
         string FirstName { get; set; }
         string LastName { get; set; }
