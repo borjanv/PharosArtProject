@@ -1,0 +1,11 @@
+/.vs/
+/pharosArt/obj/
+/pharosArt/App_Browsers/
+/pharosArt/App_Start/
+/pharosArt/App_Data/Logs/
+/pharosArt/App_Data/Temp/
+/pharosArt/App_Data/NuGetBackup/
+/pharosArt/App_Data/Cache/
+/pharosArt/App_Data/umbraco.config
+pharosArt.sln
+pharosArt.v12.suo
