@@ -90,7 +90,7 @@ namespace pharosArt.Controllers
             return View("~/Views/MacroPartials/Profile.cshtml", member);
         }
 
-        public int getFolderProfile()
+        public int getFolderProfile(string userName)
         {
             var userLogin = Membership.GetUser().UserName;
             int idProfileFoler = 0;
@@ -115,7 +115,7 @@ namespace pharosArt.Controllers
                 var list = mediaService.GetRootMedia();
                 int idFolderImage = 0, folder = 0;
 
-                idFolderImage = getFolderProfile();
+                idFolderImage = getFolderProfile(loged);
 
                 foreach (string file in Request.Files)
                 {
