@@ -114,14 +114,26 @@ namespace pharosArt.Controllers
             return View("~/Views/MacroPartials/Profile.cshtml", member);
         }
 
-        public int getFolderProfile(string userName)
+        public int getFolderProfile()
         {
-            var userLogin = Membership.GetUser().UserName;
             int idProfileFoler = 0;
-            var member = (Umbraco.Web.PublishedContentModels.Member)Members.GetByUsername(userName);
-            idProfileFoler = member.MediaRoot.Descendants<IPublishedContent>().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
-                             || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias == ProfileFolder.ModelTypeAlias).FirstOrDefault().Parent.Id;
-            
+            Membership.GetNumberOfUsersOnline();
+            var userLogin = Membership.GetUser().UserName;
+            var service = Services.MemberService;
+            var member = service.GetByUsername(userLogin);
+            var mediaService = ApplicationContext.Current.Services.MediaService;
+            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); 
+            var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
+            foreach (var mediaItem in mediaFolder.Children())
+            {
+                if (mediaItem.Name == "Profile")
+                {
+                    idProfileFoler = mediaItem.Id;
+                    var mediaProfiler = Umbraco.Media(idProfileFoler);
+                    break;
+                }
+            }
+
             return idProfileFoler;
         }
 
@@ -139,7 +151,7 @@ namespace pharosArt.Controllers
                 var list = mediaService.GetRootMedia();
                 int idFolderImage = 0, folder = 0;
 
-                idFolderImage = getFolderProfile(loged);
+                idFolderImage = getFolderProfile();
 
                 foreach (string file in Request.Files)
                 {

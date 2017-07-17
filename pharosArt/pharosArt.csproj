@@ -23,8 +23,6 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>c3c55f6f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,8 +78,9 @@
       <HintPath>..\packages\Examine.0.1.82\lib\net45\Examine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Facebook">
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -330,6 +329,7 @@
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\Menu.generated.cs" />
     <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
+    <Compile Include="App_Data\Models\ParentFolder.generated.cs" />
     <Compile Include="App_Data\Models\Post.generated.cs" />
     <Compile Include="App_Data\Models\PostContainer.generated.cs" />
     <Compile Include="App_Data\Models\ProfileFolder.generated.cs" />
@@ -337,13 +337,17 @@
     <Compile Include="App_Data\Models\Slide2.generated.cs" />
     <Compile Include="App_Data\Models\Upload.generated.cs" />
     <Compile Include="App_Data\Models\Video.generated.cs" />
+    <Compile Include="Controllers\AppHelper.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
+    <Compile Include="Controllers\IRegister.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\ProfileMember.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -486,13 +490,13 @@
   <ItemGroup>
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Partials\_Login.cshtml" />
-    <Content Include="Views\Partials\no_Logout.cshtml" />
+    <Content Include="Views\Partials\_Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\no_Login.cshtml" />
+    <Content Include="Views\MacroPartials\_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\Profile.cshtml" />
+    <Content Include="Views\MacroPartials\_Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\upload.cshtml" />
@@ -570,7 +574,7 @@
     <Content Include="Views\slide2.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\no_Profile.cshtml" />
+    <Content Include="Views\Partials\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post.cshtml" />
@@ -590,10 +594,7 @@
     <Content Include="App_Data\Models\models.hash" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\no_EditProfile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Partials\EditProfile.cshtml" />
+    <Content Include="Views\Registration\RegistrationPartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -630,10 +631,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.6.0\build\UmbracoCms.props'))" />
     <Error Condition="!Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets')" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

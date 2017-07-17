@@ -1,0 +1,44 @@
+﻿@using pharosArt.Controllers
+@using pharosArt.Models
+@model RegistrationModel
+@{
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+}
+
+<div>
+    @using (Html.BeginUmbracoForm<RegistrationController>("PostRegistration", "Registration", new { @class = "registration-form" }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="row">
+            @Html.LabelFor(m => m.Member.FirstName)
+            @Html.TextBoxFor(m => m.Member.FirstName)
+            @Html.ValidationMessageFor(model => model.Member.FirstName)
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Member.LastName)
+            @Html.TextBoxFor(m => m.Member.LastName)
+            @Html.ValidationMessageFor(model => model.Member.LastName)
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Member.Email)
+            @Html.TextBoxFor(m => m.Member.Email, new { type = "email" })
+            @Html.ValidationMessageFor(model => model.Member.Email)
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.Member.Password)
+            @Html.TextBoxFor(m => m.Member.Password, new {type = "password"})
+            @Html.ValidationMessageFor(model => model.Member.Password)
+        </div>       
+        @*<div class="row">
+            @Html.LabelFor(m => m.Member.Genre)
+            @Html.DropDownListFor(x => x.Member.Genre, new SelectList(Model.Genres))
+        </div>*@
+
+
+        <input type="submit" value="Submit" />
+        @ViewBag.RegistrationMessage
+    }
+</div>

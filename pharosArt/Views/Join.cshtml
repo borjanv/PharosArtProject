@@ -9,7 +9,7 @@
         position: relative;
         top: 30%;
         text-align: center;
-        	font-family: 'Open Sans', sans-serif;
+        font-family: 'Open Sans', sans-serif;
 
     }
     .join-form h1 {
@@ -56,7 +56,58 @@
         color:#000;
         font-weight: 700;
     }
-    
+    <style>
+    div#banner-wrapper {
+         display: none;
+     }
+
+    button {
+        border: 2px solid;
+        background: transparent;
+        margin: 12px;
+        margin-left: 0;
+        padding: 6px;
+        width: 100px;
+        font-weight: bold;
+        text-transform: uppercase;
+        -webkit-transition-duration: 0.5s; /* Safari */
+        transition-duration: 0.5s;
+        margin-top: 29px;
+    }
+
+    button:hover {
+        color: #fff;
+        background: #000;
+        border: 2px solid;
+    }
+
+    input#Username {
+        border: 0;
+        background: transparent;
+        border-bottom: 2px solid;
+        padding: 5px;
+        font-family: Open Sans;
+    }
+
+    input#Password {
+        border: 0;
+        background: transparent;
+        border-bottom: 2px solid;
+        padding: 5px;
+        font-family: Open Sans;
+    }
+
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 30px white inset;
+    }
+
+    label {
+        text-transform: uppercase;
+        padding: 10px;
+        padding-left: 0;
+        margin-top: 10px;
+    }
+</style>
 </style>
 <!DOCTYPE html>
 <html>
@@ -67,7 +118,8 @@
             <h1>Join Pharos</h1>
             <h3>Want to see your work here?</h3>
             <div>Be featured online and represented as a contributor of Pharos.</div>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeT2RNiCcX7QXfL-GkEVXNZWyjKROwspia1-pHgo0hEU3EF_Q/viewform" target="_blank">Sign up</a>
+            @Html.Action("GetRegistration", "Registration")
+            @*<a href="https://docs.google.com/forms/d/e/1FAIpQLSeT2RNiCcX7QXfL-GkEVXNZWyjKROwspia1-pHgo0hEU3EF_Q/viewform" target="_blank">Sign up</a>*@
         </div>
     </body>
 </html>
