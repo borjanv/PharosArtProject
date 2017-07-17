@@ -72,8 +72,15 @@ if (Umbraco.MemberIsLoggedOn())
                 //}
             }*/
         }
+        
+        
     <td style="width:10%">@Html.Partial("Header")</td>
     <td>
+        @if (Members.IsLoggedIn())
+        {
+            <a href="@Url.Action("SubmitLogout", "Login")">Logout</a>
+        }
+        
         <ul id="socialmedia_menu">
         <li>
             <a href="https://twitter.com/pharoslondon" target="_blank">

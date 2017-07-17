@@ -26,14 +26,28 @@ namespace pharosArt.Models
         [Required]
         public string memberLastName { get; set; }
 
-        [Display(Name = "Description")]
-        public string description { get; set; }
+        [Display(Name = "Biography")]
+        public string biography { get; set; }
 
         public LoginModel profile { get; set; }
+
+        public List<Tuple<string, string>> mediaMember { get; set; }
+        //public List<TupleList<string, string>> mediaMember2 { get; set; }
+        //public Tuple<string, string> scores { get; set; }
 
         public ProfileMember()
         {
             this.profile = new LoginModel();
+            mediaMember = new List<Tuple<string, string>>();
+            //mediaMember2 = new List<TupleList<string, string>>();
         }
     }
+
+    //public class TupleList<T1, T2> : List<Tuple<T1, T2>>
+    //{
+    //    public void Add(T1 item, T2 item2)
+    //    {
+    //        Add(new Tuple<T1, T2>(item, item2));
+    //    }
+    //}
 }

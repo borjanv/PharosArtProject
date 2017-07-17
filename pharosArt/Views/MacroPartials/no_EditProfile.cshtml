@@ -1,60 +1,50 @@
-﻿@*@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.ProfileMember>
-@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<pharosArt.Models.ProfileMember>
-@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.ProfileMember>*@
-@*@inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@ 
-@using pharosArt.Controllers
-@using pharosArt.Models
+﻿@using pharosArt.Controllers
+@using Umbraco.Web.Mvc;
+@using System.Collections.Generic;
 @model pharosArt.Models.ProfileMember
+@*@inherits UmbracoViewPage<Umbraco.Web.PublishedContentModels.Member>
+@using Umbraco.Web.PublishedContentModels*@
+
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+<style>
+    td, th
+    {
+        padding: 9px;
+    }
+</style>
 @*@{ 
     var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
 }
 @if (umbracoHelper.MemberIsLoggedOn())
 {*@
-    @using (Html.BeginUmbracoForm("editProfile", "Profile", new { id = Model.memberId, userName = Model.profile.Username }, System.Web.Mvc.FormMethod.Post))
+    @using (Html.BeginUmbracoForm("saveProfile", "Profile", System.Web.Mvc.FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        int k = 0, i = 0;
-        //var myUser = System.Web.Security.Membership.GetUser();
-        //if (myUser != null)
-        //{
-        <div>
+            @Html.LabelFor(m => m.)
+            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @style="width:90%" })
+        
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @style="width:90%" })
+        
+            @Html.TextAreaFor(m => m.)
+            @Html.TextBoxFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.LastName)
             <div>
-                <p>Add profile picture2:</p>
                 <input type="file" name="FileUpload" id="FileUpload">
                 <!--  <input type="button" id="Upload" value="Upload" /> -->
                 <p id="responseMessage"></p>
                 <!-- on button click clear input,after sending , and if success , display text that it was delivered, if error - same :D-->
             </div>
-            <table>
-                <tr>
-                    <td colspan="4">@Model.memberName; @Model.memberLastName;</td>
-                </tr>
-                <tr>
-                    <td><img src="@Model.profile.urlImage" /></td>
-                    <td>@Model.description;</td>
-                </tr>
-                <tr><td colspan="4"></td></tr>
-                @for (i = 0; i < 8; i++)  //list order by date create
-                {
-                    <tr>
-                        @for (k = 0; k < 4; k++)
-                        {
-                            <td>b</td>
-                        }
-                        @{k = 0; i = i + 4; }
-                    </tr>
-                }
-            </table>
-            @Model.memberName;
-            @Model.profile.Username;
-        </div>
+
+            @Html.ValidationSummary()
+           <button name="edit" type="submit"><span>Save</span> <i class="fa fa-arrow-right"></i></button>
 
             @*<p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>*@
-            <button name="edit" type="submit"><span>Edit profile</span> <i class="fa fa-arrow-right"></i></button>
-            <button id="logout" name="logout" type="submit" onclick="location.href='/SubmitLogout/Login'"><span>logout</span> <i class="fa fa-arrow-right"></i></button>
+            
         //}
     }   
 @*}*@

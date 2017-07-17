@@ -6,92 +6,135 @@ using pharosArt.Models;
 using System.Web;
 using System.Collections.Generic;
 using Umbraco.Core;
-using Umbraco.Core.Models;
 using Umbraco.Core.Services;
-
-using System.Linq;
 using Umbraco.Web;
+using System.Linq;
+using Umbraco.Web.Models;
 using umbraco.IO;
 using System.Threading.Tasks;
 using System.IO;
 using System.Text;
 using System.Net;
+using Umbraco.Web.PublishedContentModels;
+using Umbraco.Core.Models;
 
 namespace pharosArt.Controllers
 {
     public class ProfileController : SurfaceController
     {
-        public ActionResult RenderLogin(string userName)
+        public ActionResult getProfile(string userName)
         {
-			/**/
-            ProfileMember profile = new ProfileMember();
-            var service = Services.MemberService;
-            var member = service.GetByUsername(userName);
+            pharosArt.Models.ProfileMember profile = new pharosArt.Models.ProfileMember();
+            List<Tuple<string, string>> mediaMember2 = new List<Tuple<string, string>>();
+            var member = (Umbraco.Web.PublishedContentModels.Member)Members.GetByUsername(userName);
             profile.memberId = member.Id;
-            profile.description = member.Comments;
-            profile.memberName = member.Email;
+            profile.biography = member.Biography;  //UmbracoMemberComments
+            profile.memberName = member.FirstName + " " + member.LastName;
             profile.profile.Username = userName;
-            if(member.Properties["picture"].Value != null)
-                profile.profile.urlImage = member.Properties["picture"].Value.ToString();
-            //profile.profile.urlImage = member.Properties["picture"].Value.ToString();
-            //profile.profile.urlImage = member.ima;
-            //profile.profile.Username = member.LastLoginDate;
-            //profile.profile. = member.Name;
-            profile.memberName = member.Properties["NameMember"].Value.ToString();
-            profile.memberLastName = member.Properties["LastName"].Value.ToString();
-            FormsAuthentication.SetAuthCookie(userName, false);
-            //return View("");
-            //return Redirect("/Profile/");
-            //return RedirectToAction("RenderLogout", profile);
-            //return PartialView("_Logout", profile);
+            if (member.Picture != null)
+            {
+                profile.profile.urlImage = member.Picture.Url;
+            }
 
-            //return Redirect("/profile/");
-            //return PartialView("_Logout");
-            return View("~/Views/MacroPartials/_Logout.cshtml", profile);
+            var mediaContent = member.MediaRoot;
+            foreach (var mediaItem in mediaContent.Descendants<IPublishedContent>().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
+                || x.DocumentTypeAlias == "File").Where(x=>x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias))
+            {
+                profile.mediaMember.Add(new Tuple<string, string>(mediaItem.DocumentTypeAlias, mediaItem.Url.ToString()));
+            }
+            
+            FormsAuthentication.SetAuthCookie(userName, false);
+            
+            return View("~/Views/MacroPartials/Profile.cshtml", profile);
         }
-        
+
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult editProfile(string id, string userName)
+        public ActionResult editProfile(int id)
         {
-            //ProfileMember profile = new ProfileMember();
-            var service = Services.MemberService;
-            var member = service.GetById(Int32.Parse(id));
-            member.Comments = "database analyst";
-            //member.Properties["picture"].Value = ;
-            //newMember.SetValue("picture", );
-            service.Save(member);
+            //var service = Services.MemberService;
+            //var memberToSave1 = service.GetById(Int32.Parse(id.ToString()));
+            var memberToSave = (Umbraco.Web.PublishedContentModels.Member)Members.GetById(Int32.Parse(id.ToString()));
 
+            pharosArt.Models.ProfileMember membertoShow = new pharosArt.Models.ProfileMember();
+            membertoShow.memberId = memberToSave.Id;
+            membertoShow.memberName = memberToSave.FirstName; //Properties["firstName"].Value.ToString();
+            membertoShow.memberLastName = memberToSave.LastName; //Properties["LastName"].Value.ToString();
+            membertoShow.biography = memberToSave.Biography; //Properties["biography"].Value.ToString();
+            //membertoShow.profile.urlImage = memberToSave.Properties["biography"].Value.ToString();
+            return View("~/Views/Partials/EditProfile.cshtml", membertoShow);
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult saveProfile(pharosArt.Models.ProfileMember member)
+        {
             if (ModelState.IsValid)
             {
-                ; ;
+                try
+                {
+                    //var memberToSave = (Umbraco.Web.PublishedContentModels.Member)Members.GetById(member.memberId);
+                    var service = Services.MemberService;
+                    var memberToSave = service.GetById(Int32.Parse(member.memberId.ToString()));
+
+                    memberToSave.SetValue("firstName", member.memberName);
+                    memberToSave.SetValue("LastName", member.memberLastName);
+                    memberToSave.SetValue("biography", member.biography);
+
+                    //memberToSave.Properties["memberName"].Value = member.memberName;
+                    //memberToSave.Properties["memberLastName"].Value = member.memberLastName;
+                    //memberToSave.Properties["description"].Value = member.description;
+                    service.Save(memberToSave);
+                    TempData["message"] = "Profile was updated!";
+                }
+                catch (Exception e)
+                {
+                    e.ToString();
+                    TempData["message"] = "Profile was not updated - contact admin";
+                }
             }
-            return CurrentUmbracoPage();
+
+            /*memberToSave.Picture = member.profile.urlImage; //member.profile.urlImage;
+            memberToSave.FirstName = member.memberName;
+            memberToSave.LastName = member.memberLastName;
+             = member.description;
+            member.memberLastName;
+            member.memberLastName;*/
+            /*var member = service.GetById(Int32.Parse(id));
+            memberToSave.Biography = "database analyst";
+            member.Properties["picture"].Value = ;
+            newMember.SetValue("picture", );*/
+
+
+            //if (ModelState.IsValid)
+            //{
+            //    ; ;
+            //}
+            
+            return View("~/Views/MacroPartials/Profile.cshtml", member);
         }
 
         public int getFolderProfile()
         {
-            /** upload media to the profile **/
-            int idImageFoler = 0;
+            int idProfileFoler = 0;
             Membership.GetNumberOfUsersOnline();
             var userLogin = Membership.GetUser().UserName;
             var service = Services.MemberService;
             var member = service.GetByUsername(userLogin);
             var mediaService = ApplicationContext.Current.Services.MediaService;
-            //int idFolderImage = 0, idFolderMusic = 0, folder;
-            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
+            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); 
             var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
             foreach (var mediaItem in mediaFolder.Children())
             {
                 if (mediaItem.Name == "Profile")
                 {
-                    idImageFoler =  mediaItem.Id;
-                    var mediaProfiler = Umbraco.Media(idImageFoler);
+                    idProfileFoler = mediaItem.Id;
+                    var mediaProfiler = Umbraco.Media(idProfileFoler);
                     break;
                 }
             }
 
-            return idImageFoler;
+            return idProfileFoler;
         }
 
         [HttpPost]
@@ -106,33 +149,9 @@ namespace pharosArt.Controllers
                 var userLogin = Membership.GetUser().UserName;
                 var mediaService = ApplicationContext.Current.Services.MediaService;
                 var list = mediaService.GetRootMedia();
-                int /*idFolderMedia = 0,*/ idFolderImage = 0, folder = 0;
+                int idFolderImage = 0, folder = 0;
 
                 idFolderImage = getFolderProfile();
-                /*foreach (var ww in list)
-                {
-                    if (ww.ContentType.Alias == "Folder")
-                    {
-                        if (ww.Name == userLogin)
-                        {
-                            idFolderMedia = ww.Id;
-                            var listChild = mediaService.GetChildren(idFolderMedia);
-                            var listChild0 = mediaService.GetDescendants(idFolderMedia);
-                            foreach (var child in listChild)
-                            {
-                                if (child.ContentType.Alias == "Folder")
-                                {
-                                    if (child.Name == "Images")
-                                    {
-                                        idFolderImage = child.Id;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                /**************/
 
                 foreach (string file in Request.Files)
                 {
@@ -142,22 +161,20 @@ namespace pharosArt.Controllers
                         var categories_string = "profile";
                         var stream = fileContent.InputStream;
                         var name = fileContent.FileName;
-                        /** media profile **/
                         if (fileContent.ContentType.Contains("image"))
                         {
                             folder = idFolderImage;
                         }
-                        /*******/
                         var ms = ApplicationContext.Current.Services.MediaService;
                         var MediaMap = Services.MediaService.CreateMedia(name, folder, "Image");
                         MediaMap.SetValue("umbracoFile", fileContent);
-                        //MediaMap.SetValue("shortDescription", category);
                         MediaMap.SetValue("category", categories_string);
                         Services.MediaService.Save(MediaMap);
                         var urlMedia = Umbraco.Media(MediaMap.Id).Url; //banner.image is the property id.
                         member.SetValue("picture", MediaMap.Id);
+                        service.Save(member);
                     }
-                }                
+                }
             }
             catch (Exception)
             {

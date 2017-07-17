@@ -8,7 +8,7 @@
 @using pharosArt.Models
 @model pharosArt.Models.ProfileMember
 @{
-	using (Html.BeginUmbracoForm("SubmitLogout", "Member", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
+	using (Html.BeginUmbracoForm("SubmitLogout", "Login", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
     {
         @Html.AntiForgeryToken()
         @*if (Model.Content.HasValue("picture"))
