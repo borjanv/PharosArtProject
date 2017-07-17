@@ -20,11 +20,8 @@ namespace pharosArt.Controllers
         [HttpPost]
         public ActionResult PostRegistration(RegistrationModel model)
         {
-            if (!ModelState.IsValid || model.Member.Genre == Genre.Genre.ToString())
+            if (!ModelState.IsValid)
             {
-                if (model.Member.Genre == Genre.Genre.ToString())
-                    ModelState.AddModelError("Genre", "Please select a genre");
-
                 return CurrentUmbracoPage();
             }
             // 
