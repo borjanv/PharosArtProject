@@ -58,27 +58,7 @@ namespace pharosArt.Controllers
             int folder;
             var member = (Umbraco.Web.PublishedContentModels.Member)Members.GetById(Int32.Parse(id));
             var username = Membership.GetUser().UserName;
-            /** upload media to the profile **/
-            /*Membership.GetNumberOfUsersOnline();
-            var userLogin = Membership.GetUser().UserName;
-            var service = Services.MemberService;
-            var member = service.GetByUsername(userLogin);
-            var mediaService = ApplicationContext.Current.Services.MediaService;
-            int idFolderImage = 0, idFolderMusic = 0, folder;            
-            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
-            var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
-            foreach (var mediaItem in mediaFolder.Children())
-            {
-                if (mediaItem.Name == "Images")
-                {
-                    idFolderImage = mediaItem.Id;
-                }
-                else
-                {
-                    idFolderMusic = mediaItem.Id;
-                }
-            }*/
-
+            
             try
             {
                 //getFoldersMedia();
@@ -103,8 +83,7 @@ namespace pharosArt.Controllers
                         /** media profile **/
                         if (fileContent.ContentType.Contains("image"))
                         {
-                            folder = //member.MediaRoot.Descendants<IPublishedContent>().Where(x => x.Name == username).FirstOrDefault().Id;// DocumentTypeAlias == ImagesFolder.ModelTypeAlias).FirstOrDefault().Id;//idFolderImage;
-                             member.MediaRoot.Descendants<IPublishedContent>().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
+                            folder = member.MediaRoot.Descendants<IPublishedContent>().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
                              || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias == ImagesFolder.ModelTypeAlias).FirstOrDefault().Parent.Id;
                         }
                         else
