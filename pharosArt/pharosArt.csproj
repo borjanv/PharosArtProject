@@ -23,6 +23,8 @@
     <IISExpressUseClassicPipelineMode />
     <NuGetPackageImportStamp>c3c55f6f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,9 +80,8 @@
       <HintPath>..\packages\Examine.0.1.82\lib\net45\Examine.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+    <Reference Include="Facebook">
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -214,6 +215,7 @@
       <HintPath>..\packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.7.0\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
@@ -315,6 +317,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\EventPage.generated.cs" />
+    <Compile Include="App_Data\Models\Events.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\Home.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
+    <Compile Include="App_Data\Models\Join.generated.cs" />
+    <Compile Include="App_Data\Models\Login.generated.cs" />
+    <Compile Include="App_Data\Models\Media.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\Menu.generated.cs" />
+    <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
+    <Compile Include="App_Data\Models\Post.generated.cs" />
+    <Compile Include="App_Data\Models\PostContainer.generated.cs" />
+    <Compile Include="App_Data\Models\ProfileFolder.generated.cs" />
+    <Compile Include="App_Data\Models\ProfileMember.generated.cs" />
+    <Compile Include="App_Data\Models\Slide2.generated.cs" />
+    <Compile Include="App_Data\Models\Upload.generated.cs" />
+    <Compile Include="App_Data\Models\Video.generated.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -358,7 +380,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="App_Start\" />
     <Folder Include="Views\ImageUpload\" />
     <Folder Include="Views\Login\" />
@@ -465,13 +486,13 @@
   <ItemGroup>
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Partials\_Login.cshtml" />
-    <Content Include="Views\Partials\_Logout.cshtml" />
+    <Content Include="Views\Partials\no_Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\_Login.cshtml" />
+    <Content Include="Views\MacroPartials\no_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\_Logout.cshtml" />
+    <Content Include="Views\MacroPartials\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\upload.cshtml" />
@@ -549,7 +570,7 @@
     <Content Include="Views\slide2.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\Profile.cshtml" />
+    <Content Include="Views\Partials\no_Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post.cshtml" />
@@ -563,6 +584,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Join.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Models\all.dll.path" />
+    <Content Include="App_Data\Models\models.hash" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\no_EditProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\EditProfile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -599,8 +630,10 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.6.0\build\UmbracoCms.props'))" />
     <Error Condition="!Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <Import Project="..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets" Condition="Exists('..\packages\UmbracoCms.7.6.0\build\UmbracoCms.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

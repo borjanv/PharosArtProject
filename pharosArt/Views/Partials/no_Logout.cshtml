@@ -1,0 +1,128 @@
+﻿@using pharosArt.Controllers
+@using pharosArt.Models
+@model pharosArt.Models.ProfileMember
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+@*@{
+        var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
+    }
+    @if (umbracoHelper.MemberIsLoggedOn())
+    {*@
+@using (Html.BeginUmbracoForm("editProfile2", "Profile", System.Web.Mvc.FormMethod.Post, new { id = Model.memberId, userName = Model.profile.Username }))
+{
+    @Html.AntiForgeryToken()
+    int k = 0,i = 0;
+    //var myUser = System.Web.Security.Membership.GetUser();
+    //if (myUser != null)
+    //{
+    <div>
+        <div>
+            <p>Add profile picture1:</p>
+            <input type="file" name="FileUpload" id="FileUpload">
+            <!--  <input type="button" id="Upload" value="Upload" /> -->
+            <p id="responseMessage"></p>
+            <!-- on button click clear input,after sending , and if success , display text that it was delivered, if error - same :D-->
+        </div>
+        <table>
+            <tr>
+                <td>@Model.memberName; @Model.memberLastName;</td>
+            </tr>
+            <tr>
+                <td><img src="@Model.profile.urlImage" /></td>
+                <td>@Model.description;</td>
+            </tr>
+            <tr><td></td></tr>
+            @for (i = 0; i < 5; i++)  //list order by date create
+            {
+                <tr>
+                    @for(k = 0; k < 5; k++)
+                    {
+                        k++;
+                        <td></td>
+                    }
+                    k = 0 ;
+                </tr>
+            }
+        </table>        
+        @Model.memberName;
+        @Model.profile.Username;
+    </div>
+
+            @*<p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>*@
+            <button name="edit" type="submit"><span>Edit profile</span> <i class="fa fa-arrow-right"></i></button>
+            <button name="logout" type="submit" onclick="location.href='@Url.Action("SubmitLogout", "Login")'"><span>logout</span> <i class="fa fa-arrow-right"></i></button>
+    //}
+}   
+
+@*@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Umbraco.Web
+
+@if (Umbraco.MemberIsLoggedOn())
+{
+    using (Html.BeginUmbracoForm("SubmitLogout", "Member", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
+    {
+        @Html.AntiForgeryToken()
+        var myUser = System.Web.Security.Membership.GetUser();
+        if (myUser != null)
+        {
+            @*<h2>Welcome @Members.GetCurrentMemberProfileModel().UserName</h2>
+            
+            <img style="height:48px;-webkit-border-radius: 90px;-moz-border-radius: 90px;border-radius: 90px;" src="/media/1370/screenshot-mediacmcdnnet-2017-01-12-12-52-39.png"/>
+            
+            <p><strong></strong> <span style="text-transform:capitalize;text-align:center;font-weight:bold;">@myUser.UserName</span>
+            
+        
+            <button style="background:transparent;border:0;" class="logoutButton dropDownLog" name="login" type="submit"><span><i class="fa fa-cog" aria-hidden="true"></i></span></button></p>
+            <div class="dropDownLogContent">
+                <p><i class="fa fa-lock" aria-hidden="true"></i>Log Out</p>
+            </div>
+       
+        
+        }
+        
+    }   
+}*@
+
+<script>
+$("#FileUpload").on("change", function(e) {
+   var files = e.target.files;
+   var myID = 3;
+   if(files.length > 0) {
+
+       if(window.FormData !== undefined) {
+
+           var data = new FormData();
+           for (var x = 0; x < files.length; x++) {
+               data.append("file" + x, files[x]);
+           }
+           var imgor = '@Url.Action("UploadImage","ImageUpload")';
+           console.log("amazing");
+           $.ajax({
+               type: "POST",
+               url: imgor ,/*?id=' + myID,*/
+               contentType: false,
+               processData: false,
+               data: data,
+               success: function(result) {
+                   console.log(result);
+                   $("#responseMessage").text("Successfully uploaded.")
+               },
+               error: function( xhr, status, p3, p4) {
+                   var err = "Error " + " " + status + " " + p3 + " " + p4;
+                   if(xhr.responseText && xhr.responseText[0] == "{")
+                       err = JSON.parse(xhr.responseText).Message;
+                   $("#responseMessage").text("Error - Couldn't uploaded.")
+                    console.log(err);
+               }
+           });
+           console.log("semi amazing");
+       } else {
+
+           console.log("This browser doesn't support HTML5 file uploads!");
+       }
+   }
+
+});
+
+</script>

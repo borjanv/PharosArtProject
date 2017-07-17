@@ -1,0 +1,93 @@
+﻿@using pharosArt.Controllers
+@using Umbraco.Web.Mvc;
+@using System.Collections.Generic;
+@model pharosArt.Models.ProfileMember
+@*@inherits UmbracoViewPage<Umbraco.Web.PublishedContentModels.Member>
+@using Umbraco.Web.PublishedContentModels*@
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+<style>
+    td, th
+    {
+        padding: 9px;
+    }
+</style>
+@*@{ 
+    var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
+}
+@if (umbracoHelper.MemberIsLoggedOn())
+{*@
+    @using (Html.BeginUmbracoForm("saveProfile", "Profile", System.Web.Mvc.FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+            @Html.LabelFor(m => m.)
+            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @style="width:90%" })
+        
+            @Html.LabelFor(m => m.Password)
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @style="width:90%" })
+        
+            @Html.TextAreaFor(m => m.)
+            @Html.TextBoxFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.LastName)
+            @Html.TextBoxFor(m => m.FirstName)
+            @Html.TextBoxFor(m => m.LastName)
+            <div>
+                <input type="file" name="FileUpload" id="FileUpload">
+                <!--  <input type="button" id="Upload" value="Upload" /> -->
+                <p id="responseMessage"></p>
+                <!-- on button click clear input,after sending , and if success , display text that it was delivered, if error - same :D-->
+            </div>
+
+            @Html.ValidationSummary()
+           <button name="edit" type="submit"><span>Save</span> <i class="fa fa-arrow-right"></i></button>
+
+            @*<p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>*@
+            
+        //}
+    }   
+@*}*@
+
+<script>
+$("#FileUpload").on("change", function(e) {
+   var files = e.target.files;
+   var myID = 3;
+   if(files.length > 0) {
+
+       if(window.FormData !== undefined) {
+
+           var data = new FormData();
+           for (var x = 0; x < files.length; x++) {
+               data.append("file" + x, files[x]);
+           }
+           var imgor = '@Url.Action("UploadImage","Profile")';
+           console.log("amazing");
+           $.ajax({
+               type: "POST",
+               url: imgor ,/*?id=' + myID,*/
+               contentType: false,
+               processData: false,
+               data: data,
+               success: function(result) {
+                   console.log(result);
+                   $("#responseMessage").text("Successfully uploaded.")
+               },
+               error: function( xhr, status, p3, p4) {
+                   var err = "Error " + " " + status + " " + p3 + " " + p4;
+                   if(xhr.responseText && xhr.responseText[0] == "{")
+                       err = JSON.parse(xhr.responseText).Message;
+                   $("#responseMessage").text("Error - Couldn't uploaded.")
+                    console.log(err);
+               }
+           });
+           console.log("semi amazing");
+       } else {
+
+           console.log("This browser doesn't support HTML5 file uploads!");
+       }
+   }
+
+});
+
+</script>
