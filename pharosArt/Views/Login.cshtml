@@ -65,8 +65,8 @@
         }
         else
         {
-            Html.RenderAction("RenderLogin", "Login");
-            <div class="fb-login-button" autologoutlink="true" scope="email">Login with Facebook</div>           
+            Html.RenderAction("RenderLogin", "Member");
+            <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>           
         }
     </div>
 </div>
@@ -88,13 +88,17 @@
                     xfbml: true // parse XFBML
                 });
                 // listen for and handle auth.statusChange events
+
                 FB.Event.subscribe('auth.statusChange', OnLogin);
+                //$(".fb-login-button").click(function () {
+                //    FB.Event.subscribe('auth.statusChange', OnLogin)
+                //});
             });
 
             // This method will be called after the user login into facebook.
             function OnLogin(response) {
                 if (response.authResponse) {
-                  var data = { accessToken: response.authResponse.accessToken };
+                    var data = { accessToken: response.authResponse.accessToken };
                     $.ajax({
                         type: 'POST',
                         url: '@Url.Action("LogUserIn", "FacebookLogin")',
@@ -104,9 +108,9 @@
                         //alert("Success");
                     }).fail(function (jqXHR, textStatus, errorThrown) {
                         alert(errorThrown);
-                    });                   
+                    });
                 }
-            }                   
+            }
         </script>
     }
 }
