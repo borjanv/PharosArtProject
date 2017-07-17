@@ -61,12 +61,12 @@
         @if (Umbraco.MemberIsLoggedOn())
         {
             //Html.RenderAction("RenderLogout", "Member");
-            Html.RenderAction("RenderLogin", "Profile", new { userName = "mauroldanr" });
+            Html.RenderAction("getProfile", "Profile", new { userName = "mauroldanr" });
         }
         else
         {
             Html.RenderAction("RenderLogin", "Member");
-            <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>
+            <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>           
         }
     </div>
 </div>
