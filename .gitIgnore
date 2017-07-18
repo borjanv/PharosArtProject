@@ -4,19 +4,13 @@ pharosArt/obj/release/
 
 pharosArt/App_Data/Models/*
 
-!pharosArt/App_Data/Models/all.dll.path
-
-!pharosArt/App_Data/Models/models.hash
-
-!pharosArt/App_Data/Models/ood.flag
-
-pharosArt/App_Data/Logs/
-
 pharosArt/App_Data/Temp/ExamineIndexes/External/
 
 pharosArt/App_Data/Temp/ExamineIndexes/Internal/
 
 pharosArt/App_Data/Temp/ExamineIndexes/InternalMember/
+
+pharosArt/App_Data/Logs/
 
 pharosArt/App_Data/NuGetBackup/
 
@@ -27,3 +21,15 @@ pharosArt/App_Data/umbraco.config
 pharosArt.sln
 
 pharosArt.v12.suo
+
+!pharosArt/App_Data/Temp/ExamineIndexes/External/keepfolder.txt
+
+!pharosArt/App_Data/Temp/ExamineIndexes/internal/keepfolder.txt
+
+!pharosArt/App_Data/Temp/ExamineIndexes/InternalMember/keepfolder.txt
+
+!pharosArt/App_Data/Models/all.dll.path
+
+!pharosArt/App_Data/Models/models.hash
+
+!pharosArt/App_Data/Models/ood.flag
