@@ -574,9 +574,6 @@
     <Content Include="Views\slide2.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\Profile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Post.cshtml" />
     <Content Include="Views\PostContainer.cshtml" />
     <Content Include="Views\PostPage.cshtml" />
@@ -595,6 +592,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Registration\RegistrationPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\Profile.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
