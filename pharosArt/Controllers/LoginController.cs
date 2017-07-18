@@ -15,7 +15,7 @@ namespace pharosArt.Controllers
     {
         public ActionResult RenderLogin()
         {
-            return PartialView("_Login", new LoginModel());
+            return PartialView("~/Views/Partials/_Login.cshtml", new LoginModel());
         }
         public bool creteMember(string username)
         {

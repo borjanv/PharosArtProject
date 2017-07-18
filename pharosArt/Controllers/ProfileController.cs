@@ -22,7 +22,7 @@ namespace pharosArt.Controllers
 {
     public class ProfileController : SurfaceController
     {
-        public ActionResult getProfile(string userName)
+        public ActionResult GetProfile(string userName)
         {
             pharosArt.Models.ProfileMember profile = new pharosArt.Models.ProfileMember();
             List<Tuple<string, string>> mediaMember2 = new List<Tuple<string, string>>();
