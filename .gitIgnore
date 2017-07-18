@@ -1,12 +1,22 @@
-pharosArt/obj/
+pharosArt/obj/Debug/
 
-pharosArt/App_Browsers/
+pharosArt/obj/release/
 
-pharosArt/App_Start/
+pharosArt/App_Data/Models/*
+
+!pharosArt/App_Data/Models/all.dll.path
+
+!pharosArt/App_Data/Models/models.hash
+
+!pharosArt/App_Data/Models/ood.flag
 
 pharosArt/App_Data/Logs/
 
-pharosArt/App_Data/Temp/
+pharosArt/App_Data/Temp/ExamineIndexes/External/
+
+pharosArt/App_Data/Temp/ExamineIndexes/Internal/
+
+pharosArt/App_Data/Temp/ExamineIndexes/InternalMember/
 
 pharosArt/App_Data/NuGetBackup/
 
