@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
@@ -69,6 +70,7 @@ namespace pharosArt.Controllers
                 var dbMember = Services.MemberService.GetByUsername(member.Email);
                 member.UmbracoId = dbMember.Id;
                 dbMember.SetValue("mediaRoot", CreateParentMediaFolderForMember(member).ToString());
+                Services.MemberService.Save(dbMember);
             }
             return status;
         }
@@ -78,7 +80,7 @@ namespace pharosArt.Controllers
         /// </summary>
         /// <param name="member"></param>
         /// <returns>Id of main member folder in media.</returns>
-        public int CreateParentMediaFolderForMember(IUmbracoMember member)
+        public GuidUdi CreateParentMediaFolderForMember(IUmbracoMember member)
         {
             var newMediaFolder = Services.MediaService.CreateMediaWithIdentity(member.FirstName + " " + member.LastName, 5830, ParentFolder.ModelTypeAlias);
             newMediaFolder.SetValue("member", member.UmbracoId);
@@ -91,7 +93,7 @@ namespace pharosArt.Controllers
             Services.MediaService.CreateMediaWithIdentity("Images", newMediaFolder,
                 ImagesFolder.ModelTypeAlias);
 
-            return newMediaFolder.Id;
+            return newMediaFolder.GetUdi();
         }
     }
 
