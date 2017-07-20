@@ -1,0 +1,14 @@
+﻿@using pharosArt.Controllers
+@model pharosArt.Models.UploadImageModel
+           
+@using (Html.BeginUmbracoForm<UploadImageController>("Post", FormMethod.Post, new { id = "upload-profile" }))
+{
+    @Html.HiddenFor(x => x.ProfileFolder)
+    @Html.HiddenFor(x => x.MemberId)
+    
+    <input type="file" name="UploadFile" id="UploadFile">
+    <img id="edit-image-result" src="@Model.ProfileImage.GetCropUrl("Profile")" />
+    
+    <input value="Upload image" type="submit"/>
+}
+

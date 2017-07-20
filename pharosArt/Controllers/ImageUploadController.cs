@@ -15,73 +15,54 @@ using Umbraco.Core;
 //using Umbraco.Web.Mvc;
 using System.Web.Security;
 //using pharosArt.Models;
+using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
 {
     public class ImageUploadController : Umbraco.Web.Mvc.SurfaceController
     {
-        public int idFolderImage { get; set; }
-        public int idFolderMusic { get; set; }
+        //public void getFoldersMedia()
+        //{
+        //    /** upload media to the profile **/
+        //    Membership.GetNumberOfUsersOnline();
+        //    var userLogin = Membership.GetUser().UserName;
+        //    var service = Services.MemberService;
+        //    var member = service.GetByUsername(userLogin);
+        //    var mediaService = ApplicationContext.Current.Services.MediaService;
+        //    //int idFolderImage = 0, idFolderMusic = 0, folder;
+        //    var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
+        //    var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
+        //    foreach (var mediaItem in mediaFolder.Children())
+        //    {
+        //        if (mediaItem.Name == "Images")
+        //        {
+        //            this.idFolderImage = mediaItem.Id;
+        //        }
+        //        else
+        //        {
+        //            this.idFolderMusic = mediaItem.Id;
+        //        }
+        //    }
+        //}
 
-        public void getFoldersMedia()
-        {
-            /** upload media to the profile **/
-            Membership.GetNumberOfUsersOnline();
-            var userLogin = Membership.GetUser().UserName;
-            var service = Services.MemberService;
-            var member = service.GetByUsername(userLogin);
-            var mediaService = ApplicationContext.Current.Services.MediaService;
-            //int idFolderImage = 0, idFolderMusic = 0, folder;
-            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
-            var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
-            foreach (var mediaItem in mediaFolder.Children())
-            {
-                if (mediaItem.Name == "Images")
-                {
-                    this.idFolderImage = mediaItem.Id;
-                }
-                else
-                {
-                    this.idFolderMusic = mediaItem.Id;
-                }
-            }
-        }
-
-        // GET: ImageUpload
         [HttpPost]
-        public async Task<JsonResult> UploadImage(string id)
+        public JsonResult UploadImage(int targetRootFolder)
         {
             int folder;
-            /** upload media to the profile **/
-            /*Membership.GetNumberOfUsersOnline();
-            var userLogin = Membership.GetUser().UserName;
-            var service = Services.MemberService;
-            var member = service.GetByUsername(userLogin);
-            var mediaService = ApplicationContext.Current.Services.MediaService;
-            int idFolderImage = 0, idFolderMusic = 0, folder;            
-            var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
-            var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
-            foreach (var mediaItem in mediaFolder.Children())
-            {
-                if (mediaItem.Name == "Images")
-                {
-                    idFolderImage = mediaItem.Id;
-                }
-                else
-                {
-                    idFolderMusic = mediaItem.Id;
-                }
-            }*/
+            var parentFolder = Umbraco.TypedMedia(targetRootFolder);
+            var imageFolder = parentFolder.Descendant<ImagesFolder>();
+            var musicFolder = parentFolder.Descendant<MusicFolder>();
 
             try
             {
-                getFoldersMedia();
                 foreach (string file in Request.Files)
                 {
                     HttpPostedFileBase fileContent = Request.Files[file];
                     if (fileContent != null && fileContent.ContentLength > 0)
                     {
-						List<string> categories = new List<string>();
+                        folder = fileContent.ContentType.Contains("image") ? imageFolder.Id : musicFolder.Id;
+
+						var categories = new List<string>();
 						string categories_string = "";
 						
 						foreach(string key in Request.Form.AllKeys) {
@@ -91,24 +72,13 @@ namespace pharosArt.Controllers
 								categories_string = Request.Form[key];
 							}
 						}
-					
-                        var stream = fileContent.InputStream;
+				
                         var name = fileContent.FileName;
-                        /** media profile **/
-                        if (fileContent.ContentType.Contains("image"))
-                        {
-                            folder = idFolderImage;
-                        }
-                        else
-                        {
-                            folder = idFolderMusic;
-                        }
-                        /*******/
-                        var ms = ApplicationContext.Current.Services.MediaService;
-                        var MediaMap = Services.MediaService.CreateMedia(name, folder, "Image");
-						MediaMap.SetValue("category", categories_string);
-                        MediaMap.SetValue("umbracoFile", fileContent);
-                        Services.MediaService.Save(MediaMap);
+
+                        var mediaMap = Services.MediaService.CreateMedia(name, folder, "Image");
+						mediaMap.SetValue("category", categories_string);
+                        mediaMap.SetValue("umbracoFile", fileContent);
+                        Services.MediaService.Save(mediaMap);
                     }
                 }
             }

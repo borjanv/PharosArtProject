@@ -1,8 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System.Runtime.InteropServices;
+using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.Services.Description;
 using pharosArt.Models;
 using Umbraco.Core;
 using Umbraco.Core.Models;
+using Umbraco.Web;
 using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.PublishedContentModels;
@@ -25,13 +28,27 @@ namespace pharosArt.Controllers
             {
                 return CurrentUmbracoPage();
             }
-            // 
-            if (Members.GetByEmail(model.Member.Email) == null)
+            if (Members.GetByEmail(model.Member.Email) != null)
             {
-                ModelState.AddModelError("Email", "A member with this email address already exists");
-                return CurrentUmbracoPage();
+                var s = Members.GetByEmail(model.Member.Email).ToString();
+                //member exists so check if they logged in with facebook in the past
+                if (!Roles.IsUserInRole(Services.MemberService.GetByEmail(model.Member.Email).Username,"facebook"))
+                {
+                    // they havent logged in with facebook in the past so they already exist as regular member
+                    ModelState.AddModelError("Email", "A member with this email address already exists");
+                    return CurrentUmbracoPage();
+                }
+                //have logged in with facebook so just update member with their information
+                UpdateMember(model.Member, Members.GetByEmail(model.Member.Email).Id);
+
+                // log member in
+                Members.Login(model.Member.Email, model.Member.Password);
+
+                //redirect member to profile page
+                return RedirectToUmbracoPage(AppHelper.GetHomeNode().ProfilePage.Id);
             }
 
+            // member doesnt exist so proceed with registration
             var registerMember = RegisterMember(model.Member);
             if (registerMember != MembershipCreateStatus.Success)
             {
@@ -42,9 +59,7 @@ namespace pharosArt.Controllers
             // todo maybe replace this with a global login function or redirect to login action
             Members.Login(model.Member.Email, model.Member.Password);
 
-            var redirectPage = Umbraco.TypedContent(AppHelper.GetHomeNode().ProfilePage);
-
-            return RedirectToUmbracoPage(redirectPage.Id);
+            return RedirectToUmbracoPage(AppHelper.GetHomeNode().ProfilePage.Id);
         }
 
 
@@ -64,8 +79,7 @@ namespace pharosArt.Controllers
 
             if (status == MembershipCreateStatus.Success)
             {
-                Services.MemberService.AssignRole(member.Email, "media");
-                Services.MemberService.AssignRole(member.Email, "regular");
+                Roles.AddUserToRole(member.Email, "regular");
 
                 var dbMember = Services.MemberService.GetByUsername(member.Email);
                 member.UmbracoId = dbMember.Id;
@@ -75,11 +89,26 @@ namespace pharosArt.Controllers
             return status;
         }
 
-        /// <summary>
-        /// Creates the folder structure in the media section for the member.
-        /// </summary>
-        /// <param name="member"></param>
-        /// <returns>Id of main member folder in media.</returns>
+        public void UpdateMember(IUmbracoMember model, int memberId)
+        {
+            var member = Services.MemberService.GetById(memberId);
+
+            Roles.AddUserToRole(member.Username, "regular");
+            Roles.RemoveUserFromRole(member.Username, "facebook");
+
+            if (!string.IsNullOrEmpty(model.FirstName))
+                member.SetValue("firstName", model.FirstName);
+            if (!string.IsNullOrEmpty(model.LastName))
+                member.SetValue("lastName", model.LastName);
+            if (!string.IsNullOrEmpty(model.Email))
+                member.Username = model.Email;
+
+            // add user to regular group and not just facebook            
+            Services.MemberService.Save(member);
+
+            Services.MemberService.SavePassword(member, model.Password);
+        }
+
         public GuidUdi CreateParentMediaFolderForMember(IUmbracoMember member)
         {
             var newMediaFolder = Services.MediaService.CreateMediaWithIdentity(member.FirstName + " " + member.LastName, 5830, ParentFolder.ModelTypeAlias);
