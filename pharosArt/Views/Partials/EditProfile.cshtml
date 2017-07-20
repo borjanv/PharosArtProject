@@ -1,14 +1,4 @@
-﻿@using pharosArt.Controllers
-@using pharosArt.Models;
-@using Umbraco.Web.Mvc;
-@using System.Collections.Generic;
-@using pharosArt.Controllers
-@*@Umbraco.Core.Models.Member*@
-@model pharosArt.Models.ProfileMember
-@*@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.ProfileMember>
-@using Umbraco.Web*@
-@*@inherits UmbracoViewPage<Umbraco.Web.PublishedContentModels.Member>
-    @using Umbraco.Web.PublishedContentModels*@
+﻿@model pharosArt.Models.EditModel
 
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
@@ -18,70 +8,23 @@
         padding: 9px;
     }
 </style>
-
-@using (Html.BeginUmbracoForm("saveProfile", "Profile", System.Web.Mvc.FormMethod.Post))
+@using (Html.BeginUmbracoForm("SaveProfile", "Profile", FormMethod.Post))
 {
     <div>
-        <input type="file" name="FileUpload" id="FileUpload">
-        <!--  <input type="button" id="Upload" value="Upload" /> -->
-        <p id="responseMessage"></p>
-        <!-- on button click clear input,after sending , and if success , display text that it was delivered, if error - same :D-->
-        @Html.Hidden("memberId", Model.memberId)
-        <img src="@Model.profile.urlImage" style="width:250px;height:260px" />
+        @Html.Hidden("memberId", Model.MemberId)
+
         @Html.AntiForgeryToken()
-        @Html.LabelFor(m => m.memberName)
-        @Html.TextBoxFor(m => m.memberName, new { placeholder = "memberName", @style = "width:90%" })
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new {placeholder = "First Name", @style = "width:90%"})
 
-        @Html.LabelFor(m => m.memberLastName)
-        @Html.TextBoxFor(m => m.memberLastName, new { placeholder = "memberLastName", @style = "width:90%" })
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new {placeholder = "Last Name", @style = "width:90%"})
 
-        @Html.LabelFor(m => m.biography)
-        @Html.TextBoxFor(m => m.biography, new { placeholder = "description", @style = "width:90%" })
+        @Html.LabelFor(m => m.Biography)
+        @Html.TextBoxFor(m => m.Biography, new {placeholder = "description", @style = "width:90%"})
 
         @Html.ValidationSummary()
         <button name="edit" type="submit"><span>Save</span><i class="fa fa-arrow-right"></i></button>
     </div>
 }
-
-<script>
-    $("#FileUpload").on("change", function (e) {
-        var files = e.target.files;
-        var myID = 3;
-        if (files.length > 0) {
-
-            if (window.FormData !== undefined) {
-
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-                var imgor = '@Url.Action("UploadImage","Profile")';
-                console.log("amazing");
-                $.ajax({
-                    type: "POST",
-                    url: imgor,/*?id=' + myID,*/
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        console.log(result);
-                        $("#responseMessage").text("Successfully uploaded.")
-                    },
-                    error: function (xhr, status, p3, p4) {
-                        var err = "Error " + " " + status + " " + p3 + " " + p4;
-                        if (xhr.responseText && xhr.responseText[0] == "{")
-                            err = JSON.parse(xhr.responseText).Message;
-                        $("#responseMessage").text("Error - Couldn't uploaded.")
-                        console.log(err);
-                    }
-                });
-                console.log("semi amazing");
-            } else {
-
-                console.log("This browser doesn't support HTML5 file uploads!");
-            }
-        }
-
-    });
-
-</script>
+   

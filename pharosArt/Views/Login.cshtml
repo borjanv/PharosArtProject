@@ -1,4 +1,4 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits UmbracoTemplatePage
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
     Layout = "Master.cshtml";
@@ -55,20 +55,18 @@
         margin-top: 10px;
     }
 </style>
-<div style="">
-    <div style="width: 30%; margin-left: 35%;">
-        <div id="fb-root"></div>
-        @if (Umbraco.MemberIsLoggedOn())
-        {
-            //Html.RenderAction("RenderLogout", "Member");
-            Html.RenderAction("getProfile", "Profile", new { userName = Members.GetCurrentMemberProfileModel().UserName });
-        }
-        else
-        {
-            Html.RenderAction("RenderLogin", "Login");
-            <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>           
-        }
-    </div>
+<div>
+    <div id="fb-root"></div>
+    @if (Umbraco.MemberIsLoggedOn())
+    {
+        //Html.RenderAction("RenderLogout", "Member");
+        Html.RenderAction("getProfile", "Profile", new { userName = Members.CurrentUserName });
+    }
+    else
+    {
+        Html.RenderAction("RenderLogin", "Login");
+        <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>
+    }
 </div>
 
 @section scripts{

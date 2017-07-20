@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
 using Umbraco.Core;
-using Umbraco.Core.Models;
 using Umbraco.Web.Mvc;
 using Facebook;
 using Umbraco.Web.Models;
@@ -26,8 +23,6 @@ namespace pharosArt.Controllers
                 parameters["fields"] = "id,name, email";
 
                 dynamic result = client.Get("me", parameters);
-
-
                 var id = (string)result["id"];
                 var name = (string)result["name"];
                 var email = (string)result["email"].ToString();
@@ -37,10 +32,10 @@ namespace pharosArt.Controllers
                 if (umbracoMember != null)
                 {
                     // member exists so log them in
-                    var auth = Membership.ValidateUser(id, Services.MemberService.GetByEmail(email).RawPasswordValue);
+                    var auth = Membership.ValidateUser(Services.MemberService.GetByEmail(email).Username, Services.MemberService.GetByEmail(email).RawPasswordValue);
                     if (auth)
                     {
-                        Members.Login(id, Services.MemberService.GetByEmail(email).RawPasswordValue);
+                        Members.Login(Services.MemberService.GetByEmail(email).Username, Services.MemberService.GetByEmail(email).RawPasswordValue);
                         return JavaScript("window.location = '/profile'");
                     }
                 }
@@ -80,7 +75,6 @@ namespace pharosArt.Controllers
 
             if (status == MembershipCreateStatus.Success)
             {
-                Services.MemberService.AssignRole(member.Id, "media");
                 Services.MemberService.AssignRole(member.Id, "facebook"); //assign facebook group
 
                 var dbMember = Services.MemberService.GetByUsername(member.Id);

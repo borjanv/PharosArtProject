@@ -1,23 +1,27 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.LoginModel>
 @using Umbraco.Web
 
-    @if(!Umbraco.MemberIsLoggedOn())
-    {
-        using (Html.BeginUmbracoForm("SubmitLogin", "Login", System.Web.Mvc.FormMethod.Post, new { id="login" }))
+<div class="login-container row">
+    <div class="col-md-4">
+        @if (!Umbraco.MemberIsLoggedOn())
         {
-            @Html.AntiForgeryToken()
-            @Html.LabelFor(m => m.Username)
-            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @style="width:90%" })
-        
-            @Html.LabelFor(m => m.Password)
-            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @style="width:90%" })
-        
-            @*Html.ValidationSummary()*@
-            <button name="login" type="submit">Login</button>
+            using (Html.BeginUmbracoForm("SubmitLogin", "Login", System.Web.Mvc.FormMethod.Post, new { id = "login" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.LabelFor(m => m.Username)
+                @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @style = "width:90%" })
+
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @style = "width:90%" })
+
+                @*Html.ValidationSummary()*@
+                <button name="login" type="submit">Login</button>
+            }
         }
-    }
-    else
-    {
-        Html.RenderAction("RenderLogout", "Login");
-    }
+        else
+        {
+            Html.RenderAction("RenderLogout", "Login");
+        }
+    </div>
+</div>
 

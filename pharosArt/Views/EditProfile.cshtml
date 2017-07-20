@@ -1,0 +1,31 @@
+﻿@using pharosArt.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "Master.cshtml";
+}
+
+@section scripts{
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    
+    <script>
+        (function () {
+            $('#upload-profile').ajaxForm({
+                complete: function (xhr) {
+                    $("#edit-image-result").attr("src", xhr.responseText);
+                }
+            });
+
+        })();
+    </script>
+}
+@if (Umbraco.MemberIsLoggedOn())
+{
+    @Html.Action("Get", "UploadImage", new {memberId = Members.GetCurrentMemberId()})
+    @Html.Action("EditProfile", "Profile", new {id = Members.GetCurrentMemberId()})
+}
+else
+{
+    <p>Please log in</p>
+}
+
+

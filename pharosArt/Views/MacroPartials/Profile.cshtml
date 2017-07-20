@@ -1,163 +1,65 @@
-﻿@using pharosArt.Controllers
-@using Umbraco.Web.Mvc;
-@using System.Collections.Generic;
-@using pharosArt.Controllers
-@model pharosArt.Models.ProfileMember
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
-<style>
-    td, th
-    {
-        padding: 9px;
-    }
-</style>
-<script type="text/javascript">
-    function PopupCenter(url, title, w, h)
-    {
-        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+﻿@model pharosArt.Models.EditModel
 
-        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+<div style="width:100%">
+    <table style="width:100%; text-align:center" align="center" border="0">
+        <tr>
+            <td colspan="4" align="center"><img src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center"><h1>@Model.FirstName @Model.LastName</h1></td>
+        </tr>
+        <tr>
+            <td colspan="4">@Model.Biography</td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <h3 style="text-align:center">@Model.UserName</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <a href="/editProfile">Edit <i class="fa fa-arrow-right"></i></a>
+            </td>
+        </tr>
+    </table>
 
-        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
-        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    <div>
+        @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
+         || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
+        {
 
-        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-
-        // Puts focus on the newWindow
-        if (window.focus) {
-            newWindow.focus();
-        }
-    }
-    window.open("Google", "width=500,height=500");
-</script>
-@*@{ 
-    var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
-}
-@if (umbracoHelper.MemberIsLoggedOn())
-{*@
-    @using (Html.BeginUmbracoForm("editProfile", "Profile",  new { id = Model.memberId, System.Web.Mvc.FormMethod.Post }  ))
-    {
-        @Html.AntiForgeryToken()
-        int k = 0, i = 0;
-        //var myUser = System.Web.Security.Membership.GetUser();
-        //if (myUser != null)
-        //{
-        <div style="width:100%">
-            <input type="file" name="FileUpload" id="FileUpload">
-            <!--  <input type="button" id="Upload" value="Upload" /> -->
-            <p id="responseMessage"></p>
-            <table style="width:100%; text-align:center" align="center" border="0">
-                <tr>
-                    <td colspan="4" align="center"><img src="@Model.profile.urlImage" style="width:250px;height:260px" /></td>
-                </tr>
-                <tr>
-                    <td colspan="4" align="center"><h1>@Model.memberName @Model.memberLastName</h1></td>
-                </tr>
-                <tr>
-                    <td colspan="4">@Model.biography</td> 
-                </tr>
-                <tr>
-                    <td colspan="4" align="center">
-                        <h3 style="text-align:center">@Model.profile.Username</h3>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button name="edit" type="submit"><span>Edit</span> <i class="fa fa-arrow-right"></i></button>
-                    </td>
-                </tr>
-            </table>
-            <table>
-                @foreach (var pitcher in Model.mediaMember)  //list order by date create
+            <div class="row">
+                @foreach (var item in pitcher)
                 {
-                    if (i % 4 == 0)
+                    if (!item.Url.Contains("mp3"))
                     {
-                        @Html.Raw("<tr>")
-                    }
-                    if (!pitcher.Item2.Contains("mp3"))
-                    {
-                        @Html.Raw("<td>")
-                        <a href="@pitcher.Item2" target="_blank" onclick="PopupCenter(this.href, 'Media', '500', '500');  ">
-                            <img src="@pitcher.Item2" style="width:250px;height:260px" />@Html.Raw("</td>")
-                        </a>
+                        <div class="col-md-3">
+                            <a href="@item.Url" class="fancy-box-image" target="_blank ">
+                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" />
+                            </a>
+                        </div>
                     }
                     else
                     {
-                        <td>
-                            <div>
-                                <a href="@pitcher.Item2" target="popup" onclick="PopupCenter(this.href, 'Media', '500', '500');  ">
-                                    <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
-                                    <audio controls style="width:250px;">
-                                        <source src="@pitcher.Item2" type="audio/mpeg">
-                                    </audio>
-                                </a>
-                            </div>
-                        </td>
-                        @*<video src="rabbit320.webm" controls>
-                        <p>Your browser doesn't support HTML5 video. Here is a <a href="rabbit320.webm">link to the video</a> instead.</p>
-                    </video>*@
+                        <div class="col-md-3">
+                            <a href="@item.Url" target="popup">
+                                <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
+                                <audio controls style="width:250px;">
+                                    <source src="@item.Url" type="audio/mpeg">
+                                </audio>
+                            </a>
+                        </div>
                     }
-                    if (i == 3)
-                    {
-                        i = -1;
-                        @Html.Raw("</tr>")
-                    }
-                    i++;
                 }
-            </table>
-        </div>
-        <div>
-            <p class="orangeTable" style="color:black"><span>@Html.Raw(TempData["message"])</span></p>
-        </div>
+            </div>
+        }
+    </div>
+</div>
 
-            @*<p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>*@
-            
-        //}
-    }   
-@*}*@
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @Html.Raw(TempData["message"])
+    </div>
+}
 
-<script>
-$("#FileUpload").on("change", function(e) {
-   var files = e.target.files;
-   var myID = 3;
-   if(files.length > 0) {
-
-       if(window.FormData !== undefined) {
-
-           var data = new FormData();
-           for (var x = 0; x < files.length; x++) {
-               data.append("file" + x, files[x]);
-           }
-           var imgor = '@Url.Action("UploadImage","ImageUpload")';
-           console.log("amazing");
-           $.ajax({
-               type: "POST",
-               url: imgor ,/*?id=' + myID,*/
-               contentType: false,
-               processData: false,
-               data: data,
-               success: function(result) {
-                   console.log(result);
-                   $("#responseMessage").text("Successfully uploaded.")
-               },
-               error: function( xhr, status, p3, p4) {
-                   var err = "Error " + " " + status + " " + p3 + " " + p4;
-                   if(xhr.responseText && xhr.responseText[0] == "{")
-                       err = JSON.parse(xhr.responseText).Message;
-                   $("#responseMessage").text("Error - Couldn't uploaded.")
-                    console.log(err);
-               }
-           });
-           console.log("semi amazing");
-       } else {
-
-           console.log("This browser doesn't support HTML5 file uploads!");
-       }
-   }
-
-});
-
-</script>
