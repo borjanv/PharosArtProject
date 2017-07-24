@@ -10,30 +10,9 @@
     var ite = 0;
 }
 <script type="text/javascript">
-    function PopupCenter(url, title, w, h, id) {
-        alert(id);
-        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
-
-        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
-        var top = ((height / 2) - (h / 2)) + dualScreenTop;
-
-        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-
-        // Puts focus on the newWindow
-        if (window.focus) {
-            //increaseStatistic('hola');
-            newWindow.focus();
-        }
-        increaseStatistic(id);
-    }
-
     function increaseStatistic(id)
     {        
-        var imgor = '@Url.Action("updateStatistic", "Login")';
+        var imgor = '@Url.Action("updateStatistic", "Tracking")';
         //var data = id.toString();
         //alert(data);
         $.ajax({
@@ -115,10 +94,10 @@
             <div class="small-article">
                 @*Html.RenderPartial("Article", article) TODO: model and partial*@
                 <div class="artcile">
-                    <a href="@article.thumbnail.Url" target="popup" onclick="PopupCenter(this.href, 'Media', '500', '500', @article.thumbnail.Id);  ">
+                    <a href="@article.thumbnail.Url" target="popup" onclick="increaseStatistic(@article.thumbnail.Id);  ">
                         @*@Html.Hidden("mediaId", article.thumbnail.Id);*@
                         <div class="image-wrapper">
-                            <img src=@article.thumbnail.Url>                            
+                            <img src=@article.thumbnail.Url>
                         </div>
                     </a>
                     <div class="text-wrapper">
