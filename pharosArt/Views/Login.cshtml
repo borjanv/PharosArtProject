@@ -1,4 +1,4 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits UmbracoTemplatePage
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
     Layout = "Master.cshtml";
@@ -55,64 +55,16 @@
         margin-top: 10px;
     }
 </style>
-<div style="">
-    <div style="width: 30%; margin-left: 35%;">
-        <div id="fb-root"></div>
-        @if (Umbraco.MemberIsLoggedOn())
-        {
-            //Html.RenderAction("RenderLogout", "Member");
-            Html.RenderAction("getProfile", "Profile", new { userName = "mauroldanr" });
-        }
-        else
-        {
-            Html.RenderAction("RenderLogin", "Member");
-            <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>           
-        }
-    </div>
-</div>
-
-@section scripts{
-    @if (!Umbraco.MemberIsLoggedOn())
+<div>
+    <div id="fb-root"></div>
+    @if (Umbraco.MemberIsLoggedOn())
     {
-        <script>
-            $("document").ready(function () {
-                // Initialize the SDK upon load
-                FB.init({
-                    appId: '620901621386387', // App ID
-                    channelUrl: '//' + window.location.hostname + '/channel', // Path to your
-                    // Channel File
-                    scope: 'id,name,email', // This to get the user details back
-                    // from Facebook
-                    status: false, // check login status
-                    cookie: true, // enable cookies to allow the server to access the session
-                    xfbml: true // parse XFBML
-                });
-                // listen for and handle auth.statusChange events
-
-                FB.Event.subscribe('auth.statusChange', OnLogin);
-                //$(".fb-login-button").click(function () {
-                //    FB.Event.subscribe('auth.statusChange', OnLogin)
-                //});
-            });
-
-            // This method will be called after the user login into facebook.
-            function OnLogin(response) {
-                if (response.authResponse) {
-                    var data = { accessToken: response.authResponse.accessToken };
-                    $.ajax({
-                        type: 'POST',
-                        url: '@Url.Action("LogUserIn", "FacebookLogin")',
-                        data: JSON.stringify(data),
-                        contentType: "application/json; charset=utf-8",
-                    }).done(function (response) {
-                        //alert("Success");
-                    }).fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(errorThrown);
-                    });
-                }
-            }
-        </script>
+        //Html.RenderAction("RenderLogout", "Member");
+        Html.RenderAction("getProfile", "Profile", new { userName = Members.CurrentUserName });
     }
-}
-
+    else
+    {
+        Html.RenderAction("RenderLogin", "Login");        
+    }
+</div>
 

@@ -1,13 +1,12 @@
 ﻿using System.Web.Security;
-using pharosArt.Models;
-using Umbraco.Core.Models;
+using Umbraco.Core;
 
 namespace pharosArt.Controllers
 {
     public interface IRegister
     {
         MembershipCreateStatus RegisterMember(IUmbracoMember member);
-        int CreateParentMediaFolderForMember(IUmbracoMember member);
+        GuidUdi CreateParentMediaFolderForMember(IUmbracoMember member);
     }
 
     public interface IUmbracoMember

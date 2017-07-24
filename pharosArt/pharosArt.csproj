@@ -344,10 +344,12 @@
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\UploadmageController.cs" />
     <Compile Include="Models\FacebookObject.cs" />
-    <Compile Include="Models\ProfileMember.cs" />
+    <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -385,7 +387,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
-    <Folder Include="Views\ImageUpload\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -525,7 +526,7 @@
   <ItemGroup>
     <Content Include="Views\MacroPartials\InsertUmbracoFormWithTheme.cshtml" />
     <Content Include="Views\MacroPartials\RenderUmbracoFormScripts.cshtml" />
-    <Content Include="Views\MacroPartials\uploadImageForm.cshtml" />
+    <Content Include="Views\Partials\UploadImagePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\Forms\DatePicker.cshtml" />
@@ -574,9 +575,6 @@
     <Content Include="Views\slide2.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\Profile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Post.cshtml" />
     <Content Include="Views\PostContainer.cshtml" />
     <Content Include="Views\PostPage.cshtml" />
@@ -595,6 +593,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Registration\RegistrationPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\Profile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\EditProfile.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\UploadImage\UploadImagePartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

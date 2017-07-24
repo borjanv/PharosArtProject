@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>Pharos Art</title>
         <!-------- Meta Tags ---->
         
         <!-------- Fonts -------->
@@ -31,16 +32,25 @@
     <body>
         <header>
             <div class="container">
-                <nav>
-                    @Html.Partial("Menu")
-                </nav>
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav>
+                            @Html.Partial("Menu")
+                        </nav>
+                    </div>
+                </div>          
             </div>
-            <div class="container-fluid full-width">
-                @Html.Partial("Banner")
-            </div>
+            @if (Model.Content.HasValue("image"))
+            {
+                <div class="container-fluid full-width">
+                    @Html.Partial("Banner")
+                </div>
+            }          
         </header>
         <div id="container-wrapper" class="container">
-            @RenderBody()
+            <div class="col-md-12">
+                @RenderBody()
+            </div>         
         </div>
     <footer>
         <div class="container-fluid footer-wrapper">

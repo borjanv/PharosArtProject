@@ -1,49 +1,0 @@
-
--------------------------------------------------------------------------------
-   ROBOCOPY     ::     Robust File Copy for Windows                              
--------------------------------------------------------------------------------
-
-  Started : 26 June 2017 14:43:25
-   Source : G:\pharosArt\pharosArt\bin\
-     Dest : G:\pharosArt\pharosArt\App_Data\NuGetBackup\20170626-144325\bin\
-
-    Files : *.*
-	    
-  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
-
-------------------------------------------------------------------------------
-
-	                  19	G:\pharosArt\pharosArt\bin\
-	    New File  		   45416	Microsoft.Web.Infrastructure.dll  0%  100%  
-	    New File  		   23640	Microsoft.Web.Mvc.FixedDisplayModes.dll  0%  100%  
-	    New File  		  391680	Newtonsoft.Json.dll  0%   33%   66%  100%  
-	    New File  		  440219	Newtonsoft.Json.xml  0%   29%   59%   89%  100%  
-	    New File  		    4096	pharosArt.dll  0%  100%  
-	    New File  		    2204	pharosArt.dll.config  0%  100%  
-	    New File  		    7680	pharosArt.pdb  0%  100%  
-	    New File  		  138432	System.Web.Helpers.dll  0%   94%  100%  
-	    New File  		   74208	System.Web.Helpers.xml  0%  100%  
-	    New File  		  507048	System.Web.Mvc.dll  0%   25%   51%   77%  100%  
-	    New File  		  847872	System.Web.Mvc.xml  0%   30%   61%   92%  100%  
-	    New File  		  266944	System.Web.Razor.dll  0%   49%   98%  100%  
-	    New File  		  365160	System.Web.Razor.xml  0%   35%   71%  100%  
-	    New File  		   41152	System.Web.WebPages.Deployment.dll  0%  100%  
-	    New File  		    2812	System.Web.WebPages.Deployment.xml  0%  100%  
-	    New File  		  204480	System.Web.WebPages.dll  0%   64%  100%  
-	    New File  		   39616	System.Web.WebPages.Razor.dll  0%  100%  
-	    New File  		   17776	System.Web.WebPages.Razor.xml  0%  100%  
-	    New File  		  223301	System.Web.WebPages.xml  0%   58%  100%  
-
-------------------------------------------------------------------------------
-
-               Total    Copied   Skipped  Mismatch    FAILED    Extras
-    Dirs :         1         0         0         0         0         0
-   Files :        19        19         0         0         0         0
-   Bytes :    3.47 m    3.47 m         0         0         0         0
-   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
-
-
-   Speed :           165624363 Bytes/sec.
-   Speed :            9477.102 MegaBytes/min.
-   Ended : 26 June 2017 14:43:25
-

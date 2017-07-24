@@ -1,42 +1,34 @@
-﻿@{
-	Layout = "Master.cshtml";
-}
-@*@inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@
-@*@inherits Umbraco.Web.Mvc.UmbracoTemplatePage*@
-@*@using ContentModels = Umbraco.Web.PublishedContentModels;*@
-@using pharosArt.Controllers
+﻿@using pharosArt.Controllers
 @using pharosArt.Models
-@model pharosArt.Models.ProfileMember
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
-	using (Html.BeginUmbracoForm("SubmitLogout", "Login", System.Web.Mvc.FormMethod.Post, new { id = "logout" }))
-    {
-        @Html.AntiForgeryToken()
-        @*if (Model.Content.HasValue("picture"))
-        {
-            var dynamicMediaFolder = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("picture");
-            foreach (var imageItem in dynamicMediaFolder)
-            {
-                    <div align="center"><img src="@imageItem.Url" />
-                        <h1>@imageItem.GetPropertyValue("title")</h1>
-                        <h3 style="width: 100%">@imageItem.GetPropertyValue("shortDescription")</h3>
-                    </div>
-                    <br/><br/>
+    Layout = "Master.cshtml";
+}
+
+@section scripts{
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/scripts/fancybox.js"></script>
+    
+    <script>
+        $(".fancy-box-image").fancybox({
+            "afterLoad": function () {
+                alert($(this.element).data("id"));
+                // Options will go here
             }
-        }*@
-
-        //var myUser = System.Web.Security.Membership.GetUser();
-        //if (myUser != null)
-        //{
-            <div>
-                @Model.description;
-                @Model.memberName;
-                @Model.profile.Username;
-                @Model.memberName;
-                @Model.memberLastName;
-            </div>
-
-            @*<p><strong>Logged in as</strong> <span>@myUser.UserName</span></p>*@
-            <button name="login" type="submit"><span>logout</span> <i class="fa fa-arrow-right"></i></button>
-        //}
-    }  
+        });
+    </script>
+}
+@section header
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css" />
+}
+@if (Umbraco.MemberIsLoggedOn())
+{
+    @Html.Action("GetProfile", "Profile", new { username = Members.CurrentUserName })
+}
+else
+{
+    @Html.Action("RenderLogin", "Login")
 }

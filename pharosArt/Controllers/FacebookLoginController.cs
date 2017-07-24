@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
+using Umbraco.Core;
 using Umbraco.Web.Mvc;
 using Facebook;
 using Umbraco.Web.Models;
@@ -24,8 +23,6 @@ namespace pharosArt.Controllers
                 parameters["fields"] = "id,name, email";
 
                 dynamic result = client.Get("me", parameters);
-
-
                 var id = (string)result["id"];
                 var name = (string)result["name"];
                 var email = (string)result["email"].ToString();
@@ -35,10 +32,10 @@ namespace pharosArt.Controllers
                 if (umbracoMember != null)
                 {
                     // member exists so log them in
-                    var auth = Membership.ValidateUser(email, Services.MemberService.GetByEmail(email).RawPasswordValue);
+                    var auth = Membership.ValidateUser(Services.MemberService.GetByEmail(email).Username, Services.MemberService.GetByEmail(email).RawPasswordValue);
                     if (auth)
                     {
-                        Members.Login(email, Services.MemberService.GetByEmail(email).RawPasswordValue);
+                        Members.Login(Services.MemberService.GetByEmail(email).Username, Services.MemberService.GetByEmail(email).RawPasswordValue);
                         return JavaScript("window.location = '/profile'");
                     }
                 }
@@ -78,17 +75,17 @@ namespace pharosArt.Controllers
 
             if (status == MembershipCreateStatus.Success)
             {
-                Services.MemberService.AssignRole(member.Email, "media");
-                Services.MemberService.AssignRole(member.Email, "facebook"); //assign facebook group
+                Services.MemberService.AssignRole(member.Id, "facebook"); //assign facebook group
 
                 var dbMember = Services.MemberService.GetByUsername(member.Id);
                 member.UmbracoId = dbMember.Id;
                 dbMember.SetValue("mediaRoot", CreateParentMediaFolderForMember(member).ToString());
+                Services.MemberService.Save(dbMember);
             }
             return status;
         }
 
-        public int CreateParentMediaFolderForMember(IUmbracoMember member)
+        public GuidUdi CreateParentMediaFolderForMember(IUmbracoMember member)
         {
             var newMediaFolder = Services.MediaService.CreateMediaWithIdentity(member.FirstName + " " + member.LastName, 5830, ParentFolder.ModelTypeAlias);
             newMediaFolder.SetValue("member", member.UmbracoId);
@@ -101,7 +98,7 @@ namespace pharosArt.Controllers
             Services.MediaService.CreateMediaWithIdentity("Images", newMediaFolder,
                 ImagesFolder.ModelTypeAlias);
 
-            return newMediaFolder.Id;
+            return newMediaFolder.GetUdi();
         }
     }
 }
