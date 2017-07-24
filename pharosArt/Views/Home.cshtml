@@ -9,6 +9,56 @@
     }*@
     var ite = 0;
 }
+<script type="text/javascript">
+    function PopupCenter(url, title, w, h, id) {
+        alert(id);
+        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        // Puts focus on the newWindow
+        if (window.focus) {
+            //increaseStatistic('hola');
+            newWindow.focus();
+        }
+        increaseStatistic(id);
+    }
+
+    function increaseStatistic(id)
+    {        
+        var imgor = '@Url.Action("updateStatistic", "Login")';
+        //var data = id.toString();
+        //alert(data);
+        $.ajax({
+            type: "GET",
+            url: imgor + "?idMedia=" + id.toString(),
+            contentType: false,
+            processData: false,
+            //data: data,
+            success: function (result) {
+                console.log(result);
+                $("#responseMessage").text("Successfully uploaded.")
+            },
+            error: function (xhr, status, p3, p4) {
+                alert('error: ' +id);
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+                $("#responseMessage").text("Error - Couldn't uploaded.")
+                console.log(err);
+            }
+        });
+    }
+
+    window.open("Google", "width=500,height=500");
+</script>
 
 <div class="row">
     <div class="col-md-12 search search-input">
@@ -33,64 +83,52 @@
         }
     }
 </div>
-        @*<section id="main" class="container">
-            <header>
-               <h2>@Umbraco.Field("title")</h2>
-            </header>*@
-            @*<div class="box">*@
-                @*<span><img src="@Umbraco.Media(CurrentPage.leadImage).Url"/></span>*@
-        
-        
-        
-                @if(Umbraco.MemberIsLoggedOn())
-                {
-                    @CurrentPage.body
-                }
+        @if(Umbraco.MemberIsLoggedOn())
+        {
+            @CurrentPage.body
+        }
                 
-                 <div class="content articles-wrapper">
-                @foreach(var article in @CurrentPage.Descendants("post")) {
-                    ite++;
-                    if(ite ==5 || ite==6 || ite ==7) {
-                        if(ite ==7) {
-                          ite = 0;
-                        }
-                        <div class="medium-article">
-                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
-                            <div class="artcile">
-                                <a>
-                                    <div class="image-wrapper">
-                                        <img src=@article.thumbnail.Url>
-                                    </div>
-                                </a>
-                                <div class="text-wrapper">
-                                    <div class="article-title"><a>@article.Name</a></div>
-                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
-                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
-                                </div>
-                            </div>
+        <div class="content articles-wrapper">
+    @foreach(var article in @CurrentPage.Descendants("post")) {
+        ite++;
+        if(ite ==5 || ite==6 || ite ==7) {
+            if(ite ==7) {
+                ite = 0;
+            }
+            <div class="medium-article">
+                <input type="text" name="firstname" value="ok" id="firstname">
+                @*Html.RenderPartial("Article", article) TODO: model and partial*@
+                <div class="artcile">
+                    <a>
+                        <div class="image-wrapper">
+                            <img src=@article.thumbnail.Url>
                         </div>
-                    } else {
-                        <div class="small-article">
-                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
-                            <div class="artcile">
-                                <a>
-                                    <div class="image-wrapper">
-                                        <img src=@article.thumbnail.Url>
-                                    </div>
-                                </a>
-                                <div class="text-wrapper">
-                                    <div class="article-title"><a>@article.Name</a></div>
-                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
-                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") &#183; <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
-                                </div>
-                            </div>
+                    </a>
+                    <div class="text-wrapper">
+                        <div class="article-title"><a>@article.Name</a></div>
+                        <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
+                        <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
+                    </div>
+                </div>
+            </div>
+        } else {
+            <div class="small-article">
+                @*Html.RenderPartial("Article", article) TODO: model and partial*@
+                <div class="artcile">
+                    <a href="@article.thumbnail.Url" target="popup" onclick="PopupCenter(this.href, 'Media', '500', '500', @article.thumbnail.Id);  ">
+                        @*@Html.Hidden("mediaId", article.thumbnail.Id);*@
+                        <div class="image-wrapper">
+                            <img src=@article.thumbnail.Url>                            
                         </div>
-                    }
-                }
+                    </a>
+                    <div class="text-wrapper">
+                        <div class="article-title"><a>@article.Name</a></div>
+                        <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
+                        <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") &#183; <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
+                    </div>
+                </div>
             </div>
-                @*else
-                {
-                    @Html.Partial("Header")
-                }
-            </div>
-        </section>*@
+        }
+    }
+</div>
+
