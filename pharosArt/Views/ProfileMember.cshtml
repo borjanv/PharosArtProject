@@ -9,11 +9,14 @@
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script>
+    <script src="/scripts/fancybox.js"></script>
     
     <script>
         $(".fancy-box-image").fancybox({
-            // Options will go here
+            "afterLoad": function () {
+                alert($(this.element).data("id"));
+                // Options will go here
+            }
         });
     </script>
 }

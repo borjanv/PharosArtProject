@@ -12,7 +12,8 @@ namespace pharosArt.Controllers
             return PartialView("~/Views/Partials/_Login.cshtml", new LoginModel());
         }
 
-        [HttpPost]
+        // functionality
+        [HttpPost] 
         [ValidateAntiForgeryToken]
         public ActionResult SubmitLogin(LoginModel model, string returnUrl)
         {

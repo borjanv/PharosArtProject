@@ -40,9 +40,12 @@
                     </div>
                 </div>          
             </div>
-            <div class="container-fluid full-width">               
-                @Html.Partial("Banner")
-            </div>
+            @if (Model.Content.HasValue("image"))
+            {
+                <div class="container-fluid full-width">
+                    @Html.Partial("Banner")
+                </div>
+            }          
         </header>
         <div id="container-wrapper" class="container">
             <div class="col-md-12">

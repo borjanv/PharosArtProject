@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -13,7 +14,6 @@ namespace pharosArt.Controllers
 {
     public class UploadImageController : SurfaceController
     {
-        [HttpGet]
         public ActionResult Get(int memberId)
         {
             var member = new Member(Members.GetById(memberId));
@@ -49,17 +49,18 @@ namespace pharosArt.Controllers
                     member.SetValue("picture", media.GetUdi().ToString());
 
                     result = Umbraco.TypedMedia(media.Id).GetCropUrl("Profile");
-
-
                     Services.MemberService.Save(member);
+
+                    return Json(new Tuple<string, string>("Success", result));
                 }
             }
             catch (Exception e)
             {
                 result = e.Message;
+                return Json(new Tuple<string, string>("Error", "Internal error"));
             }
 
-            return Content(result);
+            return Json(new Tuple<string, string>("Error", "Please select an image file."));
         }
     }
 }
