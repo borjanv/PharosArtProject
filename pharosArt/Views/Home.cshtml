@@ -47,47 +47,9 @@
                     @CurrentPage.body
                 }
                 
-                 <div class="content articles-wrapper">
-                @foreach(var article in @CurrentPage.Descendants("post")) {
-                    ite++;
-                    if(ite ==5 || ite==6 || ite ==7) {
-                        if(ite ==7) {
-                          ite = 0;
-                        }
-                        <div class="medium-article">
-                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
-                            <div class="artcile">
-                                <a>
-                                    <div class="image-wrapper">
-                                        <img src=@article.thumbnail.Url>
-                                    </div>
-                                </a>
-                                <div class="text-wrapper">
-                                    <div class="article-title"><a>@article.Name</a></div>
-                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
-                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
-                                </div>
-                            </div>
-                        </div>
-                    } else {
-                        <div class="small-article">
-                            @*Html.RenderPartial("Article", article) TODO: model and partial*@
-                            <div class="artcile">
-                                <a>
-                                    <div class="image-wrapper">
-                                        <img src=@article.thumbnail.Url>
-                                    </div>
-                                </a>
-                                <div class="text-wrapper">
-                                    <div class="article-title"><a>@article.Name</a></div>
-                                    <span class="read-more"><a>Read More   <i class="fa fa-long-arrow-right"></i></a></span>
-                                    <div class="additional-info">@article.CreateDate.ToString("dd MMM yyyy") &#183; <a href="#">@article.Parent.Name</a></div> <!-- categorylink : /nima-shafiani/?category=Art -->
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
+                 
+
+            @Html.Action("ShowUploadedImages", "LandingPage")
                 @*else
                 {
                     @Html.Partial("Header")

@@ -1,0 +1,61 @@
+﻿@model pharosArt.Models.EditModel
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script>
+
+<style>
+    div#banner-wrapper {
+        display: none;
+    }
+</style>
+
+<div style="width:100%">
+    <table style="width:100%; text-align:center" align="center" border="0">
+        <tr>
+            <td colspan="4" align="center"><img src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center"><h1>@Model.FirstName @Model.LastName</h1></td>
+        </tr>
+        <tr>
+            <td colspan="4">@Model.Biography</td>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                <h3 style="text-align:center">@Model.UserName</h3>
+            </td>
+        </tr>
+    </table>
+
+    <div>
+        @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
+             || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
+        {
+
+            <div class="row">
+                @foreach (var item in pitcher)
+                {
+                    if (!item.Url.Contains("mp3"))
+                    {
+                        <div class="col-md-3">
+                            <a href="@item.Url" class="fancy-box-image" target="_blank " data-fancybox="gallery">
+                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" />
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-3">
+                            <a href="@item.Url" target="popup" data-fancybox="gallery">
+                                <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
+                                <audio controls style="width:250px;">
+                                    <source src="@item.Url" type="audio/mpeg">
+                                </audio>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+</div>
