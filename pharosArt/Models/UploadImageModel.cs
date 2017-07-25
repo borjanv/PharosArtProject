@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 using Umbraco.Web.PublishedContentModels;
 using Image = Umbraco.Web.PublishedContentModels.Image;

@@ -1,6 +1,7 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.LoginModel>
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<pharosArt.Models.LoginModel>
 @using Umbraco.Web
 
+<div id="fb-root"></div>
 <div class="login-container row">
     <div class="col-md-4">
         @using (Html.BeginUmbracoForm("SubmitLogin", "Login", System.Web.Mvc.FormMethod.Post, new { id = "login" }))

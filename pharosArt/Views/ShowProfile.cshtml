@@ -1,0 +1,9 @@
+﻿
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "Master.cshtml";
+    int userID = Int32.Parse(Request["id"]);
+
+}
+
+@Html.Action("ShowProfile", "ShowProfile", new { memberID = userID })

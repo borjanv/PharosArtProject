@@ -1,4 +1,4 @@
-﻿@inherits UmbracoTemplatePage
+@inherits UmbracoTemplatePage
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
     Layout = "Master.cshtml";
@@ -55,16 +55,15 @@
         margin-top: 10px;
     }
 </style>
-<div>
-    <div id="fb-root"></div>
+<div>   
     @if (Umbraco.MemberIsLoggedOn())
     {
-        //Html.RenderAction("RenderLogout", "Member");
-        Html.RenderAction("getProfile", "Profile", new { userName = Members.CurrentUserName });
+        Response.Redirect(AppHelper.GetHomeNode().ProfilePage.Url);        
     }
     else
     {
         Html.RenderAction("RenderLogin", "Login");        
     }
 </div>
+
 

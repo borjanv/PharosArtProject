@@ -1,166 +1,19 @@
 ﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
-    .icon{
-        width: 60px;
-        height: auto;
-        overflow: hidden;
-    }
-    
-    
-    .carousel-indicators .active {
-        width: 60px;
-        height: auto;
-        border: 3px solid white;
-    }
-    
-    .carousel-indicators {
-        width: 300px;
-        height: 40px;
-        overflow: hidden;
-    }
-    
-    .carousel-inner.onebyone-carosel { margin: auto; width: 90%; }
-    .onebyone-carosel .active.left { left: -33.33%; }
-    .onebyone-carosel .active.right { left: 33.33%; }
-    .onebyone-carosel .next { left: 33.33%; }
-    .onebyone-carosel .prev { left: -33.33%; }
-</style>
-
-
+@using Umbraco.Web.Models
 @{
-    var ite = 0;
-    
-    <p id="test">test</p>
-    
-    if (CurrentPage.HasValue("slideImg"))
-    {
-        var typedMultiMediaPicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("slideImg");
-        <div class="container" style="width: 60%">
-          <h2>Carousel Example</h2>  
-          <div id="myCarousel" class="carousel slide" data-ride="carousel" >
-            <!-- Indicators -->
-            <div class="carousel-indicators">
-            @foreach(var image in typedMultiMediaPicker)
-            {
-                if(ite == 0)
-                {
-                    <!--<li data-target="#myCarousel" data-slide-to="@ite" class="active"></li> -->
-                    <img class="icon" src="@image.Url" data-target="#myCarousel" data-slide-to="@ite" class="active" />
-                    
-                }
-                else
-                {
-                     <!-- <li data-target="#myCarousel" data-slide-to="@ite"></li> -->
-                    <img class="icon" src="@image.Url" data-target="#myCarousel" data-slide-to="@ite" />
-                }
-                ite++;
-            }
-            </div>
-        
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" style="margin: auto; height: 500px; width: auto; display: flex; justify-content: center; align-items:center; background-color: black">
-                @{ ite=0; }
-                @foreach(var image in typedMultiMediaPicker)
-                {
-                    if(ite == 0)
-                    {
-                        <div id="tab-@ite" class="item active" style="">
-                        <img src="@image.Url">
-                        </div>
-                    }
-                    else
-                    {
-                        <div id="tab-@ite" class="item">
-                        <img src="@image.Url" >
-                        </div>
-                    }
-                    ite++;
-                }
-              
-            </div>
-        
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-        
-        
-        <div id="myCarousel" class="carousel fdi-Carousel slide">
-                     <!-- Carousel items -->
-                        <div class="carousel fdi-Carousel slide" id="eventCarousel" data-interval="0">
-                            <div class="carousel-inner onebyone-carosel">
-                            @{ ite=1; }
-                            @foreach(var image in typedMultiMediaPicker)
-                            {
-                                if(ite == 1)
-                                {
-                                    <div class="item active">
-                                    <div class="col-md-4">
-                                        <a href="#"><img id="@ite" src="@image.Url" class="img-responsive center-block"></a>
-                                        <div class="text-center">@ite</div>
-                                    </div>
-                                </div>
-                                }
-                                else
-                                {
-                                    <div class="item">
-                                    <div class="col-md-4">
-                                        <a href="#"><img id="@ite" src="@image.Url" class="img-responsive center-block"></a>
-                                        <div class="text-center">@ite</div>
-                                    </div>
-                                </div>
-                                }
-                                ite++;
-                            }
-                            </div>
-                            <a class="left carousel-control" href="#eventCarousel" data-slide="prev"></a>
-                            <a class="right carousel-control" href="#eventCarousel" data-slide="next"></a>
-                        </div>
-                        <!--/carousel-inner-->
-        </div><!--/myCarousel-->
-                    
-    <script>
-    $(document).ready(function () {
-        $('#myCarousel').carousel({
-            interval: 10000
-        })
-        $('.fdi-Carousel .item').each(function () {
-            var next = $(this).next();
-            if (!next.length) {
-                next = $(this).siblings(':first');
-            }
-            next.children(':first-child').clone().appendTo($(this));
-    
-            if (next.next().length > 0) {
-                next.next().children(':first-child').clone().appendTo($(this));
-            }
-            else {
-                $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
-            }
-        });
-       
-       window.setInterval(function(){
-            var active = $("div.item.active").attr('id');
-            
-            if (new Date().getHours() < 18){
-            document.getElementById("test").innerHTML = active;
-            }
+    var currentImageNumber = 1;
+}
 
-       }, 100);
-         
+@if (CurrentPage.HasValue("slideImg"))
+{
+    var typedMultiMediaPicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("slideImg");
+    var numberOfImages = typedMultiMediaPicker.Count();
 
-        
-    });
-    </script>
-    }
+    <div class="fotorama" data-nav="thumbs" data-loop="true" data-keyboard="true" data-fit="scaledown">
+        @foreach(var image in typedMultiMediaPicker)
+        {
+            <img src="@image.Url" data-caption="@currentImageNumber/@numberOfImages"/>
+            currentImageNumber++;
+        }
+    </div>
 }

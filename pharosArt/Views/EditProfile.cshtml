@@ -1,4 +1,4 @@
-﻿@using pharosArt.Controllers
+@using pharosArt.Controllers
 @inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
     Layout = "Master.cshtml";
@@ -6,11 +6,11 @@
 
 @section scripts{
     <script src="http://malsup.github.com/jquery.form.js"></script>
-
     <script>
         (function () {
             $('#upload-profile').ajaxForm({
                 complete: function (xhr) {
+                    $("#edit-image-result").attr("src", xhr.responseText);
                     var object = $.parseJSON(xhr.responseText);
                     if (object.Item1 == "OK") {
                         $("#edit-image-result").attr("src", object.Item2);
