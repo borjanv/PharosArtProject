@@ -14,7 +14,7 @@
 
         <div class="row">
             @Html.LabelFor(m => m.Member.FirstName)
-            @Html.TextBoxFor(m => m.Member.FirstName)
+            @Html.TextBoxFor(m => m.Member.FirstName, new { @class=""})
             @Html.ValidationMessageFor(model => model.Member.FirstName)
         </div>
         <div class="row">
