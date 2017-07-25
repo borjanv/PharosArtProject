@@ -1,4 +1,4 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
 	Layout = "Master.cshtml";
 	var root = CurrentPage;
@@ -9,6 +9,35 @@
     }*@
     var ite = 0;
 }
+<script type="text/javascript">
+    function increaseStatistic(id)
+    {        
+        var imgor = '@Url.Action("updateStatistic", "Tracking")';
+        //var data = id.toString();
+        //alert(data);
+        $.ajax({
+            type: "GET",
+            url: imgor + "?idMedia=" + id.toString(),
+            contentType: false,
+            processData: false,
+            //data: data,
+            success: function (result) {
+                console.log(result);
+                $("#responseMessage").text("Successfully uploaded.")
+            },
+            error: function (xhr, status, p3, p4) {
+                alert('error: ' +id);
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+                $("#responseMessage").text("Error - Couldn't uploaded.")
+                console.log(err);
+            }
+        });
+    }
+
+    window.open("Google", "width=500,height=500");
+</script>
 
 <div class="row">
     <div class="col-md-12 search search-input">
@@ -33,26 +62,10 @@
         }
     }
 </div>
-        @*<section id="main" class="container">
-            <header>
-               <h2>@Umbraco.Field("title")</h2>
-            </header>*@
-            @*<div class="box">*@
-                @*<span><img src="@Umbraco.Media(CurrentPage.leadImage).Url"/></span>*@
-        
-        
-        
-                @if(Umbraco.MemberIsLoggedOn())
-                {
-                    @CurrentPage.body
-                }
-                
-                 
+        @if(Umbraco.MemberIsLoggedOn())
+        {
+            @CurrentPage.body
+        }                               
+         @Html.Action("ShowUploadedImages", "LandingPage")
+              
 
-            @Html.Action("ShowUploadedImages", "LandingPage")
-                @*else
-                {
-                    @Html.Partial("Header")
-                }
-            </div>
-        </section>*@

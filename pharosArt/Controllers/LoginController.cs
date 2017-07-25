@@ -1,4 +1,3 @@
-﻿using Umbraco.Web.Mvc;
 using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
@@ -12,7 +11,7 @@ namespace pharosArt.Controllers
             return PartialView("~/Views/Partials/_Login.cshtml", new LoginModel());
         }
 
-        [HttpPost]
+        [HttpPost] 
         [ValidateAntiForgeryToken]
         public ActionResult SubmitLogin(LoginModel model, string returnUrl)
         {

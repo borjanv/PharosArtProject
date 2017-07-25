@@ -1,4 +1,4 @@
-﻿@model pharosArt.Models.EditModel
+@model pharosArt.Models.EditModel
 
 <div style="width:100%">
     <table style="width:100%; text-align:center" align="center" border="0">
@@ -34,15 +34,15 @@
                     if (!item.Url.Contains("mp3"))
                     {
                         <div class="col-md-3">
-                            <a href="@item.Url" class="fancy-box-image" target="_blank ">
-                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" />
+                            <a href="@item.Url" class="fancy-box-image" id="@item.Id">
+                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" id="@item.Id" />
                             </a>
                         </div>
                     }
                     else
                     {
                         <div class="col-md-3">
-                            <a href="@item.Url" target="popup">
+                            <a href="@item.Url">
                                 <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
                                 <audio controls style="width:250px;">
                                     <source src="@item.Url" type="audio/mpeg">
