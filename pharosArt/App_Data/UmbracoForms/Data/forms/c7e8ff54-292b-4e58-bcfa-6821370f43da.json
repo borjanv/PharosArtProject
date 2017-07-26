@@ -16,7 +16,7 @@
               "fields": [
                 {
                   "caption": "TitleImage",
-                  "tooltip": null,
+                  "tooltip": "test123",
                   "placeholder": null,
                   "cssClass": null,
                   "alias": "titleImage",

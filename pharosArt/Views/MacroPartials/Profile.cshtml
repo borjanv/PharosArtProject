@@ -3,22 +3,25 @@
 <div style="width:100%">
     <table style="width:100%; text-align:center" align="center" border="0">
         <tr>
-            <td colspan="4" align="center"><img src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
+            <td colspan="4" align="center"><img style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
         </tr>
         <tr>
-            <td colspan="4" align="center"><h1>@Model.FirstName @Model.LastName</h1></td>
-        </tr>
-        <tr>
-            <td colspan="4">@Model.Biography</td>
+            <td colspan="4" align="center"><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></td>
         </tr>
         <tr>
             <td colspan="4" align="center">
-                <h3 style="text-align:center">@Model.UserName</h3>
+                <h3 style="text-align:center;margin-top:0;font-size:15px;font-family:raleway;">@Model.UserName</h3>
+                 <hr>
             </td>
         </tr>
+       
         <tr>
-            <td colspan="2">
-                <a href="/editProfile">Edit <i class="fa fa-arrow-right"></i></a>
+            <td colspan="4">@Model.Biography</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding:30px;">
+                <a href="/editProfile">Edit Profile <i class="fa fa-arrow-right"></i></a>
             </td>
         </tr>
     </table>
@@ -33,10 +36,14 @@
                 {
                     if (!item.Url.Contains("mp3"))
                     {
-                        <div class="col-md-3">
-                            <a href="@item.Url" class="fancy-box-image" id="@item.Id">
-                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" id="@item.Id" />
+                        <div class="col-md-3" style="width:22%;margin:10px;-webkit-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);-moz-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);padding:0px;">
+                            <a href="@item.Url" class="fancy-box-image " id="@item.Id">
+                                <img alt="@item.Name"  style="width:100%;" src="@item.GetCropUrl("Profile")" id="@item.Id" />
                             </a>
+                            <div class="polar" style="padding:10px;text-align:center;font-family:raleway;color:#616161;">
+                                <p>@item.Name</p>
+                                <p></p>
+                            </div>
                         </div>
                     }
                     else

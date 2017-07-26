@@ -4,7 +4,18 @@ body {
  margin-right: 0px;
 	font-family: 'Open Sans', sans-serif;
 }
-
+button {
+	color: #000;
+	border:2px solid #000;
+	background:#fff;
+    -webkit-transition-duration: 0.5s; /* Safari */
+    transition-duration: 0.5s;
+	font-family: raleway;
+}
+button:hover {
+	color: #fff;
+	background:#000;
+}
 footer {
  border-top: rgb(232,232,232) solid 1px;
 }
@@ -22,7 +33,7 @@ footer .footer-wrapper {
  padding-right: 0;
 }
 #container-wrapper.container {
- padding-top: 100px;
+ padding-top: 35px;
  padding-bottom: 100px;
 }
 
@@ -239,5 +250,12 @@ header nav {
 .dropDownLog:hover .dropDownLogContent {
     display: block;
 
+}
+.editInput {
+    width: 100%;
+    font-family: raleway;
+    border-width: 0px 0px 2px 0px;
+    border-color: #000;	
+	padding:5px;
 }
 
