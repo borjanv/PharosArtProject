@@ -1,0 +1,27 @@
+﻿@using File = Umbraco.Web.PublishedContentModels.File
+@model List<pharosArt.Models.LandingPageModel>
+@{
+    ViewBag.Title = "LandingPage";
+}
+
+<div class="content articles-wrapper">
+    @foreach (var item in Model)
+    {
+        if (item.Media.DocumentTypeAlias == Image.ModelTypeAlias)
+        {
+            <div class="small-article">
+                <div class="artcile">
+                    @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new Image(item.Media))
+                </div>
+            </div>
+        }
+        else if (item.Media.DocumentTypeAlias == File.ModelTypeAlias)
+        {
+            <div class="small-article">
+                <div class="artcile">
+                    @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new File(item.Media))
+                </div>
+            </div>
+        }
+    }
+</div>

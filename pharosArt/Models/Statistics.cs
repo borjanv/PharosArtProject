@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Data;
-
-
-using System.Linq;
-using System.Web;
-using PetaPoco;
+﻿using PetaPoco;
 
 namespace pharosArt.Models
 {
-    [TableName("mauroTest")]
-    [PrimaryKey("Id")]
+    [TableName("Statistics")]
+    [PrimaryKey("id", AutoIncrement = true)]
     public class Statistics
     {
-        public int id { get; set; }
+        public int MediaId { get; set; }
 
-        public int times { get; set; }
+        public int Times { get; set; }
+
+        public int Likes { get; set; }
+
+
     }
 }

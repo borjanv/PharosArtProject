@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
+using Umbraco.Web.Mvc;
 
 namespace pharosArt.Controllers
 {

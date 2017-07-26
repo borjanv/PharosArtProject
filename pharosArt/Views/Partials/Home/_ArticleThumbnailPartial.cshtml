@@ -1,0 +1,22 @@
+﻿@model Image
+@{
+    var memberId = Model.Ancestor<ParentFolder>().Member.Id;
+}
+
+@Html.Partial("Home/_ThumbnailPartial", Model)
+
+<div class="text-wrapper">
+    <div class="article-title">
+        <a class="profile-link" href="/showprofile?id=@memberId"></a>
+    </div>
+    <div class="additional-info">
+        @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+        @if (Model.Category.Split(',')[0] != "No category")
+        {
+            foreach (var category in Model.Category.Split(','))
+            {
+                <a href="/@category.ToLower()">@category</a>
+            }
+        }
+    </div>
+</div>

@@ -1,44 +1,31 @@
 @inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
-	Layout = "Master.cshtml";
-	var root = CurrentPage;
-    @*var toHide = true;
-    if(root == "login")
-    {
-        toHide = false;
-    }*@
-    var ite = 0;
+    Layout = "Master.cshtml";
 }
-<script type="text/javascript">
-    function increaseStatistic(id)
-    {        
-        var imgor = '@Url.Action("updateStatistic", "Tracking")';
-        //var data = id.toString();
-        //alert(data);
-        $.ajax({
-            type: "GET",
-            url: imgor + "?idMedia=" + id.toString(),
-            contentType: false,
-            processData: false,
-            //data: data,
-            success: function (result) {
-                console.log(result);
-                $("#responseMessage").text("Successfully uploaded.")
-            },
-            error: function (xhr, status, p3, p4) {
-                alert('error: ' +id);
-                var err = "Error " + " " + status + " " + p3 + " " + p4;
-                if (xhr.responseText && xhr.responseText[0] == "{")
-                    err = JSON.parse(xhr.responseText).Message;
-                $("#responseMessage").text("Error - Couldn't uploaded.")
-                console.log(err);
-            }
+@section scripts
+{
+    <script src="~/scripts/site.js"></script>
+    <script src="/scripts/magnific-popup.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".fancy-box-image").colorbox({
+                rel: 'fancy-box-image',
+                scalePhotos: true,
+                maxWidth: "90%"
+            });
+            $(document).bind('cbox_complete', function () {
+                var id = $.colorbox.element()[0].id;
+                increaseStatistic(id);
+            });
         });
-    }
 
-    window.open("Google", "width=500,height=500");
-</script>
-
+    </script>
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/popup.css">
+}
 <div class="row">
     <div class="col-md-12 search search-input">
         <span style="margin-left:6em;" class="fa fa-search"></span>
@@ -54,18 +41,16 @@
             var imgFront = Int32.Parse(item.GetPropertyValue("Thumbnail").ToString());
             var img = Umbraco.Media(imgFront);
             <a href="@content">
-                <img src="@img.url" /><br/>
+                <img src="@img.url" /><br />
             </a>
-            <br/><br/>
-            @*mauro<p>name: @item.Name</p>
-            <p>title: @item.GetPropertyValue("title")</p>*@
+            <br /><br />
         }
     }
 </div>
-        @if(Umbraco.MemberIsLoggedOn())
-        {
-            @CurrentPage.body
-        }                               
-         @Html.Action("ShowUploadedImages", "LandingPage")
-              
+
+@CurrentPage.body
+
+
+@Html.Action("ShowUploadedImages", "LandingPage")
+
 

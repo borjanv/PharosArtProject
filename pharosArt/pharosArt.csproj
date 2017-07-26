@@ -17,10 +17,10 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>44395</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <NuGetPackageImportStamp>c3c55f6f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
@@ -341,14 +341,20 @@
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
     <Compile Include="Controllers\IRegister.cs" />
+    <Compile Include="Controllers\LandingPageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ShowProfileController.cs" />
+    <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UploadmageController.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\LandingPageModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -377,6 +383,7 @@
     <Content Include="config\Lang\zh-CN.user.xml" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -608,6 +615,35 @@
   <ItemGroup>
     <Content Include="Views\UploadImage\UploadImagePartial.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\EventSlider.cshtml" />
+    <Content Include="Views\MacroPartials\no_EditProfile.cshtml" />
+    <Content Include="Views\MacroPartials\no_Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\no_Logout.cshtml" />
+    <Content Include="Views\Partials\no_Profile.cshtml" />
+    <Content Include="Views\Partials\ShowProfilePartial.cshtml" />
+    <Content Include="Views\Partials\Slides.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EventPage1.cshtml" />
+    <Content Include="Views\Events.cshtml" />
+    <Content Include="Views\Gallery.cshtml" />
+    <Content Include="Views\Partials\Home\LandingPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_ThumbnailPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_ArticleThumbnailPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_AudioPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_ArticleAudioPartial.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -622,7 +658,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62153</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

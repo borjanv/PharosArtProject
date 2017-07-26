@@ -1,0 +1,7 @@
+﻿@model Image
+
+<a class="fancy-box-image" href="@Model.Url" id="@Model.Id">
+    <div class="image-wrapper">
+        <img src=@Model.GetCropUrl("Profile")>
+    </div>
+</a>

@@ -21,30 +21,6 @@ namespace pharosArt.Controllers
 {
     public class ImageUploadController : Umbraco.Web.Mvc.SurfaceController
     {
-        //public void getFoldersMedia()
-        //{
-        //    /** upload media to the profile **/
-        //    Membership.GetNumberOfUsersOnline();
-        //    var userLogin = Membership.GetUser().UserName;
-        //    var service = Services.MemberService;
-        //    var member = service.GetByUsername(userLogin);
-        //    var mediaService = ApplicationContext.Current.Services.MediaService;
-        //    //int idFolderImage = 0, idFolderMusic = 0, folder;
-        //    var rootFolder = member.Properties["mediaRoot"].Value.ToString(); //replace this foreach
-        //    var mediaFolder = Umbraco.Media(Int32.Parse(rootFolder));
-        //    foreach (var mediaItem in mediaFolder.Children())
-        //    {
-        //        if (mediaItem.Name == "Images")
-        //        {
-        //            this.idFolderImage = mediaItem.Id;
-        //        }
-        //        else
-        //        {
-        //            this.idFolderMusic = mediaItem.Id;
-        //        }
-        //    }
-        //}
-
         [HttpPost]
         public JsonResult UploadImage(int targetRootFolder)
         {

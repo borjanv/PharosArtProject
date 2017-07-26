@@ -10,10 +10,10 @@
         (function () {
             $('#upload-profile').ajaxForm({
                 complete: function (xhr) {
-                    $("#edit-image-result").attr("src", xhr.responseText);
                     var object = $.parseJSON(xhr.responseText);
                     if (object.Item1 == "OK") {
                         $("#edit-image-result").attr("src", object.Item2);
+                        $("#image-error").hide();
                     } else {
                         $("#image-error").html(object.Item2);
                     }
