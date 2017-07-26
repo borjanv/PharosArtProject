@@ -27,7 +27,6 @@ namespace pharosArt.Controllers
 
             var mediaFolder = Umbraco.TypedMedia(5830);
             int mediaID;
-            string author = null;
             string mediaUrl = null;
             DateTime date;
             List<string> categories;
@@ -43,10 +42,10 @@ namespace pharosArt.Controllers
                     mediaUrl = mediafile.Url;
                     date = mediafile.CreateDate;
                     mediaID = mediafile.Id;
+                        
                     if(mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
-                        category = mediafile.GetPropertyValue<string>("category");
-                        
+                        category = mediafile.GetProperty("category").DataValue.ToString(); 
                     }
                     else
                     {
@@ -73,7 +72,6 @@ namespace pharosArt.Controllers
             List<string> categories = new List<string>();
             category = category.Replace(" ", string.Empty);
             category = category.ToUpper();
-            System.Diagnostics.Debug.WriteLine(category);
             if (category != null)
             {
                 if (category.Contains(','))

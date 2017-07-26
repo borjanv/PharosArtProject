@@ -1,9 +1,14 @@
 ﻿@using pharosArt.Controllers;
 @using pharosArt.Models;
+@using ContentModels = Umbraco.Web.PublishedContentModels;
 @model List<pharosArt.Models.LandingPageModel>
 @{
     ViewBag.Title = "LandingPage";
     var ite = 0;
+    var availableCategories = uQuery.GetNode(1054).GetChildNodesByType("Menu").ToList(); //get all categories that have subpages
+    //var b = root.Any(p => p.Name.ToString() == "ART");
+    //var root2 = root[0].Name;
+    //var test = Model.Ancestor().Descendants("Menu");
 }
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css" />
@@ -13,14 +18,22 @@
 <div class="content articles-wrapper">
     @foreach (var item in Model)
     {
-        if (!item.MediaUrl.Contains("mp3"))
-        {
             <div class="small-article">
                 <div class="artcile">
                     <a data-fancybox="gallery" href="@item.MediaUrl">
-                        <div class="image-wrapper">
-                            <img src=@item.MediaUrl>
-                        </div>
+                        @if (item.MediaUrl.Contains("mp3"))
+                        {
+                            <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
+                            <audio controls style="width:250px;">
+                                <source src="@item.MediaUrl" type="audio/mpeg">
+                            </audio>
+                        }
+                        else
+                        {
+                            <div class="image-wrapper">
+                                <img src=@item.MediaUrl>
+                            </div>
+                        }
                     </a>
                     <div class="text-wrapper">
                         <div class="article-title"><a class="profile-link" href="/showprofile?id=@item.MemberId">@item.Author</a></div>
@@ -30,39 +43,19 @@
                         {
                             foreach (var category in item.Categories)
                             {
-                                <a href="/@category.ToLower()">@category</a>
+                                if (availableCategories.Any(p => p.Name.ToString() == category)) //Check if category page exists
+                                {
+                                    <a href="/@category.ToLower()">@category</a>
+                                }
+                                else
+                                {
+                                    <span style="opacity: .5">@category</span>
+                                }
                             }
                         }
                         </div>
                     </div>
                 </div>
             </div>
-        }
-        else
-        {
-            <div class="small-article">
-                <div class="artcile">
-                        <a data-fancybox="gallery" href="@item.MediaUrl" target="popup">
-                            <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
-                            <audio controls style="width:250px;">
-                                <source src="@item.MediaUrl" type="audio/mpeg">
-                            </audio>
-                        </a>
-                        <div class="text-wrapper">
-                            <div class="article-title"><a class="profile-link" href="/showprofile?id=@item.MemberId">@item.Author</a></div>
-                            <div class="additional-info">
-                                @item.UploadDate.ToString("dd MMM yyyy") &#183;
-                                @if (item.Categories[0] != "No category")
-                                {
-                                    foreach (var category in item.Categories)
-                                    {
-                                        <a href="/@category.ToLower()">@category</a>
-                                    }
-                                }
-                            </div>
-                        </div>
-                </div>
-            </div>
-        }
     }
 </div>
