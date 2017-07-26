@@ -18,21 +18,15 @@ namespace pharosArt.Controllers
         public ActionResult ShowUploadedImages()
         {
             var models = new List<LandingPageModel>();
-            /*models.Add(new LandingPageModel { Author = "Amy Eight" });
-            models.Add(new LandingPageModel { Author = "Amy Nine" });
-
-            var mediaID = 5876;
-            var media = Umbraco.Media(mediaID);
-            models.Add(new LandingPageModel { Author = "Amy Ten", ImageUrl = media.Url, UploadDate = media.UpdateDate });*/
 
             var mediaFolder = Umbraco.TypedMedia(5830);
             int mediaID;
+            string author = null;
             string mediaUrl = null;
             DateTime date;
             List<string> categories;
             string category;
 
-            //var images = mediaFolder.Descendants<Image>().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == MusicFolder.ModelTypeAlias).Where(x => x.Parent.DocumentTypeAlias == ImagesFolder.ModelTypeAlias);
             var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias);
 
             if (mediaFiles.Any())
@@ -41,11 +35,9 @@ namespace pharosArt.Controllers
                 {
                     mediaUrl = mediafile.Url;
                     date = mediafile.CreateDate;
-                    mediaID = mediafile.Id;
-                        
-                    if(mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
+                    if (mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
-                        category = mediafile.GetProperty("category").DataValue.ToString(); 
+                        category = mediafile.GetPropertyValue<string>("category");
                     }
                     else
                     {
@@ -59,12 +51,12 @@ namespace pharosArt.Controllers
                         }
                     }
                     categories = GetCategories(category);
-                    models.Add(new LandingPageModel { MediaID = mediaID, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
+                    models.Add(new LandingPageModel { Media = mediafile, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
                 }
             }
 
             List<LandingPageModel> sortedModels = models.OrderByDescending(o => o.UploadDate).ToList(); //sorting images by date
-            return PartialView("LandingPage", sortedModels);
+            return PartialView("~/Views/Partials/Home/LandingPage.cshtml", sortedModels);
         }
 
         private List<string> GetCategories(string category)
@@ -83,10 +75,5 @@ namespace pharosArt.Controllers
             categories.Add(category);
             return categories;
         }
-
-        /*public ActionResult DisplayImages(LandingPageModel model)
-        {
-            return CurrentUmbracoPage();
-        }*/
     }
 }
