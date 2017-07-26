@@ -19,9 +19,8 @@
     </div>
 </div>
 <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>
+<div class="google-plus-login-button" id="googleplus"></div><br />
 <span id="loading"></span> @*//replace with fancy radiating Logging in, please wait*@
-
-<div class="row"><h2>Google + Login / Sign in</h2><br /><button class="btn btn-danger" id="googleplus">Google + API</button><br /></div> 
 
 <script>
     $("document").ready(function () {
@@ -39,6 +38,10 @@
         // listen for and handle auth.statusChange events
 
         FB.Event.subscribe('auth.statusChange', OnLogin);
+
+        //google plus login/signup
+        var googleUser = {};
+        startAppA();
     });
 
     // This method will be called after the user login into facebook.
@@ -60,10 +63,8 @@
         }
     }
 
-    //google plus login/signup
-    var googleUser = {};
-    var startAppA = function() {
-        gapi.load('auth2', function() {
+    var startAppA = function () {
+        gapi.load('auth2', function () {
             //Retrieve the singleton for the GoogleAuth library and set up the client.
             auth2 = gapi.auth2.init({
                 client_id: '141486034349-mjv6j5d1161r8k8m5jdp3i89oe95dams.apps.googleusercontent.com',
@@ -77,6 +78,7 @@
     function attachSignin(element) {
         auth2.attachClickHandler(element, {}, function(googleUser) {
             debugger;
+            $("#loading").html("Loading...");
             $(".se-pre-con").show();
             console.log(googleUser);
             var profiles = googleUser.getBasicProfile();
@@ -95,13 +97,17 @@
                 data: objData,
                 datatype: "json",
                 success: function(data) {
-                    alert("Successfully Done");
-                }
+                    // will be redirtected to profile page
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    $("#loading").htmlFor(errorThrown);
+                    alert(errorThrown);                }
             });
             $(".se-pre-con").hide();
         }, function(error) {
-            alert(JSON.stringify(error, '#ff0000', 2));
+            $("#loading").htmlFor(errorThrown);
+            alert(errorThrown);
         });
     }
-</script>
+</script> 
 

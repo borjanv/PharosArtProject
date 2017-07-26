@@ -11,9 +11,9 @@
     </div>
     <div class="additional-info">
         @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-        @if (Model.Category.Split(',')[0] != "No category")
+        @if (!Model.Category.Contains("No category"))
         {
-            foreach (var category in Model.Category.Split(','))
+            foreach (var category in Model.Category)
             {
                 <a href="/@category.ToLower()">@category</a>
             }

@@ -32,11 +32,6 @@
             @Html.TextBoxFor(m => m.Member.Password, new {type = "password"})
             @Html.ValidationMessageFor(model => model.Member.Password)
         </div>       
-        @*<div class="row">
-            @Html.LabelFor(m => m.Member.Genre)
-            @Html.DropDownListFor(x => x.Member.Genre, new SelectList(Model.Genres))
-        </div>*@
-
 
         <input type="submit" value="Submit" />
         @ViewBag.RegistrationMessage

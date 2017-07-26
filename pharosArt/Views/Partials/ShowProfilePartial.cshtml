@@ -1,4 +1,5 @@
-﻿@model pharosArt.Models.EditModel
+﻿@using pharosArt.Controllers
+@model pharosArt.Models.EditModel
 
 <style>
     div#banner-wrapper {
@@ -9,24 +10,32 @@
 <div style="width:100%">
     <table style="width:100%; text-align:center" align="center" border="0">
         <tr>
-            <td colspan="4" align="center"><img src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
+            <td colspan="4" align="center"><img style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
         </tr>
         <tr>
-            <td colspan="4" align="center"><h1>@Model.FirstName @Model.LastName</h1></td>
+            <td colspan="4" align="center"><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></td>
         </tr>
         <tr>
             <td colspan="4">@Model.Biography</td>
         </tr>
-        <tr>
-            <td colspan="4" align="center">
-                <h3 style="text-align:center">@Model.UserName</h3>
-            </td>
-        </tr>
+        @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
+        {
+            <tr>
+                <td colspan="2" style="padding:30px;">
+                    <a href="/editProfile">Edit Profile <i class="fa fa-arrow-right"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding:30px;">
+                    <a href="/upload">Upload Work <i class="fa fa-arrow-right"></i></a>
+                </td>
+            </tr>
+        }
     </table>
 
     <div>
         @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
-             || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
+                     || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
         {
 
             <div class="row">
@@ -34,16 +43,20 @@
                 {
                     if (!item.Url.Contains("mp3"))
                     {
-                        <div class="col-md-3">
-                            <a href="@item.Url" class="fancy-box-image" target="_blank " data-fancybox="gallery">
-                                <img alt="@item.Name" src="@item.GetCropUrl("Profile")" />
+                        <div class="col-md-3" style="width:22%;margin:10px;-webkit-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);-moz-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);padding:0px;">
+                            <a href="@item.Url" class="fancy-box-image " id="@item.Id">
+                                <img alt="@item.Name" style="width:100%;" src="@item.GetCropUrl("Profile")" id="@item.Id" />
                             </a>
+                            <div class="polar" style="padding:10px;text-align:center;font-family:raleway;color:#616161;">
+                                <p>@item.Name</p>
+                                <p></p>
+                            </div>
                         </div>
                     }
                     else
                     {
                         <div class="col-md-3">
-                            <a href="@item.Url" target="popup" data-fancybox="gallery">
+                            <a href="@item.Url">
                                 <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
                                 <audio controls style="width:250px;">
                                     <source src="@item.Url" type="audio/mpeg">
@@ -55,5 +68,4 @@
             </div>
         }
     </div>
-
 </div>

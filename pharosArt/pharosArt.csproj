@@ -325,7 +325,6 @@
     <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
     <Compile Include="App_Data\Models\Join.generated.cs" />
     <Compile Include="App_Data\Models\Login.generated.cs" />
-    <Compile Include="App_Data\Models\Media.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\Menu.generated.cs" />
     <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
@@ -338,7 +337,9 @@
     <Compile Include="App_Data\Models\Upload.generated.cs" />
     <Compile Include="App_Data\Models\Video.generated.cs" />
     <Compile Include="Controllers\AppHelper.cs" />
+    <Compile Include="Controllers\CategoryPageController.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
+    <Compile Include="Controllers\GooglePlusLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
     <Compile Include="Controllers\IRegister.cs" />
     <Compile Include="Controllers\LandingPageController.cs" />
@@ -348,13 +349,17 @@
     <Compile Include="Controllers\ShowProfileController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UploadmageController.cs" />
+    <Compile Include="Models\FacebookMember.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\GooglePlusMember.cs" />
+    <Compile Include="Models\GooglePlusObject.cs" />
     <Compile Include="Models\LandingPageModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\Statistics.cs" />
+    <Compile Include="Models\UmbracoMember.cs" />
     <Compile Include="Models\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -394,6 +399,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
+    <Folder Include="Views\Home\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -501,12 +507,6 @@
     <Content Include="Views\Partials\_Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\_Login.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\MacroPartials\_Logout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -602,9 +602,6 @@
     <Content Include="Views\Registration\RegistrationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\Profile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -617,12 +614,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MacroPartials\EventSlider.cshtml" />
-    <Content Include="Views\MacroPartials\no_EditProfile.cshtml" />
-    <Content Include="Views\MacroPartials\no_Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\no_Logout.cshtml" />
-    <Content Include="Views\Partials\no_Profile.cshtml" />
     <Content Include="Views\Partials\ShowProfilePartial.cshtml" />
     <Content Include="Views\Partials\Slides.cshtml" />
   </ItemGroup>
