@@ -1,4 +1,4 @@
-﻿using pharosArt.Models;
+using pharosArt.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace pharosArt.Controllers
             DateTime date;
             List<string> categories;
             string category;
-
+            
             var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias);
 
             if (mediaFiles.Any())
@@ -35,7 +35,7 @@ namespace pharosArt.Controllers
                 {
                     mediaUrl = mediafile.Url;
                     date = mediafile.CreateDate;
-                    if (mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
+                    if(mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
                         category = mediafile.GetPropertyValue<string>("category");
                     }
