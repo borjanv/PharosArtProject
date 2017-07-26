@@ -21,6 +21,8 @@
 <div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>
 <span id="loading"></span> @*//replace with fancy radiating Logging in, please wait*@
 
+<div class="row"><h2>Google + Login / Sign in</h2><br /><button class="btn btn-danger" id="googleplus">Google + API</button><br /></div> 
+
 <script>
     $("document").ready(function () {
         // Initialize the SDK upon load
@@ -56,6 +58,50 @@
                 alert(errorThrown);
             });
         }
+    }
+
+    //google plus login/signup
+    var googleUser = {};
+    var startAppA = function() {
+        gapi.load('auth2', function() {
+            //Retrieve the singleton for the GoogleAuth library and set up the client.
+            auth2 = gapi.auth2.init({
+                client_id: '141486034349-mjv6j5d1161r8k8m5jdp3i89oe95dams.apps.googleusercontent.com',
+                secret_key: 'Q7cGP-e63fPoG3SR0FjiQoRk',
+                cookiepolicy: 'single_host_origin',
+            });
+            attachSignin(document.getElementById('googleplus'));
+        });
+    };
+
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {}, function(googleUser) {
+            debugger;
+            $(".se-pre-con").show();
+            console.log(googleUser);
+            var profiles = googleUser.getBasicProfile();
+            var ReturnUrl = 'http://localhost:62153/';
+            //Crate A Bunch Of Object for Search
+            var objData = {
+                Email: profiles.getEmail(),
+                LastName: profiles.getFamilyName(),
+                FirstName: profiles.getGivenName(),
+                GoogleID: profiles.getId(),
+                ProfileURL: profiles.getName(),
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LogUserIn", "GooglePlusLogin")',
+                data: objData,
+                datatype: "json",
+                success: function(data) {
+                    alert("Successfully Done");
+                }
+            });
+            $(".se-pre-con").hide();
+        }, function(error) {
+            alert(JSON.stringify(error, '#ff0000', 2));
+        });
     }
 </script>
 

@@ -56,15 +56,18 @@
         margin-top: 10px;
     }
 </style>
-<div>   
+<div>
     @if (Umbraco.MemberIsLoggedOn())
     {
-        Response.Redirect(AppHelper.GetHomeNode().ProfilePage.Url);        
+        Response.Redirect(AppHelper.GetHomeNode().ProfilePage.Url);
     }
     else
     {
-        Html.RenderAction("RenderLogin", "Login");        
+        Html.RenderAction("RenderLogin", "Login");
     }
 </div>
-
+@section header{
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
+}
 

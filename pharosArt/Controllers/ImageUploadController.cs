@@ -4,17 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Umbraco.Web;
-using umbraco.IO;
-using System.Threading.Tasks;
-using System.IO;
-using System.Text;
 using System.Net;
-using Umbraco.Core;
-//using Umbraco.Core.Services;
-//using Umbraco.Core.Models;
-//using Umbraco.Web.Mvc;
-using System.Web.Security;
-//using pharosArt.Models;
 using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
