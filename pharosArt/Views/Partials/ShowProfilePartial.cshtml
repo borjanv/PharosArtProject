@@ -1,11 +1,8 @@
 ﻿@using pharosArt.Controllers
+@using File = Umbraco.Web.PublishedContentModels.File
 @model pharosArt.Models.EditModel
 
-<style>
-    div#banner-wrapper {
-        display: none;
-    }
-</style>
+
 
 <div style="width:100%">
     <table style="width:100%; text-align:center" align="center" border="0">
@@ -41,27 +38,20 @@
             <div class="row">
                 @foreach (var item in pitcher)
                 {
-                    if (!item.Url.Contains("mp3"))
+                    if (item.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
-                        <div class="col-md-3" style="width:22%;margin:10px;-webkit-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);-moz-box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);box-shadow: 10px 10px 47px -6px rgba(0,0,0,0.75);padding:0px;">
-                            <a href="@item.Url" class="fancy-box-image " id="@item.Id">
-                                <img alt="@item.Name" style="width:100%;" src="@item.GetCropUrl("Profile")" id="@item.Id" />
-                            </a>
-                            <div class="polar" style="padding:10px;text-align:center;font-family:raleway;color:#616161;">
-                                <p>@item.Name</p>
-                                <p></p>
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new Image(item))
                             </div>
                         </div>
                     }
-                    else
+                    else if (item.DocumentTypeAlias == File.ModelTypeAlias)
                     {
-                        <div class="col-md-3">
-                            <a href="@item.Url">
-                                <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
-                                <audio controls style="width:250px;">
-                                    <source src="@item.Url" type="audio/mpeg">
-                                </audio>
-                            </a>
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new File(item))
+                            </div>
                         </div>
                     }
                 }

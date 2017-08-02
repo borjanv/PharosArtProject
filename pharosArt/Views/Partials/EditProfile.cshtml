@@ -15,19 +15,19 @@
 
         @Html.AntiForgeryToken()
     <div class="row">
-        @Html.LabelFor(m => m.FirstName, new { @class="col-md-4", @style="margin-top:20px;font-family: raleway;padding-left: 0;"})
-        @Html.TextBoxFor(m => m.FirstName, new {placeholder = "First Name", @style = "width:100%;", @class="col-md-8 editInput"})
+        @Html.LabelFor(m => m.FirstName)
+        @Html.TextBoxFor(m => m.FirstName, new {@class="editInput"})
     </div>
     <div class="row">
-        @Html.LabelFor(m => m.LastName, new { @class="col-md-4", @style="margin-top:20px;;font-family: raleway;padding-left: 0;"})
-        @Html.TextBoxFor(m => m.LastName, new {placeholder = "Last Name", @style = "width:100%;", @class="col-md-8 editInput"})
+        @Html.LabelFor(m => m.LastName)
+        @Html.TextBoxFor(m => m.LastName, new { @class="editInput"})
     </div>
     <div class="row">
-        @Html.LabelFor(m => m.Biography, new { @class="col-md-4", @style="margin-top:20px;;font-family: raleway;padding-left: 0;"})
-        @Html.TextAreaFor(m => m.Biography, new {placeholder = "description", @style = "width:100%;height:300px;", @class="col-md-8 editInput"})
+        @Html.LabelFor(m => m.Biography)
+        @Html.TextAreaFor(m => m.Biography, new {@class= "editInput"})
     </div>
         @Html.ValidationSummary()
-        <button name="edit" type="submit" style="padding:4px;width:100px;margin:auto;font-weight:600;margin-top:3em;"><span>Save </span><i class="fa fa-arrow-right"></i></button>
+        <button name="edit" type="submit" style="padding:4px;margin:auto;font-weight:600;margin-top:3em;"><span>Save </span></button>
     </div>
 }
    

@@ -1,0 +1,56 @@
+﻿@using pharosArt.Controllers
+@model Umbraco.Web.PublishedContentModels.File
+
+<div class="audio-player">
+    <div class="audio-player-thumbnail">
+        <div class="image-wrapper audio-wrapper">
+            <div class="prototype-wrapper">
+                <!-- A wrapper to emulate use in a webpage and center align -->
+                <!-- The container for the interface can go where you want to display it. Show and hide it as you need. -->
+
+                <div id="cp_container_1" class="cp-container">
+                    <div class="cp-buffer-holder">
+                        <!-- .cp-gt50 only needed when buffer is > than 50% -->
+                        <div class="cp-buffer-1"></div>
+                        <div class="cp-buffer-2"></div>
+                    </div>
+                    <div class="cp-progress-holder">
+                        <!-- .cp-gt50 only needed when progress is > than 50% -->
+                        <div class="cp-progress-1"></div>
+                        <div class="cp-progress-2"></div>
+                    </div>
+                    <div class="cp-circle-control"></div>
+                    <ul class="cp-controls">
+                        <li><a class="cp-play" tabindex="1">play</a></li>
+                        <li><a class="cp-pause" style="display:none;" tabindex="1">pause</a></li> <!-- Needs the inline style here, or jQuery.show() uses display:inline instead of display:block -->
+                    </ul>
+                </div>
+            </div>
+            @*<i class="fa fa-headphones" aria-hidden="true"></i>*@
+            <p class="audio-desc"><strong>@Model.Name</strong></p>
+            <p class="audio-desc">@Model.UpdateDate.ToString("dd MMM yyyy")</p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        /*
+         * Instance CirclePlayer inside jQuery doc ready
+         *
+         * CirclePlayer(jPlayerSelector, media, options)
+         *   jPlayerSelector: String - The css selector of the jPlayer div.
+         *   media: Object - The media object used in jPlayer("setMedia",media).
+         *   options: Object - The jPlayer options.
+         *
+         * Multiple instances must set the cssSelectorAncestor in the jPlayer options. Defaults to "#cp_container_1" in CirclePlayer.
+         */
+        var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
+        {
+            mp3: "http://localhost:62153/@Model.Url",
+        }, {
+            cssSelectorAncestor: "#cp_container_1"
+        });
+    });
+</script>
+

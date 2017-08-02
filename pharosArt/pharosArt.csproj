@@ -339,6 +339,7 @@
     <Compile Include="Controllers\AppHelper.cs" />
     <Compile Include="Controllers\CategoryPageController.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
+    <Compile Include="Controllers\GetContentController.cs" />
     <Compile Include="Controllers\GooglePlusLoginController.cs" />
     <Compile Include="Controllers\ImageUploadController.cs" />
     <Compile Include="Controllers\IRegister.cs" />
@@ -386,8 +387,22 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="css\style.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="jPlayer\circle.skin\bgr.jpg" />
+    <Content Include="jPlayer\circle.skin\buffer.png" />
+    <Content Include="jPlayer\circle.skin\circle.player.css" />
+    <Content Include="jPlayer\circle.skin\controls.jpg" />
+    <Content Include="jPlayer\circle.skin\progress.png" />
+    <Content Include="jPlayer\circle.skin\progress_sprite.jpg" />
+    <Content Include="jPlayer\css\not.the.skin.css" />
+    <Content Include="jPlayer\js\circle.player.js" />
+    <Content Include="jPlayer\js\Jplayer.swf" />
+    <Content Include="jPlayer\js\jquery.grab.js" />
+    <Content Include="jPlayer\js\jquery.jplayer.js" />
+    <Content Include="jPlayer\js\jquery.transform2d.js" />
+    <Content Include="jPlayer\js\mod.csstransforms.min.js" />
     <Content Include="scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -510,16 +525,10 @@
     <Content Include="Views\upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\one.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Partials\Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\basic.cshtml" />
@@ -527,7 +536,6 @@
     <Content Include="Views\Partials\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\basic.cshtml" />
     <Content Include="Views\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -636,6 +644,26 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\Home\_ArticleAudioPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\MobileMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\SocialMediaIcons.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_AudioAjaxPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_AudioThumbnailAjax.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Banner.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Article.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

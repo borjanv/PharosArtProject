@@ -1,8 +1,12 @@
 ﻿@model Umbraco.Web.PublishedContentModels.File
 
-<a class="fancy-box-image" href="@Model.Url" >
-    <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
-    <audio controls style="width:250px;">
-        <source src="@Model.Url" type="audio/mpeg">
-    </audio>
+<a class="ajax" href="/umbraco/surface/GetContent/GetById?id=@Model.Id" id="@Model.Id">
+    <div class="thumbnail-hover-overlay">
+        <div class="animate-flicker">
+            <i class="fa fa-search-plus" aria-hidden="true"></i><span>&nbsp;&nbsp;Enlarge</span>
+        </div>
+    </div>
+    <div class="image-wrapper audio-wrapper">
+        <i class="fa fa-headphones" aria-hidden="true"></i>
+    </div>
 </a>

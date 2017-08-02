@@ -6,11 +6,9 @@
 <style>
     .join-form { 
         color: #fff;
-        position: relative;
-        top: 30%;
         text-align: center;
         font-family: 'Open Sans', sans-serif;
-
+        padding: 30px;
     }
     .join-form h1 {
         font-size: 110px;
@@ -56,7 +54,6 @@
         color:#000;
         font-weight: 700;
     }
-    <style>
     div#banner-wrapper {
          display: none;
      }
@@ -108,18 +105,17 @@
         margin-top: 10px;
     }
 </style>
-</style>
 <!DOCTYPE html>
 <html>
-    <head >
+    <head>
+        <title>PharosArt | Register</title>
     </head>
-    <body style="background: url(../media/1007/scanplus3.jpeg) center center no-repeat; background-size: cover; min-height: 100vh; overflow: hidden;">
+    <body style="background: url(../media/1007/scanplus3.jpeg) center center no-repeat; background-size: cover; overflow: hidden;">
         <div class="container join-form">
             <h1>Join Pharos</h1>
             <h3>Want to see your work here?</h3>
             <div>Be featured online and represented as a contributor of Pharos.</div>
             @Html.Action("GetRegistration", "Registration")
-            @*<a href="https://docs.google.com/forms/d/e/1FAIpQLSeT2RNiCcX7QXfL-GkEVXNZWyjKROwspia1-pHgo0hEU3EF_Q/viewform" target="_blank">Sign up</a>*@
         </div>
     </body>
 </html>

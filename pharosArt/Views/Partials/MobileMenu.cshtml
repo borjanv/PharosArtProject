@@ -1,0 +1,20 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    var root = Model.Content.AncestorOrSelf(1);
+
+    <nav class="pushy pushy-right">
+        <div class="pushy-content">
+            <div class="site-title-wrapper"><a id="logo" href="@root.Url">PHAROS</a></div>
+            <ul class="mobile-menu-list">
+                @foreach (var page in root.Children.Where("Visible"))
+                {
+                    <li class="pushy-link"><a href="@page.Url">@page.Name</a></li>
+                }
+                @if (Members.IsLoggedIn())
+                {
+                    <li class="pushy-link"><a href="@Url.Action("SubmitLogout", "Login")">Logout</a></li>
+                }
+            </ul>
+        </div>
+    </nav>
+    }

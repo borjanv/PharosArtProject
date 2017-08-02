@@ -10,30 +10,33 @@
     @using (Html.BeginUmbracoForm<RegistrationController>("PostRegistration", "Registration", new { @class = "registration-form" }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        @Html.ValidationSummary()
 
-        <div class="row">
-            @Html.LabelFor(m => m.Member.FirstName)
-            @Html.TextBoxFor(m => m.Member.FirstName, new { @class=""})
-            @Html.ValidationMessageFor(model => model.Member.FirstName)
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Member.LastName)
-            @Html.TextBoxFor(m => m.Member.LastName)
+        @Html.LabelFor(m => m.Member.FirstName)
+        @Html.TextBoxFor(m => m.Member.FirstName, new { @class = "reg-input" })
+    <p class="warning">@Html.ValidationMessageFor(model => model.Member.FirstName)</p>
+
+
+        @Html.LabelFor(m => m.Member.LastName)
+        @Html.TextBoxFor(m => m.Member.LastName, new { @class = "reg-input" })
+        <p class="warning">
             @Html.ValidationMessageFor(model => model.Member.LastName)
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Member.Email)
-            @Html.TextBoxFor(m => m.Member.Email, new { type = "email" })
-            @Html.ValidationMessageFor(model => model.Member.Email)
-        </div>
-        <div class="row">
-            @Html.LabelFor(m => m.Member.Password)
-            @Html.TextBoxFor(m => m.Member.Password, new {type = "password"})
-            @Html.ValidationMessageFor(model => model.Member.Password)
-        </div>       
+        </p>
 
-        <input type="submit" value="Submit" />
+
+        @Html.LabelFor(m => m.Member.Email)
+        @Html.TextBoxFor(m => m.Member.Email, new { type = "email", @class = "reg-input" })
+        <p class="warning">
+            @Html.ValidationMessageFor(model => model.Member.Email)
+        </p>
+
+        @Html.LabelFor(m => m.Member.Password)
+        @Html.TextBoxFor(m => m.Member.Password, new { type = "password", @class = "reg-input" })
+        <p class="warning">
+            @Html.ValidationMessageFor(model => model.Member.Password)
+        </p>
+
+
+        <button name="login" type="submit">Submit</button>
         @ViewBag.RegistrationMessage
     }
 </div>

@@ -20,14 +20,12 @@ namespace pharosArt.Controllers
             var models = new List<LandingPageModel>();
 
             var mediaFolder = Umbraco.TypedMedia(5830);
-            int mediaID;
-            string author = null;
             string mediaUrl = null;
             DateTime date;
             List<string> categories;
             string category;
             
-            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias);
+            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).OrderByDescending(x => x.CreateDate).ToList();
 
             if (mediaFiles.Any())
             {
@@ -35,28 +33,21 @@ namespace pharosArt.Controllers
                 {
                     mediaUrl = mediafile.Url;
                     date = mediafile.CreateDate;
+
                     if(mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
                         category = mediafile.GetPropertyValue<string>("category");
                     }
                     else
                     {
-                        if (mediafile.GetPropertyValue<string>("umbracoExtension") == "mp3")
-                        {
-                            category = "music";
-                        }
-                        else
-                        {
-                            category = "";
-                        }
+                        category = mediafile.GetPropertyValue<string>("umbracoExtension") == "mp3" ? "music" : "";
                     }
                     categories = GetCategories(category);
                     models.Add(new LandingPageModel { Media = mediafile, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
                 }
             }
-
-            List<LandingPageModel> sortedModels = models.OrderByDescending(o => o.UploadDate).ToList(); //sorting images by date
-            return PartialView("~/Views/Partials/Home/LandingPage.cshtml", sortedModels);
+            
+            return PartialView("~/Views/Partials/Home/LandingPage.cshtml", models);
         }
 
         private List<string> GetCategories(string category)

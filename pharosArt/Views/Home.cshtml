@@ -6,6 +6,11 @@
 {
     <script src="~/scripts/site.js"></script>
     <script src="/scripts/magnific-popup.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.transform2d.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.grab.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
+    <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -14,10 +19,16 @@
                 scalePhotos: true,
                 maxWidth: "90%"
             });
+            // Increase view count for this item
             $(document).bind('cbox_complete', function () {
                 var id = $.colorbox.element()[0].id;
                 increaseStatistic(id);
             });
+            // Stop the music when user closes the modal window
+            $(document).bind('cbox_closed', function () {
+                $("#jquery_jplayer_1").jPlayer("stop");
+            });
+            $(".ajax").colorbox();
         });
 
     </script>
@@ -28,8 +39,8 @@
 }
 <div class="row">
     <div class="col-md-12 search search-input">
-        <span style="margin-left:6em;" class="fa fa-search"></span>
-        <input type="search" placeholder="Search">
+        <i class="fa fa-search"></i>
+        <input type="search" placeholder="Search" class="search-bar">
     </div>
 </div>
 <div style="text-align:center;">
@@ -49,8 +60,6 @@
 </div>
 
 @CurrentPage.body
-
-
 @Html.Action("ShowUploadedImages", "LandingPage")
 
 
