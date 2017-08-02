@@ -354,7 +354,6 @@ img {
     margin-top: 30px;
     text-align: left;
     list-style: none;
-    max-width: 710px;
     float: left;
 }
 
@@ -376,11 +375,11 @@ img {
     display: block;
     margin: 0;
     padding: 0;
-    float: left;
+    position: absolute;
+    top: 0;
+    right: 0;
     list-style: none;
     opacity: .15;
-    float: right;
-    margin-top: 40px;
 }
 
     #socialmedia_menu li {
@@ -400,13 +399,15 @@ img {
 .site-title-wrapper {
     float: left;
     line-height: 91px;
-    margin-right: 50px;
 }
 
 .pushy-content #logo {
     color: #fff;
 }
-
+.edit-buttons {
+        border: 1px solid #3a3a3a;
+    padding: 10px 30px;
+}
 .thumbnail-hover-overlay {
     background-color: rgba(0,0,0,.85);
     position: absolute;
@@ -544,6 +545,7 @@ label {
     .login-div {
         margin-right: 0;
         border-right: none;
+        margin-bottom: 50px;
     }
 }
 

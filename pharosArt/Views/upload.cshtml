@@ -43,7 +43,7 @@
                     categories.push($(this).val());
                 });
 
-                var imgor = '@Url.Action("UploadImage", "ImageUpload", new { targetRootFolder = member.MediaRoot.Id })';
+                var imgor = '@Url.Action("UploadContent", "ContentUpload", new { targetRootFolder = member.MediaRoot.Id })';
                 console.log("amazing");
                 $.ajax({
                     type: "POST",

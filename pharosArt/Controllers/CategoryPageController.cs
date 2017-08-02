@@ -26,7 +26,9 @@ namespace pharosArt.Controllers
             DateTime date;
             var allowedCategories = Umbraco.TypedContentAtRoot().First().Descendants("Menu").ToList();
 
-            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias);
+            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias ||
+                x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).ToList();
             
             if (mediaFiles.Any())
             {

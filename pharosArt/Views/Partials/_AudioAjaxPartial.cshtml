@@ -1,5 +1,4 @@
-﻿@using pharosArt.Controllers
-@model Umbraco.Web.PublishedContentModels.File
+﻿@model Umbraco.Web.PublishedContentModels.File
 
 <div class="audio-player">
     <div class="audio-player-thumbnail">
@@ -35,22 +34,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        /*
-         * Instance CirclePlayer inside jQuery doc ready
-         *
-         * CirclePlayer(jPlayerSelector, media, options)
-         *   jPlayerSelector: String - The css selector of the jPlayer div.
-         *   media: Object - The media object used in jPlayer("setMedia",media).
-         *   options: Object - The jPlayer options.
-         *
-         * Multiple instances must set the cssSelectorAncestor in the jPlayer options. Defaults to "#cp_container_1" in CirclePlayer.
-         */
+        $("#jquery_jplayer_1").jPlayer("destroy");
         var myCirclePlayer = new CirclePlayer("#jquery_jplayer_1",
         {
             mp3: "http://localhost:62153/@Model.Url",
         }, {
             cssSelectorAncestor: "#cp_container_1"
         });
+        $("#jquery_jplayer_1").jPlayer("load");
     });
 </script>
-

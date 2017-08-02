@@ -316,6 +316,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\ContentImage.generated.cs" />
+    <Compile Include="App_Data\Models\ContentMusic.generated.cs" />
+    <Compile Include="App_Data\Models\ContentVideo.generated.cs" />
     <Compile Include="App_Data\Models\EventPage.generated.cs" />
     <Compile Include="App_Data\Models\Events.generated.cs" />
     <Compile Include="App_Data\Models\File.generated.cs" />
@@ -325,6 +328,7 @@
     <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
     <Compile Include="App_Data\Models\Join.generated.cs" />
     <Compile Include="App_Data\Models\Login.generated.cs" />
+    <Compile Include="App_Data\Models\Master.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\Menu.generated.cs" />
     <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
@@ -336,6 +340,8 @@
     <Compile Include="App_Data\Models\Slide2.generated.cs" />
     <Compile Include="App_Data\Models\Upload.generated.cs" />
     <Compile Include="App_Data\Models\Video.generated.cs" />
+    <Compile Include="App_Data\Models\VideoFile.generated.cs" />
+    <Compile Include="App_Data\Models\VideosFolder.generated.cs" />
     <Compile Include="Controllers\AppHelper.cs" />
     <Compile Include="Controllers\CategoryPageController.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />

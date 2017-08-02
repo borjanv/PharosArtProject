@@ -24,8 +24,11 @@ namespace pharosArt.Controllers
             DateTime date;
             List<string> categories;
             string category;
-            
-            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).OrderByDescending(x => x.CreateDate).ToList();
+
+            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias || 
+                x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias)
+                .OrderByDescending(x => x.CreateDate).ToList();
 
             if (mediaFiles.Any())
             {
@@ -34,7 +37,7 @@ namespace pharosArt.Controllers
                     mediaUrl = mediafile.Url;
                     date = mediafile.CreateDate;
 
-                    if(mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
+                    if (mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
                     {
                         category = mediafile.GetPropertyValue<string>("category");
                     }
@@ -46,7 +49,7 @@ namespace pharosArt.Controllers
                     models.Add(new LandingPageModel { Media = mediafile, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
                 }
             }
-            
+
             return PartialView("~/Views/Partials/Home/LandingPage.cshtml", models);
         }
 

@@ -9,15 +9,17 @@ using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
 {
-    public class ImageUploadController : Umbraco.Web.Mvc.SurfaceController
+    public class ContentUploadController : Umbraco.Web.Mvc.SurfaceController
     {
         [HttpPost]
-        public JsonResult UploadImage(int targetRootFolder)
+        public JsonResult UploadContent(int targetRootFolder)
         {
             int folder;
+            string alias = "File";
             var parentFolder = Umbraco.TypedMedia(targetRootFolder);
             var imageFolder = parentFolder.Descendant<ImagesFolder>();
             var musicFolder = parentFolder.Descendant<MusicFolder>();
+            var videosFolder = parentFolder.Descendant<VideosFolder>();
 
             try
             {
@@ -26,23 +28,35 @@ namespace pharosArt.Controllers
                     HttpPostedFileBase fileContent = Request.Files[file];
                     if (fileContent != null && fileContent.ContentLength > 0)
                     {
-                        folder = fileContent.ContentType.Contains("image") ? imageFolder.Id : musicFolder.Id;
+                        folder = 0;
+                        if (fileContent.ContentType.Contains("image"))
+                        {
+                            folder = imageFolder.Id;
+                            alias = ContentImage.ModelTypeAlias;
+                        }
+                        if (fileContent.ContentType.Contains("video"))
+                        {// needs testing
+                            folder = videosFolder.Id;
+                            alias = ContentVideo.ModelTypeAlias;
+                        }
+                        if (fileContent.ContentType.Contains("mp3"))
+                        {
+                            folder = musicFolder.Id;
+                            alias = ContentMusic.ModelTypeAlias;
+                        }
 
-						var categories = new List<string>();
-						string categories_string = "";
-						
-						foreach(string key in Request.Form.AllKeys) {
-							if(key.StartsWith("Categories")) 
-							{
-								categories = (Request.Form[key]).Split(',').ToList();
-								categories_string = Request.Form[key];
-							}
-						}
-				
-                        var name = fileContent.FileName;
+                        string categories_string = "";
 
-                        var mediaMap = Services.MediaService.CreateMedia(name, folder, "Image");
-						mediaMap.SetValue("category", categories_string);
+                        foreach (string key in Request.Form.AllKeys)
+                        {
+                            if (key.StartsWith("Categories"))
+                            {
+                                categories_string = Request.Form[key];
+                            }
+                        }
+
+                        var mediaMap = Services.MediaService.CreateMedia(fileContent.FileName, folder, alias);
+                        mediaMap.SetValue("category", categories_string);
                         mediaMap.SetValue("umbracoFile", fileContent);
                         Services.MediaService.Save(mediaMap);
                     }
@@ -56,18 +70,20 @@ namespace pharosArt.Controllers
 
             return Json("File uploaded successfully");
         }
-        
-        public ActionResult Upload(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-            {
-                var parent = Services.MediaService.GetRootMedia().Single();
-                var media = Services.MediaService.CreateMedia(file.FileName, parent, "Image");
-                media.SetValue("umbracoFile", file);
 
-                Services.MediaService.Save(media);
-            }
-            return RedirectToAction("Upload");
-        }
+        //public ActionResult Upload(HttpPostedFileBase file, string category)
+        //{
+        //    if (file != null && file.ContentLength > 0)
+        //    {
+        //        var alias = file.ContentType.Contains("image") ? "Image" : "File";
+        //        var parent = Services.MediaService.GetRootMedia().Single();
+        //        var media = Services.MediaService.CreateMedia(file.FileName, parent, alias);
+        //        media.SetValue("umbracoFile", file);
+        //        media.SetValue("category", category);
+
+        //        Services.MediaService.Save(media);
+        //    }
+        //    return RedirectToAction("Upload");
+        //}
     }
 }

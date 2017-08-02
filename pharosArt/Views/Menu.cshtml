@@ -12,7 +12,6 @@
     <script type="text/javascript" src="~/jPlayer/js/jquery.jplayer.js"></script>
     <script type="text/javascript" src="~/jPlayer/js/mod.csstransforms.min.js"></script>
     <script type="text/javascript" src="~/jPlayer/js/circle.player.js"></script>
-
     <script>
         $(document).ready(function () {
             $(".fancy-box-image").colorbox({
@@ -28,8 +27,11 @@
             // Stop the music when user closes the modal window
             $(document).bind('cbox_closed', function () {
                 $("#jquery_jplayer_1").jPlayer("stop");
+               
             });
             $(".ajax").colorbox();
+
+           
         });
 
     </script>

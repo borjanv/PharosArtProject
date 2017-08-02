@@ -7,6 +7,8 @@
 <html>
 <head>
     <title>Pharos Art</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <!-------- Meta Tags ---->
     <!-------- Fonts -------->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
@@ -17,9 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/pushy.css">
-
-    <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+    
     @RenderSection("header", false) @* TODO *@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     @*<script src="/scripts/jQuery 3.1.1.min.js"></script>*@
@@ -29,7 +29,6 @@
 </head>
     <body>
         <div id="jquery_jplayer_1" class="cp-jplayer"></div>
-        <div id="jquery_jplayer_2" class="cp-jplayer"></div>
         @Html.Partial("MobileMenu")
 
         <div class="site-overlay"></div>

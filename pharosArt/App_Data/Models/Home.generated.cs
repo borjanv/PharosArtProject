@@ -55,7 +55,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// body
+		/// Body
 		///</summary>
 		[ImplementPropertyType("body")]
 		public IHtmlString Body
@@ -64,7 +64,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// contentPicker
+		/// Content Picker
 		///</summary>
 		[ImplementPropertyType("contentPicker")]
 		public IEnumerable<IPublishedContent> ContentPicker
@@ -73,7 +73,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// leadImage
+		/// Banner Image
 		///</summary>
 		[ImplementPropertyType("image")]
 		public IPublishedContent Image
@@ -91,7 +91,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// title
+		/// Title
 		///</summary>
 		[ImplementPropertyType("title")]
 		public string Title

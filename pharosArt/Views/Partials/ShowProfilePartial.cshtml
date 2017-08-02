@@ -1,56 +1,47 @@
 ﻿@using pharosArt.Controllers
-@using File = Umbraco.Web.PublishedContentModels.File
 @model pharosArt.Models.EditModel
 
-
-
 <div style="width:100%">
-    <table style="width:100%; text-align:center" align="center" border="0">
-        <tr>
-            <td colspan="4" align="center"><img style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></td>
-        </tr>
-        <tr>
-            <td colspan="4" align="center"><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></td>
-        </tr>
-        <tr>
-            <td colspan="4">@Model.Biography</td>
-        </tr>
+    <div style="width:100%; text-align:center; margin-bottom:25px;">
+        <p><img style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
+        <p><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></p>
+        <p>@Model.Biography</p>
         @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
         {
-            <tr>
-                <td colspan="2" style="padding:30px;">
-                    <a href="/editProfile">Edit Profile <i class="fa fa-arrow-right"></i></a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="padding:30px;">
-                    <a href="/upload">Upload Work <i class="fa fa-arrow-right"></i></a>
-                </td>
-            </tr>
+            <div class="row">
+                <div class="col-md-4">
+                    <a class="edit-buttons" href="/editProfile">Edit Profile <i class="fa fa-arrow-right"></i></a>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <a class="edit-buttons" href="/upload">Upload Work <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
         }
-    </table>
+    </div>
 
     <div>
-        @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == Image.ModelTypeAlias
-                     || x.DocumentTypeAlias == "File").Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
+        @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias
+                     || x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                     .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
         {
 
             <div class="row">
                 @foreach (var item in pitcher)
                 {
-                    if (item.DocumentTypeAlias == Image.ModelTypeAlias)
+                    if (item.DocumentTypeAlias == ContentImage.ModelTypeAlias)
                     {
                         <div class="small-article">
                             <div class="artcile">
-                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new Image(item))
+                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
                             </div>
                         </div>
                     }
-                    else if (item.DocumentTypeAlias == File.ModelTypeAlias)
+                    else if (item.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
                     {
                         <div class="small-article">
                             <div class="artcile">
-                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new File(item))
+                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(item))
                             </div>
                         </div>
                     }
