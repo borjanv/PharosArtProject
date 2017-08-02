@@ -2,7 +2,7 @@ body {
     margin: 3px;
     margin-left: 0px;
     margin-right: 0px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;   
 }
 
 button {
@@ -360,6 +360,13 @@ img {
 .nav-menu {
     float: left;
     width: 100%;
+}
+
+.transition {
+    transition: all .45s cubic-bezier(1,.7,.36,.95);
+    -moz-transition: all .45s cubic-bezier(1,.7,.36,.95);
+    -ms-transition: all .45s cubic-bezier(1,.7,.36,.95);
+    -o-transition: all .45s cubic-bezier(1,.7,.36,.95);
 }
 
 .menuBit {

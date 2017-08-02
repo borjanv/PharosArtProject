@@ -33,7 +33,7 @@
 
         <div class="site-overlay"></div>
         <header>
-            <div class="container">
+            <div class="container transition">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="menu-logo-header">
@@ -45,12 +45,12 @@
             </div>
             @if (Model.Content.HasValue("image"))
             {
-                <div class="container-fluid full-width">
+                <div class="container-fluid full-width transition">
                     @Html.Partial("Banner")
                 </div>
             }
         </header>
-        <div id="container-wrapper" class="container">
+        <div id="container-wrapper" class="container transition">
             <div class="col-md-12">
                 @RenderBody()
             </div>
