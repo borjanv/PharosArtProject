@@ -580,11 +580,11 @@ label {
 
 .owl-prev {
     position: absolute;
-    left: -45px;
+    left: -32px;
 }
 
 .owl-next {
-    right: -45px;
+    right: 46px;
     position: absolute;
 }
 
@@ -601,9 +601,9 @@ label {
     z-index:9999;
 }
 .small-posts-container {
-    padding: 20px 0 0 0;
+    padding: 20px 40px 0 40px;
     background-color: #f2f2f2;
-    margin-bottom: 15px;
+    margin-bottom: 15px;        
 }
 
 .owl-carousel .owl-item img {

@@ -19,7 +19,7 @@
                 rel: 'fancy-box-image',
                 scalePhotos: true,
                 maxWidth: "90%",
-                maxHeight: '90%'
+                maxHeight: '90%'              
             });
             // Increase view count for this item
             $(document).bind('cbox_complete', function () {
@@ -30,7 +30,9 @@
             $(document).bind('cbox_closed', function () {
                 $("#jquery_jplayer_1").jPlayer("stop");
             });
-            $(".ajax").colorbox();
+            $(".ajax").colorbox({
+                rel: 'fancy-box-image'
+            });
 
             $(".owl-carousel").owlCarousel({
                 nav: true,
@@ -41,6 +43,9 @@
                         items: 1
                     },
                     402: {
+                        items: 2
+                    },
+                    640: {
                         items: 3
                     }
                 }
