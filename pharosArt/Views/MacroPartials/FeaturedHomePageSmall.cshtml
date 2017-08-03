@@ -1,0 +1,31 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    if (Model.Content.HasValue("featuredSmall"))
+    {
+        var items = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("featuredSmall");
+        foreach (var post in items)
+        {
+            if (post.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+            {
+                var item = new ContentMusic(post);
+
+                <div class="small-article">
+                    <div class="artcile">
+                        @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", item)
+                    </div>
+                </div>
+            }
+            else if (post.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+            {
+                var item = new ContentImage(post);
+
+                <div class="small-article">
+                    <div class="artcile">
+                        @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item)
+                    </div>
+                </div>
+
+            }
+        }
+    }
+}

@@ -11,13 +11,15 @@
     <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
     <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
     <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
+    <script type="text/javascript" src="owlCarousel/owl.carousel.min.js"></script>
 
     <script>
         $(document).ready(function () {
             $(".fancy-box-image").colorbox({
                 rel: 'fancy-box-image',
                 scalePhotos: true,
-                maxWidth: "90%"
+                maxWidth: "90%",
+                maxHeight: '90%'
             });
             // Increase view count for this item
             $(document).bind('cbox_complete', function () {
@@ -29,6 +31,20 @@
                 $("#jquery_jplayer_1").jPlayer("stop");
             });
             $(".ajax").colorbox();
+
+            $(".owl-carousel").owlCarousel({
+                nav: true,
+                responsiveClass: true,
+                navText: ["<i class='fa fa-arrow-circle-left' aria-hidden='true'></i>", "<i class='fa fa-arrow-circle-right' aria-hidden='true'></i>"],
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    402: {
+                        items: 3
+                    }
+                }
+            });
         });
 
     </script>
@@ -36,6 +52,9 @@
 @section header
 {
     <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="owlCarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlCarousel/owl.theme.default.min.css">
+
 }
 <div class="row">
     <div class="col-md-12 search search-input">
@@ -43,23 +62,16 @@
         <input type="search" placeholder="Search" class="search-bar">
     </div>
 </div>
-<div style="text-align:center;">
-    @{
-        var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker");
-        foreach (var item in typedMultiNodeTreePicker)
-        {
-            var content = Umbraco.NiceUrl(Int32.Parse(item.ToString()));
-            var imgFront = Int32.Parse(item.GetPropertyValue("Thumbnail").ToString());
-            var img = Umbraco.Media(imgFront);
-            <a href="@content">
-                <img src="@img.url" /><br />
-            </a>
-            <br /><br />
-        }
-    }
+
+<div class="small-posts-container owl-carousel transition">
+    @Umbraco.RenderMacro("FeaturedHomePageSmall")
 </div>
 
-@CurrentPage.body
+
+<div class="large-posts-container">
+    @Umbraco.RenderMacro("FeaturedHomePageLarge")
+</div>
+
 @Html.Action("ShowUploadedImages", "LandingPage")
 
 

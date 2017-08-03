@@ -671,6 +671,15 @@
   <ItemGroup>
     <Content Include="Views\Partials\Article.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\FeaturedHomePageLarge.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_LargePost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\FeaturedHomePageSmall.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

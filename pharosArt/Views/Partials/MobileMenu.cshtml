@@ -1,4 +1,5 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using pharosArt.Controllers
 @{
     var root = Model.Content.AncestorOrSelf(1);
 
@@ -12,6 +13,9 @@
                 }
                 @if (Members.IsLoggedIn())
                 {
+                    <li class="pushy-link @(@AppHelper.GetHomeNode().ProfilePage.IsAncestorOrSelf(Model.Content) ? "current" : null)">
+                        <a href="@AppHelper.GetHomeNode().ProfilePage.Url"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;@AppHelper.GetHomeNode().ProfilePage.Name</a>
+                    </li>
                     <li class="pushy-link"><a href="@Url.Action("SubmitLogout", "Login")">Logout</a></li>
                 }
             </ul>

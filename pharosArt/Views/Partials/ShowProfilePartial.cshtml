@@ -3,7 +3,7 @@
 
 <div style="width:100%">
     <div style="width:100%; text-align:center; margin-bottom:25px;">
-        <p><img style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
+        <p><img class="profile-image" style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
         <p><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></p>
         <p>@Model.Biography</p>
         @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
@@ -19,34 +19,27 @@
             </div>
         }
     </div>
-
-    <div>
-        @foreach (var pitcher in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias
-                     || x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
-                     .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).InGroupsOf(4))
+    <div class="content articles-wrapper">
+        @foreach (var item in Model.RootMedia.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias
+                         || x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                         .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias))
         {
-
-            <div class="row">
-                @foreach (var item in pitcher)
-                {
-                    if (item.DocumentTypeAlias == ContentImage.ModelTypeAlias)
-                    {
-                        <div class="small-article">
-                            <div class="artcile">
-                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
-                            </div>
-                        </div>
-                    }
-                    else if (item.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
-                    {
-                        <div class="small-article">
-                            <div class="artcile">
-                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(item))
-                            </div>
-                        </div>
-                    }
-                }
-            </div>
+            if (item.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+            {
+                <div class="small-article">
+                    <div class="artcile">
+                        @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
+                    </div>
+                </div>
+            }
+            else if (item.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+            {
+                <div class="small-article">
+                    <div class="artcile">
+                        @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(item))
+                    </div>
+                </div>
+            }
         }
     </div>
 </div>

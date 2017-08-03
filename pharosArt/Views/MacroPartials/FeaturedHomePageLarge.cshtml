@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    if (Model.Content.HasValue("contentPicker"))
+    {
+        var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker");
+        foreach (var post in typedMultiNodeTreePicker)
+        {
+            var item = new Post(post);
+
+            @Html.Partial("~/Views/Partials/_LargePost.cshtml", item)
+
+        }
+    }
+}
