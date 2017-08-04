@@ -1,0 +1,41 @@
+﻿@model IPublishedContent
+@{
+
+}
+<div class="confirmation-delete">
+    <h1>Please confirm</h1>
+    <div class="row">
+        @using (Html.BeginUmbracoForm("GetContent", "DeleteContentById", new { id = Model.Id}, FormMethod.Post))
+        {
+
+            <div class="col-md-4">
+                <p>Are you sure you want to remove this item from your profile?</p>
+                <p><strong>Warning: </strong>This action is irreversable. Once you confirm, you item will be gone for good.</p>
+                <br />
+                <button type="submit">Confirm</button>
+            </div>
+            <div class="col-md-8">
+                <div class="confirm-item-container">
+                    @if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+                    {
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(Model))
+                            </div>
+                        </div>
+                    }
+                    else if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+                    {
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(Model))
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+

@@ -5,7 +5,7 @@ using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
 {
-    public class GetContentController:SurfaceController
+    public class GetContentController : SurfaceController
     {
         [HttpGet]
         public ActionResult GetById(int id)
@@ -15,6 +15,16 @@ namespace pharosArt.Controllers
                 return PartialView("~/Views/Partials/_AudioAjaxPartial.cshtml", new File(model));
 
             return Content("The requested resource could not be found.");
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmContentDelete(int id)
+        {
+            var model = Umbraco.TypedMedia(id);
+            if (model != null)
+                return PartialView("~/Views/Partials/DeleteContentConfirmation.cshtml", model);
+
+            return Content("Content item not found in our database.");
         }
 
         [HttpPost]
@@ -27,11 +37,13 @@ namespace pharosArt.Controllers
             try
             {
                 Services.MediaService.Delete(mediaToDelete, 0);
-            }catch(Exception e)
-            {
-                throw new NotImplementedException();
+                return RedirectToUmbracoPage(AppHelper.GetHomeNode().ProfilePage.Id);
             }
-            
+            catch (Exception e)
+            {
+                return Content("There was an error, please try again.");
+            }
+
         }
     }
 }
