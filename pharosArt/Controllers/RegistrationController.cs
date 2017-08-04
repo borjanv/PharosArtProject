@@ -31,10 +31,11 @@ namespace pharosArt.Controllers
             if (Members.GetByEmail(model.Member.Email) != null)
             {
                 var s = Members.GetByEmail(model.Member.Email).ToString();
-                //member exists so check if they logged in with facebook in the past
-                if (!Roles.IsUserInRole(Services.MemberService.GetByEmail(model.Member.Email).Username,"facebook"))
+                //member exists so check if they logged in with facebook or g+ in the past
+                if (!Roles.IsUserInRole(Services.MemberService.GetByEmail(model.Member.Email).Username,"facebook") 
+                    && !Roles.IsUserInRole(Services.MemberService.GetByEmail(model.Member.Email).Username, "googlePlus"))
                 {
-                    // they havent logged in with facebook in the past so they already exist as regular member
+                    // they havent logged in with facebook or g+ in the past so they already exist as regular member
                     ModelState.AddModelError("Email", "A member with this email address already exists");
                     return CurrentUmbracoPage();
                 }

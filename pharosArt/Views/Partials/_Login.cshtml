@@ -21,9 +21,13 @@
             <p class="warning">
                 @Html.ValidationMessageFor(m => m.Password)
             </p>
-
-
             <button name="login" type="submit">Sign in</button>
+
+            if (ViewData.ModelState["general-Error"] != null)
+            {
+                <p class="warning">@ViewData.ModelState["general-Error"].Errors.First().ErrorMessage</p>
+            }
+
         }
 
 
@@ -43,10 +47,10 @@
                     <div class="fb-login-button" autologoutlink="false" scope="email">Sign in with Facebook</div><br />
                     <div class="google-plus-login-button" id="googleplus"></div><br /><br />
                 </div>
-                <div class="col-md-6">
+                @*<div class="col-md-6">
                     <div class="fb-login-button" autologoutlink="false" scope="email">Register with Facebook</div><br />
                     <div class="google-plus-login-button" id="googleplus"></div><br /><br />
-                </div>
+                </div>*@
             </div>
             <p id="loading"></p> @*//replace with fancy radiating Logging in, please wait*@
         </div>

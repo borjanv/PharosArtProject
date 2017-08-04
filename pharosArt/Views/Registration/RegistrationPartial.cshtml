@@ -34,9 +34,12 @@
         <p class="warning">
             @Html.ValidationMessageFor(model => model.Member.Password)
         </p>
-
-
         <button name="login" type="submit">Submit</button>
+
+        if (ViewData.ModelState["Email"] != null)
+        {
+            <p class="warning">@ViewData.ModelState["Email"].Errors.First().ErrorMessage</p>
+        }
         @ViewBag.RegistrationMessage
     }
 </div>

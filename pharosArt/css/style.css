@@ -180,9 +180,9 @@ header nav {
     padding: 0 17px 17px 17px;
 }
 
-.small-article img{
-    min-height: 346px;
-}
+    .small-article img {
+        min-height: 346px;
+    }
 
 
     .small-article .image-wrapper {
@@ -315,12 +315,14 @@ img {
     border: none !important;
     cursor: pointer;
     width: 54px;
-    height: 53px;
+    height: 54px;
     float: right;
     position: relative;
     border: 0 solid transparent;
     right: 0;
     padding: .75vw;
+    font-size:20px;
+    font-weight:bold;
 }
 
 .mobile-menu-list {
@@ -567,6 +569,7 @@ label {
     height: 50px;
     width: 100%;
     z-index: 1;
+    right: 0;
 }
 
 .disabled .fa {
@@ -580,11 +583,11 @@ label {
 
 .owl-prev {
     position: absolute;
-    left: -32px;
+    left: 8px;
 }
 
 .owl-next {
-    right: 46px;
+    right: 10px;
     position: absolute;
 }
 
@@ -597,26 +600,28 @@ label {
     max-width: 200px;
 }
 
-.owl-stage-outer{
-    z-index:9999;
+.owl-stage-outer {
+    z-index: 9999;
 }
+
 .small-posts-container {
     padding: 20px 40px 0 40px;
     background-color: #f2f2f2;
-    margin-bottom: 15px;        
+    margin-bottom: 15px;
 }
 
 .owl-carousel .owl-item img {
     min-height: 0 !important;
 }
+
 @media (max-width: 1200px) {
     .small-article {
         width: 310px;
     }
 
-    .small-article img{
-        min-height: 276px;
-    }
+        .small-article img {
+            min-height: 276px;
+        }
 }
 
 @media (max-width: 992px) {
@@ -670,7 +675,8 @@ label {
     }
 
     .small-article {
-        width: 190px;
+        width: 198px;
+        padding: 0 13px 17px 13px;
     }
 
         .small-article img {
@@ -678,15 +684,21 @@ label {
         }
 }
 
+@media(min-width: 640px) and (max-width: 769px) {
+}
+
 @media (max-width: 640px) {
     .small-article {
         width: 100%;
         max-width: 402px;
-
     }
 
     .thumbnail-hover-overlay {
         font-size: 28px;
+    }
+
+    .owl-item .animate-flicker span {
+        display: none;
     }
 }
 
