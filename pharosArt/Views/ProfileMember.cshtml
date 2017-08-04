@@ -21,8 +21,10 @@
             $(".fancy-box-image").colorbox({
                 rel: 'fancy-box-image',
                 scalePhotos: true,
-                maxWidth: "90%"
+                maxWidth: "90%",
+                maxHeight: '90%'
             });
+
             // Increase view count for this item
             $(document).bind('cbox_complete', function () {
                 var id = $.colorbox.element()[0].id;

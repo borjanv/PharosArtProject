@@ -1,5 +1,48 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.GenericTextPage>
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
 	Layout = "Master.cshtml";
+    
 }
+@section scripts
+{
+    <script src="~/scripts/site.js"></script>
+    <script src="/scripts/magnific-popup.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.transform2d.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.grab.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
+    <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".fancy-box-image").colorbox({
+                rel: 'fancy-box-image',
+                scalePhotos: true,
+                maxWidth: "90%",
+                maxHeight: '90%'
+            });          
+            // Stop the music when user closes the modal window
+            $(document).bind('cbox_closed', function () {
+                $("#jquery_jplayer_1").jPlayer("stop");
+            });
+            $(".ajax").colorbox({
+                rel: 'fancy-box-image'
+            });            
+        });
+    </script>
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/popup.css">
+}
+@if (Request["id"] != null)
+{
+    var id = Request["id"] as string;
+    @Html.Action("ConfirmContentDelete", "GetContent", new { id = int.Parse(id) })
+}
+else
+{
+    <p>This requested item couldnt be found.</p>
+}
+

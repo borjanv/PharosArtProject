@@ -5,7 +5,7 @@
     <div style="width:100%; text-align:center; margin-bottom:25px;">
         <p><img class="profile-image" style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
         <p><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></p>
-        <p>@Model.Biography</p>
+        <p>@Model.Biography</p><br />
         @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
         {
             <div class="row">

@@ -347,7 +347,7 @@
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\GetContentController.cs" />
     <Compile Include="Controllers\GooglePlusLoginController.cs" />
-    <Compile Include="Controllers\ImageUploadController.cs" />
+    <Compile Include="Controllers\ContentUploadController.cs" />
     <Compile Include="Controllers\IRegister.cs" />
     <Compile Include="Controllers\LandingPageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -679,6 +679,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MacroPartials\FeaturedHomePageSmall.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\GenericTextPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\DeleteContentConfirmation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

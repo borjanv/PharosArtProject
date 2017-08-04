@@ -311,7 +311,7 @@ img {
 .menu-btn {
     display: none;
     float: right;
-    margin-top: 25px;
+    margin-top: 20px;
     border: none !important;
     cursor: pointer;
     width: 54px;
@@ -321,8 +321,8 @@ img {
     border: 0 solid transparent;
     right: 0;
     padding: .75vw;
-    font-size:20px;
-    font-weight:bold;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .mobile-menu-list {
@@ -418,8 +418,45 @@ img {
 }
 
 .edit-buttons {
-    border: 1px solid #3a3a3a;
+    border: 2px solid #000;
     padding: 10px 30px;
+    display: block;
+    margin-bottom: 10px;
+    color: #000;
+    transition: 0.3s;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.dz-preview{
+    float:left;
+    padding:15px;
+}
+.dropzone {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    font-size: 1.25rem;
+    background-color: #c8dadf;
+    position: relative;
+    padding: 100px 20px;
+    text-align: center;
+    overflow:auto;
+}
+
+.dz-drag-hover {
+  background-color: #f4f8ff;
+}
+
+.edit-buttons:hover {
+    text-decoration: none !important;
+    color: #fff;
+    background-color: #000;
+}
+
+.delete-item-icon {
+    color: #000 !important;
+    font-size: 36px;
 }
 
 .thumbnail-hover-overlay {
@@ -612,6 +649,16 @@ label {
 
 .owl-carousel .owl-item img {
     min-height: 0 !important;
+}
+
+.confirm-item-container .small-article {
+    padding-left: 0 !important;
+    margin-bottom: 10px;
+    width: auto !important;
+}
+
+.confirm-item-container {
+    overflow: hidden;
 }
 
 @media (max-width: 1200px) {

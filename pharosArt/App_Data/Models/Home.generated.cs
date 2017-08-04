@@ -55,21 +55,21 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Body
-		///</summary>
-		[ImplementPropertyType("body")]
-		public IHtmlString Body
-		{
-			get { return this.GetPropertyValue<IHtmlString>("body"); }
-		}
-
-		///<summary>
-		/// Content Picker
+		/// Featured large
 		///</summary>
 		[ImplementPropertyType("contentPicker")]
 		public IEnumerable<IPublishedContent> ContentPicker
 		{
 			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker"); }
+		}
+
+		///<summary>
+		/// Featured small
+		///</summary>
+		[ImplementPropertyType("featuredSmall")]
+		public IEnumerable<IPublishedContent> FeaturedSmall
+		{
+			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("featuredSmall"); }
 		}
 
 		///<summary>
