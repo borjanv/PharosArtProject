@@ -12,7 +12,13 @@ namespace pharosArt.Controllers
         {
             var model = Umbraco.TypedMedia(id);
             if (model != null)
-                return PartialView("~/Views/Partials/_AudioAjaxPartial.cshtml", new File(model));
+            {
+                if (model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+                    return PartialView("~/Views/Partials/_AudioAjaxPartial.cshtml", new File(model));
+                if (model.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                    return PartialView("~/Views/Partials/_VideoAjaxPartial.cshtml", new ContentVideo(model));
+            }
+                
 
             return Content("The requested resource could not be found.");
         }

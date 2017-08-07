@@ -19,48 +19,35 @@ namespace pharosArt.Controllers
             var subpageCategory = CurrentPage.Name;
             var models = new List<LandingPageModel>();
             var mediaFolder = Umbraco.TypedMedia(5830);
-            int mediaID;
-            string mediaUrl = null;
-            string category;
-            List<string> categories;
-            DateTime date;
-            var allowedCategories = Umbraco.TypedContentAtRoot().First().Descendants("Menu").ToList();
 
             var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias ||
-                x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
-                .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias).ToList();
-            
+                                                                  x.DocumentTypeAlias == ContentMusic.ModelTypeAlias ||
+                                                                  x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                .ToList();
+
             if (mediaFiles.Any())
             {
                 foreach (var mediafile in mediaFiles)
                 {
-                    mediaUrl = mediafile.Url;
-                    date = mediafile.CreateDate;
-                    mediaID = mediafile.Id;
-                    if (mediafile.DocumentTypeAlias == Image.ModelTypeAlias)
-                    {
-                        category = mediafile.GetProperty("category").DataValue.ToString();
+                    string category = mediafile.GetProperty("category").DataValue.ToString();
 
-                    }
-                    else
+                    List<string> categories = GetCategories(category);
+
+                    if (category.ToLower().Contains(subpageCategory.ToLower()))
                     {
-                        if (mediafile.GetPropertyValue<string>("umbracoExtension") == "mp3")
+                        models.Add(new LandingPageModel
                         {
-                            category = "music";
-                        }
-                        else
-                        {
-                            category = "";
-                        }
-                    }
-                    categories = GetCategories(category);
-                    if(categories.Contains(subpageCategory))
-                    {
-                        models.Add(new LandingPageModel { Media = mediafile, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
+                            Media = mediafile,
+                            Author = mediafile.Ancestor<ParentFolder>().Member.Name,
+                            MediaUrl = mediafile.Url,
+                            UploadDate = mediafile.CreateDate,
+                            Categories = categories,
+                            MemberId = mediafile.Ancestor<ParentFolder>().Member.Id
+                        });
                     }
                 }
             }
-            
+
             List<LandingPageModel> sortedModels = models.OrderByDescending(o => o.UploadDate).ToList(); //sorting images by date
             return PartialView("~/Views/Partials/Home/LandingPage.cshtml", sortedModels);
         }

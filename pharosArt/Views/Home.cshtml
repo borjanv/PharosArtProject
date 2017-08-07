@@ -19,7 +19,7 @@
                 rel: 'fancy-box-image',
                 scalePhotos: true,
                 maxWidth: "90%",
-                maxHeight: '90%'              
+                maxHeight: '90%'
             });
             // Increase view count for this item
             $(document).bind('cbox_complete', function () {
@@ -29,6 +29,7 @@
             // Stop the music when user closes the modal window
             $(document).bind('cbox_closed', function () {
                 $("#jquery_jplayer_1").jPlayer("stop");
+                $("#jquery_jplayer_2").jPlayer("stop");
             });
             $(".ajax").colorbox({
                 rel: 'fancy-box-image'
@@ -43,10 +44,10 @@
                         items: 1
                     },
                     402: {
-                        items: 2
+                        items: 3
                     },
                     640: {
-                        items: 3
+                        items: 5
                     }
                 }
             });
@@ -59,6 +60,8 @@
     <link rel="stylesheet" href="/css/popup.css">
     <link rel="stylesheet" href="owlCarousel/owl.carousel.min.css">
     <link rel="stylesheet" href="owlCarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/video.css">
+
 
 }
 <div class="row">

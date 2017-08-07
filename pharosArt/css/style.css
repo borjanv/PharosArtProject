@@ -5,7 +5,7 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
-button {
+.button {
     color: #000;
     border: 2px solid #000;
     background: #fff;
@@ -13,7 +13,7 @@ button {
     transition-duration: 0.5s;
 }
 
-    button:hover {
+    .button:hover {
         color: #fff;
         background: #000;
     }
@@ -427,10 +427,12 @@ img {
     font-weight: bold;
     text-transform: uppercase;
 }
-.dz-preview{
-    float:left;
-    padding:15px;
+
+.dz-preview {
+    float: left;
+    padding: 15px;
 }
+
 .dropzone {
     outline: 2px dashed #92b0b3;
     outline-offset: -10px;
@@ -441,11 +443,18 @@ img {
     position: relative;
     padding: 100px 20px;
     text-align: center;
-    overflow:auto;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+#uploading, #progress {
+    font-weight: bold;
+    font-size: 16px;
+    padding-right: 5px;
 }
 
 .dz-drag-hover {
-  background-color: #f4f8ff;
+    background-color: #f4f8ff;
 }
 
 .edit-buttons:hover {
@@ -527,7 +536,7 @@ img {
     text-align: center;
 }
 
-button {
+.button {
     border: 2px solid;
     background: transparent;
     margin: 12px;
@@ -545,7 +554,7 @@ button {
     color: red;
 }
 
-button:hover {
+.button:hover {
     color: #fff;
     background: #000;
     border: 2px solid;
@@ -661,6 +670,46 @@ label {
     overflow: hidden;
 }
 
+.loader {
+    height: 4px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #ddd;
+    display: none;
+}
+
+    .loader:before {
+        display: block;
+        position: absolute;
+        content: "";
+        left: -200px;
+        width: 200px;
+        height: 4px;
+        background-color: #2980b9;
+        animation: loading 2s linear infinite;
+    }
+
+.checkboxes {
+    overflow: auto;
+    width: 100%;
+}
+
+    .checkboxes ul {
+        list-style: none;
+        overflow: auto;
+        padding: 0;
+    }
+
+        .checkboxes ul li {
+            float: left;
+            margin-right: 5px;
+            padding-right: 2px;
+        }
+        .cat {
+            margin-right: 3px !important;
+        }
+
 @media (max-width: 1200px) {
     .small-article {
         width: 310px;
@@ -731,9 +780,6 @@ label {
         }
 }
 
-@media(min-width: 640px) and (max-width: 769px) {
-}
-
 @media (max-width: 640px) {
     .small-article {
         width: 100%;
@@ -757,6 +803,33 @@ label {
     .large-post-heading {
         font-size: 32px;
         top: 5%;
+    }
+}
+
+@keyframes loading {
+    from {
+        left: -200px;
+        width: 30%;
+    }
+
+    50% {
+        width: 30%;
+    }
+
+    70% {
+        width: 70%;
+    }
+
+    80% {
+        left: 50%;
+    }
+
+    95% {
+        left: 120%;
+    }
+
+    to {
+        left: 100%;
     }
 }
 

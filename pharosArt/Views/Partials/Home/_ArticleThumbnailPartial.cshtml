@@ -1,22 +1,62 @@
-﻿@model ContentImage
+﻿@model IPublishedContent
 @{
     var memberId = Model.Ancestor<ParentFolder>().Member.Id;
 }
 
-@Html.Partial("Home/_ThumbnailPartial", Model)
+@if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+{
+    @Html.Partial("Home/_AudioPartial", new ContentMusic(Model))
 
-<div class="text-wrapper">
-    <div class="article-title">
-        <a class="profile-link" href="/showprofile?id=@memberId"></a>
+    <div class="text-wrapper">
+        <div class="article-title">
+            <a class="profile-link" href="/showprofile?id=@memberId"></a>
+        </div>
+        <div class="additional-info">
+            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+            <a href="/music">Music</a>
+
+        </div>
     </div>
-    <div class="additional-info">
-        @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-        @if (!Model.Category.Contains("No category"))
-        {
-            foreach (var category in Model.Category)
+}
+else if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+{
+
+    @Html.Partial("Home/_ThumbnailPartial", new ContentImage(Model))
+
+    <div class="text-wrapper">
+        <div class="article-title">
+            <a class="profile-link" href="/showprofile?id=@memberId"></a>
+        </div>
+        <div class="additional-info">
+            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+            @if (!Model.GetPropertyValue<string>("Category").Contains("No category"))
             {
-                <a href="/@category">@category</a>
+                foreach (var category in Model.GetPropertyValue<string>("Category"))
+                {
+                    <a href="/@category">@category</a>
+                }
             }
-        }
+        </div>
     </div>
-</div>
+}
+else if (Model.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+{
+    @Html.Partial("Home/_VideoPartial", new ContentVideo(Model))
+    // do video
+    <div class="text-wrapper">
+        <div class="article-title">
+            <a class="profile-link" href="/showprofile?id=@memberId"></a>
+        </div>
+        <div class="additional-info">
+            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+            @if (!Model.GetPropertyValue<string>("Category").Contains("No category"))
+            {
+                foreach (var category in Model.GetPropertyValue<string>("Category"))
+                {
+                    <a href="/@category">@category</a>
+                }
+            }
+        </div>
+    </div>
+}
+

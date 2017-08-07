@@ -97,6 +97,8 @@ namespace pharosArt.Controllers
                 ProfileFolder.ModelTypeAlias);
             Services.MediaService.CreateMediaWithIdentity("Images", newMediaFolder,
                 ImagesFolder.ModelTypeAlias);
+            Services.MediaService.CreateMediaWithIdentity("Videos", newMediaFolder,
+               VideosFolder.ModelTypeAlias);
 
             return newMediaFolder.GetUdi();
         }

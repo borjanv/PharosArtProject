@@ -7,21 +7,10 @@
 <div class="content articles-wrapper">
     @foreach (var item in Model)
     {
-        if (item.Media.DocumentTypeAlias == ContentImage.ModelTypeAlias)
-        {
-            <div class="small-article">
-                <div class="artcile">
-                    @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item.Media))
-                </div>
+        <div class="small-article">
+            <div class="artcile">
+                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item.Media)
             </div>
-        }
-        else if (item.Media.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
-        {
-            <div class="small-article">
-                <div class="artcile">
-                    @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(item.Media))
-                </div>
-            </div>
-        }
+        </div>
     }
 </div>

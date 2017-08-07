@@ -1,99 +1,83 @@
-﻿@using Member = Umbraco.Web.PublishedContentModels.Member
+﻿@using pharosArt.Controllers
+@using Member = Umbraco.Web.PublishedContentModels.Member
 @inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 
 <!-- Dependency -->
 @section scripts{
-<script src="~/scripts/dropzone.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script> 
+    <script src="~/scripts/dropzone.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.1.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/mvc/5.1/jquery.validate.unobtrusive.min.js"></script>
 
     <script type="text/javascript">
-        Dropzone.options.myAwesomeDropzone = {         
+        $('.cat').change(function () {
+            if (this.checked) {
+                appendCat($(this).val());
+            } else {
+                removeCat($(this).val());
+            }
+
+        });
+        Dropzone.options.myAwesomeDropzone = {
             createImageThumbnails: false,
+            dictDefaultMessage: "Drop files here to upload or click to chose a file",
             init: function () {
-                this.on("uploadprogress", function (file) {
-                    $("#uploading").html("uploading file:" + file.name);
+                this.on("drop", function (e) {
+                    $(".loader").css("display", "block");
                 });
+                this.on("error", function (file) {
+                    $(".loader").hide();
+                    $("#progress").html("<p class='warning'>Internal error. Please try again later.</p>");
+                });
+                //this.on("uploadprogress", function (file) {
+                //    $("#uploading").html("Uploading file: " + file.name);
+                //});
                 this.on("totaluploadprogress", function (file) {
-                    $("#progress").html(file + "%");
+                    $("#progress").html("Upload progress: " + file.toString().substring(0, 4) + "%");
                 });
                 this.on("queuecomplete", function (file) {
-                    $("#uploading").html("Upload is complete");
+                    $(".loader").hide();
+                    $("#progress").html("Upload is complete");
                 });
             }
         };
+
+        var removeCat = function (cat) {
+            $("#categories").val($("#categories").val().replace(cat + ",", ""));
+        }
+        var appendCat = function (cat) {
+            $("#categories").val($("#categories").val() + cat + ",");
+        }
     </script>
+}
+@section header{
+
+    <link href="~/css/dropzone.css" rel="stylesheet" />
 }
 @{
     Layout = "Master.cshtml";
 
-    var categories = CurrentPage.AncestorOrSelf(1).Descendants("Menu");
+    var categories = AppHelper.GetCategories();
     var member = new Member(Members.GetCurrentMember());
 }
 
+<h2>1. Select categories</h2>
+<div class="checkboxes">
+    <ul>
+        @foreach (var category in categories)
+        {
+            <li><input type="checkbox" class="cat" name="@category" value="@category" />@category</li>
+        }
+    </ul>
+</div>
+<br />
+<h2>2. Upload files</h2>
 <form action="/umbraco/surface/contentupload/uploadcontent"
       class="dropzone"
-      id="my-awesome-dropzone">@Html.Hidden("targetRootFolder", member.MediaRoot.Id)</form>
-<span id="uploading"></span>
+      id="my-awesome-dropzone">
+    @Html.Hidden("targetRootFolder", member.MediaRoot.Id)
+    <input type="text" hidden="hidden" id="categories" name="categories" />
+</form>
+<div class="loader"></div>
 <span id="progress"></span>
-@*<input type="file" name="FileUpload" id="FileUpload" multiple>*@
-
-@foreach (var category in categories)
-{
-    <input type="checkbox" name="@category.Name" value="@category.Name" />@category.Name
-}
-<!--  <input type="button" id="Upload" value="Upload" /> -->
-<p id="responseMessage"></p>
-<!-- on button click clear input,after sending , and if success , display text that it was delivered, if error - same :D-->
-
-
-
-@*<script>
-    $("#FileUpload").on("change", function (e) {
-        var files = e.target.files;
-        var myID = 3;
-        if (files.length > 0) {
-
-            if (window.FormData !== undefined) {
-
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-                var categories = [];
-
-                $('input[type="checkbox"]:checked').each(function () {
-                    categories.push($(this).val());
-                });
-
-                var imgor = '@Url.Action("UploadContent", "ContentUpload", new { targetRootFolder = member.MediaRoot.Id })';
-                console.log("amazing");
-                $.ajax({
-                    type: "POST",
-                    url: imgor,/*?id=' + myID,*/
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                        console.log(result);
-                        $("#responseMessage").text("Successfully uploaded.")
-                    },
-                    error: function (xhr, status, p3, p4) {
-                        var err = "Error " + " " + status + " " + p3 + " " + p4;
-                        if (xhr.responseText && xhr.responseText[0] == "{")
-                            err = JSON.parse(xhr.responseText).Message;
-                        $("#responseMessage").text("Error - Couldn't uploaded.")
-                        console.log(err);
-                    }
-                });
-                console.log("semi amazing");
-            } else {
-
-                console.log("This browser doesn't support HTML5 file uploads!");
-            }
-        }
-
-    });
-
-</script>*@
+<p class="warning" id="responseMessage"></p>
