@@ -42,9 +42,10 @@
 <div class="row">
     <div class="col-md-12 search search-input">
         <span style="margin-left:6em;" class="fa fa-search"></span>
-        <input type="search" placeholder="Search">
+        <input type="search" placeholder="Search" id="search-box">
     </div>
 </div>
+
 <div style="text-align:center;">
     @{
         var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker");
@@ -69,3 +70,12 @@
          @Html.Action("ShowUploadedImages", "LandingPage")
               
 
+<script>
+    $('#search-box').on('keyup', function (e) {
+        var content = $(this).val();
+        var link = "/search" + "?q=" + content;
+        if (e.keyCode === 13) {
+            window.location.href = link;
+        }
+    });
+</script>

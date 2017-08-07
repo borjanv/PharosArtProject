@@ -1,0 +1,21 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.BlogPost>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = "Master.cshtml";
+}
+
+<style>
+    .main-paragraph{
+        font-weight: bold;
+    }
+</style>
+
+<h1>This is blog post!</h1>
+
+<p>Title: @CurrentPage.title</p>
+
+<div class="main-paragraph">
+    <p>@CurrentPage.mainParagraph</p>
+</div>
+
+@CurrentPage.GetGridHtml(Html, "gridContent")

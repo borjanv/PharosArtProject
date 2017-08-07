@@ -38,27 +38,28 @@
         width: 40px;
     }
 </style>
-<div>
-    <p class="foot">Banner images provided by <a href="http://www.classic-sailing.co.uk/">Classic Sailin</a>g or <a href="https://www.flickr.com/photos/20581458@N00/4089180923/">GollyGforce</a>, for demo purposes only. Powered by <a href="https://www.squarespace.com/">Squarespace</a></p>
-</div>
 
-
+@{
+    var twitter_icon = Umbraco.Media(7986);
+    var facebook_icon = Umbraco.Media(7984);
+    var instagram_icon = Umbraco.Media(7985);
+}
 
 <div class="socialmedia_accounts" align="center"> 
     <ul id="socialmedia_footer">
         <li class="socialmedia_item">
         <a href="https://twitter.com/pharoslondon" target="_blank" class="socialmedia_link">
-        <img  src="http://pharoslondon.co.uk/media/1020/twitter_logo.png" height="30" width="30" />
+        <img  src="@twitter_icon.Url" height="30" width="30" />
         </a>
         </li>
         <li class="socialmedia_item">
         <a href="https://www.facebook.com/Pharos-377810605733832/timeline/" target="_blank" class="socialmedia_link">
-        <img src="http://pharoslondon.co.uk/media/1021/facebook_logo.png" height="30" width="30"/>
+        <img src="@facebook_icon.Url" height="30" width="30"/>
         </a> 
         </li>
         <li class="socialmedia_item">
         <a href="https://www.instagram.com/pharoslondon/" target="_blank" class="socialmedia_link">
-        <img src="http://pharoslondon.co.uk/media/1023/instagram_logo.png" height="30" width="30"/>
+        <img src="@instagram_icon.Url" height="30" width="30"/>
         </a>
         </li>
     </ul>

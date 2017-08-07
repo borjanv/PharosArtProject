@@ -1,51 +1,85 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Events>
 @using ContentModels = Umbraco.Web.PublishedContentModels;
 @{
-	Layout = "Master.cshtml";
+    Layout = "Master.cshtml";
+    int pageSize; // How many items per page
+    int page; // The page we are viewing
+
+
+
+    var root = Umbraco.TypedContentAtRoot().First();
+    if (Int32.Parse(root.GetPropertyValue<string>("pagesNumber")) > 0)
+    {
+        pageSize = Int32.Parse(root.GetPropertyValue<string>("pagesNumber"));
+    }
+    else
+    {
+        pageSize = 10;
+    }
+
+    var nodes = CurrentPage.children.OrderBy("CreateDate desc");
+
+    int totalNodes = nodes.Count();
+    int totalPages = (int)Math.Ceiling((double)totalNodes / (double)pageSize);
+
+    if (Request.QueryString["page"] == null)
+    {
+        page = 1;
+    }
+    else
+    {
+        page = Int32.Parse(Request.QueryString["page"]);
+    }
+
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
 }
 
 <style>
-    .title{
+    .title {
         color: blue;
     }
-    
-    .image{
-        
+
+    .blog-post-image {
+        max-width: initial;
     }
-    
+
     div.events {
-    width: 400px;
-    height: 300px;
-    overflow: hidden;
-    margin: 5px;
-    border: 1px solid #ccc;
-    float: left;
-    display:table-cell; 
-    vertical-align:middle; 
-    text-align:center;
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+        margin: 5px;
+        border: 1px solid #ccc;
+        vertical-align: middle;
+        text-align: center;
+        padding: 0;
     }
-    
-    div.events:hover {
-        border: 1px solid #777;
-    }
-    
-    div.events img {
-        max-height: 100%;
-        position: relative;
-    }
-    
-    .clear
-    {
+
+        div.events:hover {
+            border: 1px solid #777;
+        }
+
+        div.events img {
+            max-height: 100%;
+            position: relative;
+        }
+
+    .clear {
         clear: both;
     }
-    
-    .main-div
-    {
+
+    .main-div {
         width: 850px;
         margin: auto;
     }
-    
-    .opacity-div{
+
+    .opacity-div {
         background-color: black;
         position: relative;
         bottom: 300px;
@@ -53,20 +87,20 @@
         opacity: 0.6;
         z-index: 1;
     }
-    
-    .event-name{
+
+    .event-name {
         position: relative;
         bottom: 600px;
         z-index: 2;
         opacity: 1;
     }
-    
-    .event-name a:hover, .button a:hover{
-        font-weight: bold;
-        text-decoration: none;
-    }
-    
-    .button{
+
+        .event-name a:hover, .button a:hover {
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+    .button {
         position: relative;
         bottom: 400px;
         z-index: 2;
@@ -74,68 +108,98 @@
         background-color: black;
         height: 50px;
         vertical-align: middle;
-        text-align:center;
+        text-align: center;
         line-height: 45px;
         transition: bottom .5s, height .5s, line-height .5s;
     }
-    
-    .button .text{
-        font-size: 15px;
-    }
-    
-    .text{
+
+        .button .text {
+            font-size: 15px;
+        }
+
+    .text {
         color: white;
         font-size: 30px;
     }
-    
-    .find-out-more{
-        z-index:3;
+
+    .find-out-more {
+        z-index: 3;
         position: relative;
         bottom: 375px;
         transition: bottom .5s;
     }
-    
-    .find-out-more a{
-        text-decoration: none;
-        color: white;
-        transition: font-size .5s;
+
+        .find-out-more a {
+            text-decoration: none;
+            color: white;
+            transition: font-size .5s;
+        }
+
+        .find-out-more:hover {
+            bottom: 380px;
+        }
+
+            .find-out-more:hover + .button {
+                height: 55px;
+                bottom: 410px;
+                line-height: 55px
+            }
+
+            .find-out-more:hover a {
+                font-size: 17px;
+            }
+
+    .paging {
+        text-align: center;
     }
-    
-    .find-out-more:hover{
-        bottom: 380px;
+
+    .row {
+        text-align: center;
     }
-    
-    .find-out-more:hover + .button{
-        height: 55px;
-        bottom: 410px;
-        line-height: 55px
-    }
-    
-    .find-out-more:hover a{
-        font-size: 17px;
-        
-    }
-    
 </style>
 
 <!-- <h1 class = "title">test</h1><br /> -->
 
 
-
-<div class="main-div">
-
-@foreach(var e in @CurrentPage.children.OrderBy("CreateDate desc")){
-
-    <div class="events">
-        <img src="@e.image.Url"/>
-        <div class="opacity-div"></div>
-        <div class="event-name"><a href="@e.Url"><h class="text">@e.eventName</h></a></div>
-        <h class="find-out-more"><a href="@e.Url">Find out more ></a></h>
-        <div class="button"></div>
-        
+@if (totalPages > 1)
+{
+    <div class="paging">
+        <ul class="pagination">
+            @for (int p = 1; p < totalPages + 1; p++)
+            {
+                string selected = (p == page) ? "active" : String.Empty;
+                <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+            }
+        </ul>
     </div>
-      
-    
 }
+<div class="main-div row">
+
+    @foreach (var e in nodes.Skip((page - 1) * pageSize).Take(pageSize))
+    {
+        <div class="events col-md-6">
+            <img src="@e.image.Url" class="blog-post-image" />
+            <div class="opacity-div"></div>
+            <div class="event-name"><a href="@e.Url"><h class="text">@e.eventName</h></a></div>
+            <h class="find-out-more"><a href="@e.Url">Find out more ></a></h>
+            <div class="button"></div>
+
+        </div>
+
+
+    }
 
 </div>
+
+@if (totalPages > 1)
+{
+    <div class="paging">
+        <ul class="pagination">
+            @for (int p = 1; p < totalPages + 1; p++)
+            {
+                string selected = (p == page) ? "active" : String.Empty;
+                <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+            }
+        </ul>
+    </div>
+}

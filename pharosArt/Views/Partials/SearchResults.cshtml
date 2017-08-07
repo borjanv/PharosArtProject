@@ -1,0 +1,171 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Examine.LuceneEngine.SearchCriteria;
+@using Umbraco.Web;
+<style>
+    .outer {
+        margin: 0 auto;
+    }
+
+    .first {
+        display: inline-block;
+        vertical-align: middle;
+        overflow: hidden;
+        width: 300px;
+        text-align: center;
+    }
+
+        .first img {
+            position: relative;
+        }
+
+    .second {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+    .profile-picture {
+        border: solid 5px black;
+        max-width: 150px;
+    }
+
+    mark {
+        padding: 0;
+    }
+</style>
+<script src="~/scripts/mark.min.js"></script>
+
+@{
+    var keywords = Request.QueryString["q"];
+    var MemberFolder = Umbraco.TypedMedia(5830);
+    var SearcherMedia = ExamineManager.Instance.SearchProviderCollection["MediaSearcher"];
+    var SearcherMember = ExamineManager.Instance.SearchProviderCollection["InternalMemberSearcher"];
+    var SearcherBlogPosts = ExamineManager.Instance.SearchProviderCollection["BlogSearcher"];
+    var SearcherEvents = ExamineManager.Instance.SearchProviderCollection["EventSearcher"];
+
+    var searchCriteria = ExamineManager.Instance.CreateSearchCriteria();
+
+    String[] fields = new String[] { "firstName", "lastName", "title", "nodeName", "umbracoExtension", "category", "gridContent", "shortDescription", "mainParagraph" };
+    var query = searchCriteria;
+    foreach (String keyword in keywords.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+    {
+        query = query.GroupedOr(fields, keyword.Fuzzy(0.5f)).Compile();
+    }
+    IEnumerable<SearchResult> results = SearcherMedia.Search(query);
+    results = results.Concat(SearcherMember.Search(query));
+    results = results.Concat(SearcherBlogPosts.Search(query));
+    results = results.Concat(SearcherEvents.Search(query));
+    results = results.ToList();
+
+    <div class="results">
+        @if (results.Any())
+        {
+            foreach (var result in results)
+            {
+                var indexType = result.Fields.Where(x => x.Key == "__IndexType").ToList().First().Value;
+                var id = result.Id;
+                if (indexType == "media")
+                {
+                    if (MemberFolder.Descendants().Where(x => x.Id == id).Any()) //Check if found results are in MemberFolders
+                    {
+                        var node = Umbraco.TypedMedia(result.Id);
+                        var member = node.Ancestor<ParentFolder>().Member;
+                        <hr />
+                        <div class="outer">
+                            <div class="first">
+                                @if (node.DocumentTypeAlias == "videoFile")
+                                {
+                                    <video width="250" height="250" controls>
+                                        <source src="@node.Url" />
+                                    </video>
+                                }
+                                else if (node.DocumentTypeAlias == "File")
+                                {
+                                    <img src="http://dreamatico.com/data_images/music/music-1.jpg" style="width:250px;position:relative;height:223px;" />
+                                    <audio controls style="width:250px;">
+                                        <source src="@node.Url" type="audio/mpeg">
+                                    </audio>
+                                }
+                                else
+                                {
+                                    <img src="@node.Url" style="max-width: 250px" />
+                                }
+                            </div>
+                            <div class="second">
+                                <a href="@node.Url"><h2>@node.Name</h2></a>
+                                <p>Author: <a href="/showprofile?id=@member.Id">@member.Name</a> (@member.GetPropertyValue("firstName") @member.GetPropertyValue("lastName"))</p>
+                                <p>&#8226; @node.DocumentTypeAlias</p>
+                                @if (node.HasValue("shortDescription"))
+                                {
+                                    <p>Description: @node.GetPropertyValue("shortDescription")</p>
+                                }
+                                @if (node.HasValue("category"))
+                                {
+                                    <p>Category: @node.GetProperty("category").DataValue.ToString()</p>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+                else if (indexType == "member")
+                {
+                    var node = Members.GetById(result.Id);
+                    var mediaFolder = node.GetPropertyValue<ParentFolder>("mediaRoot").Url;
+                    if (node.HasValue("picture") && node.GetPropertyValue("picture") != null)
+                    {
+                        var profilePicture = node.GetPropertyValue<Image>("picture");
+                        <hr />
+                        <div class="first">
+                            <img src="@profilePicture.Url" class="profile-picture" />
+                        </div>
+                    }
+                    else
+                    {
+                        var profilePicture = Umbraco.TypedMedia(6927);
+                        <hr />
+                        <div class="first">
+                            <img src="@profilePicture.Url" class="profile-picture" />
+                        </div>
+                    }
+                    <div class="second">
+                        <a href="/showprofile?id=@node.Id">@node.Name</a>
+                        <p>@node.GetPropertyValue("firstName") @node.GetPropertyValue("lastName")</p>
+                        <p>&#8226; @node.DocumentTypeAlias</p>
+                    </div>
+                }
+                else
+                {
+                    <hr />
+                    var node = Umbraco.TypedContent(result.Id);
+                    <div>
+                        <a href="@node.Url"><h2>@node.Name</h2></a>
+                        <p>&#8226; @node.DocumentTypeAlias</p>
+                    </div>
+                    if (node.HasValue("mainParagraph"))
+                    {
+                        <p> @Umbraco.Truncate(library.StripHtml(node.GetPropertyValue("mainParagraph").ToString()), 250)</p>
+                    }
+                }
+            }
+            <hr />
+        }
+    </div>
+}
+
+<script>
+    //Get query parameter
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    var search = getParameterByName('q');
+
+    var res = document.querySelector(".results");
+    var instance = new Mark(res);
+    instance.mark(search);
+</script>

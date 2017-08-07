@@ -1,0 +1,29 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Search>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+	Layout = "Master.cshtml";
+    string word = Request["q"];
+}
+<script src="~/scripts/jQuery 3.1.1.min.js"></script>
+<h1>Search: @word</h1>
+
+<div class="row">
+    <div class="col-md-12 search search-input">
+        <span style="margin-left:6em;" class="fa fa-search"></span>
+        <input type="search" placeholder="Search" id="search-box2">
+    </div>
+</div>
+
+
+
+@Html.Partial("SearchResults")
+
+<script>
+    $('#search-box2').on('keyup', function (e) {
+        var content = $(this).val();
+        var link = "/search" + "?q=" + content;
+        if (e.keyCode === 13) {
+            window.location.href = link;
+        }
+    });
+</script>

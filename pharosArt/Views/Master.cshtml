@@ -1,4 +1,4 @@
-@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
     Layout = null;
     var home = @CurrentPage.Site();
@@ -9,6 +9,7 @@
 <head>
     <title>Pharos Art</title>
     <!-------- Meta Tags ---->
+    @Umbraco.RenderMacro("MetaTags", new {pageDescription="This is page description"})
     <!-------- Fonts -------->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 

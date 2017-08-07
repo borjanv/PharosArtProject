@@ -1,0 +1,200 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Blog>
+@using Umbraco.Web
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    int pageSize; // How many items per page
+    int page; // The page we are viewing
+
+
+
+    var root = Umbraco.TypedContentAtRoot().First();
+    if(Int32.Parse(root.GetPropertyValue<string>("pagesNumber")) > 0)
+    {
+        pageSize = Int32.Parse(root.GetPropertyValue<string>("pagesNumber"));
+    }
+    else
+    {
+        pageSize = 10;
+    }
+
+    var nodes = Model.Content.Children.OrderBy("CreateDate desc");
+
+    int totalNodes = nodes.Count();
+    int totalPages = (int)Math.Ceiling((double)totalNodes / (double)pageSize);
+
+    if (Request.QueryString["page"] == null)
+    {
+        page = 1;
+    }
+    else
+    {
+        page = Int32.Parse(Request.QueryString["page"]);
+    }
+
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
+}
+
+<style>
+    h2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .post-content {
+        height: 200px;
+        width: 500px;
+        overflow: hidden;
+        word-wrap: break-word;
+        background-color: whitesmoke;
+        margin: auto;
+        padding: 10px;
+        border-radius: 0 0 20px 20px;
+    }
+
+        .post-content:hover {
+            background-color: #f2f2f2;
+        }
+
+    .post-title {
+        text-align: center;
+        bottom: 0px;
+        position: relative;
+    }
+
+    .post-content:hover .post-title {
+        position: relative;
+    }
+
+    .row a {
+        text-decoration: none;
+    }
+
+    .post-date {
+        margin: auto;
+        width: 100%;
+        text-align: right;
+    }
+
+    .col-sm-6 {
+        margin: 15px 0;
+    }
+
+    .post-image {
+        max-height: 150px;
+        height: 150px;
+        overflow: hidden;
+        width: 500px;
+        padding: 0;
+        border: 1px solid #ccc;
+        margin: 0 auto;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .paging{
+        text-align: center;
+    }
+
+    .row{
+        text-align: center;
+    }
+
+</style>
+
+@{
+
+    if (totalPages > 1)
+    {
+        <div class="paging">
+            <ul class="pagination">
+                @for (int p = 1; p < totalPages + 1; p++)
+                {
+                    string selected = (p == page) ? "active" : String.Empty;
+                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row">
+        @foreach (var post in nodes.Skip((page - 1) * pageSize).Take(pageSize))
+        {
+            <a href="@post.Url">
+                <div class="col-sm-6">
+                    @if (post.HasValue("image"))
+                    {
+                        var image = Umbraco.TypedMedia(post.GetPropertyValue<string>("image"));
+                        <div class="post-image" style="background-image: url(@image.Url)">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="post-image" style="background-color: #000">
+                        </div>
+                    }
+
+                    <div class="post-content">
+
+
+                        <div class="post-date">
+                            @post.CreateDate.ToString("dddd, MMMM dd, yyyy")
+                        </div>
+                        <div class="post-title">
+
+                            <h2>
+                                @post.Name
+                            </h2>
+                        </div>
+                        <div>
+                            <p> @Umbraco.Truncate(library.StripHtml(post.GetPropertyValue("mainParagraph").ToString()), 250)</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </a>
+                        }
+
+        
+    </div>
+
+
+    if (totalPages > 1)
+    {
+        <div class="paging">
+            <ul class="pagination">
+                @for (int p = 1; p < totalPages + 1; p++)
+                {
+                    string selected = (p == page) ? "active" : String.Empty;
+                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+                }
+            </ul>
+        </div>
+    }
+
+    @*<ul>
+        @foreach (var item in nodes.Skip((page - 1) * pageSize).Take(pageSize))
+        {
+            <a href="@item.Url">@item.Name</a>
+        }
+    </ul>
+
+    <ul class="paging">
+        @for(int p=1; p < totalPages + 1; p++)
+        {
+            string selected = (p == page) ? "selected" : String.Empty;
+            <li class="@selected"><a href="?page=@p">@p</a></li>
+        }
+    </ul>*@
+}
