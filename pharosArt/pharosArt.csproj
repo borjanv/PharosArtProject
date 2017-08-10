@@ -316,13 +316,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\Blog.generated.cs" />
+    <Compile Include="App_Data\Models\BlogPost.generated.cs" />
+    <Compile Include="App_Data\Models\Categories.generated.cs" />
+    <Compile Include="App_Data\Models\Category.generated.cs" />
     <Compile Include="App_Data\Models\ContentImage.generated.cs" />
     <Compile Include="App_Data\Models\ContentMusic.generated.cs" />
     <Compile Include="App_Data\Models\ContentVideo.generated.cs" />
+    <Compile Include="App_Data\Models\EditItem.generated.cs" />
+    <Compile Include="App_Data\Models\EditProfile.generated.cs" />
     <Compile Include="App_Data\Models\EventPage.generated.cs" />
     <Compile Include="App_Data\Models\Events.generated.cs" />
     <Compile Include="App_Data\Models\File.generated.cs" />
     <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\GenericTextPage.generated.cs" />
     <Compile Include="App_Data\Models\Home.generated.cs" />
     <Compile Include="App_Data\Models\Image.generated.cs" />
     <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
@@ -337,6 +344,8 @@
     <Compile Include="App_Data\Models\PostContainer.generated.cs" />
     <Compile Include="App_Data\Models\ProfileFolder.generated.cs" />
     <Compile Include="App_Data\Models\ProfileMember.generated.cs" />
+    <Compile Include="App_Data\Models\Search.generated.cs" />
+    <Compile Include="App_Data\Models\ShowProfile.generated.cs" />
     <Compile Include="App_Data\Models\Slide2.generated.cs" />
     <Compile Include="App_Data\Models\Upload.generated.cs" />
     <Compile Include="App_Data\Models\Video.generated.cs" />
@@ -344,6 +353,7 @@
     <Compile Include="App_Data\Models\VideosFolder.generated.cs" />
     <Compile Include="Controllers\AppHelper.cs" />
     <Compile Include="Controllers\CategoryPageController.cs" />
+    <Compile Include="Controllers\EditItemController.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
     <Compile Include="Controllers\GetContentController.cs" />
     <Compile Include="Controllers\GooglePlusLoginController.cs" />
@@ -356,6 +366,7 @@
     <Compile Include="Controllers\ShowProfileController.cs" />
     <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UploadmageController.cs" />
+    <Compile Include="Models\EditItemModel.cs" />
     <Compile Include="Models\FacebookMember.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\EditModel.cs" />
@@ -393,6 +404,7 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="css\dropzone.css" />
     <Content Include="css\style.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
@@ -409,6 +421,7 @@
     <Content Include="jPlayer\js\jquery.jplayer.js" />
     <Content Include="jPlayer\js\jquery.transform2d.js" />
     <Content Include="jPlayer\js\mod.csstransforms.min.js" />
+    <Content Include="scripts\mark.min.js" />
     <Content Include="scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -643,13 +656,10 @@
     <Content Include="Views\Partials\Home\_ThumbnailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\Home\_ArticleThumbnailPartial.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Partials\Home\_AudioPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Partials\Home\_ArticleAudioPartial.cshtml" />
+    <Content Include="Views\Partials\Home\_ArticleThumbnailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\MobileMenu.cshtml" />
@@ -685,6 +695,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\DeleteContentConfirmation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_VideoPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_VideoAjaxPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\MetaTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog.cshtml" />
+    <Content Include="Views\BlogPost.cshtml" />
+    <Content Include="Views\Partials\SearchResults.cshtml" />
+    <Content Include="Views\Search.cshtml" />
+    <Content Include="Views\ShowProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_BlogThumbnailPartial.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\EditItem\EditItemForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
