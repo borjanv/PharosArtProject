@@ -64,6 +64,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Description
+		///</summary>
+		[ImplementPropertyType("description")]
+		public string Description
+		{
+			get { return this.GetPropertyValue<string>("description"); }
+		}
+
+		///<summary>
 		/// Hide in the navigation?
 		///</summary>
 		[ImplementPropertyType("hideInTheNavigation")]
@@ -79,6 +88,24 @@ namespace Umbraco.Web.PublishedContentModels
 		public IPublishedContent Image
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Keywords
+		///</summary>
+		[ImplementPropertyType("keywords")]
+		public string Keywords
+		{
+			get { return this.GetPropertyValue<string>("keywords"); }
+		}
+
+		///<summary>
+		/// Page Title
+		///</summary>
+		[ImplementPropertyType("pageTitle")]
+		public string PageTitle
+		{
+			get { return this.GetPropertyValue<string>("pageTitle"); }
 		}
 
 		///<summary>

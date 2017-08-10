@@ -1,5 +1,34 @@
 ﻿@model ContentVideo
+@{
+    var url = "http://localhost:62153" + Model.Url;
+}
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#jquery_jplayer_2").jPlayer({
+            ready: function () {
+                $(this).jPlayer("setMedia", {
+                    title: "@Model.Name",
+                    m4v: "@url",
+                });
+            },
+            swfPath: "~/jPlayer/js/Jplayer.swf",
+            supplied: "m4v",
+            size: {
+                width: "640px",
+                height: "360px",
+                cssClass: "jp-video-360p"
+            },
+            useStateClassSkin: true,
+            autoBlur: false,
+            smoothPlayBar: true,
+            keyEnabled: true,
+            remainingDuration: true,
+            toggleDuration: true,
+            preload: "auto"
+        });
+    });
+</script>
 <div id="jp_container_1" class="jp-video jp-video-360p" role="application" aria-label="media player">
     <div class="jp-type-single">
         <div id="jquery_jplayer_2" class="jp-jplayer"></div>
@@ -43,31 +72,3 @@
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $("#jquery_jplayer_2").jPlayer({
-            ready: function () {
-                $(this).jPlayer("setMedia", {
-                    title: "@Model.Name",
-                    m4v: "http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v",
-                });
-            },
-            swfPath: "~/jPlayer/js/Jplayer.swf",
-            supplied: "m4v",
-            size: {
-                width: "640px",
-                height: "360px",
-                cssClass: "jp-video-360p"
-            },
-            useStateClassSkin: true,
-            autoBlur: false,
-            smoothPlayBar: true,
-            keyEnabled: true,
-            remainingDuration: true,
-            toggleDuration: true
-        });
-
-    });
-</script>

@@ -26,17 +26,17 @@ namespace pharosArt.Controllers
             return (Home)UmbHelper().TypedContentAtRoot().First(x => x.DocumentTypeAlias == Home.ModelTypeAlias);
         }
 
-        public static List<string> GetCategories()
+        public static IEnumerable<string> GetCategories()
         {
             var model = new List<string>();
             if (
                 UmbHelper()
-                    .TypedMediaAtRoot()
+                    .TypedContentAtRoot()
                     .FirstOrDefault(x => x.DocumentTypeAlias == Categories.ModelTypeAlias) != null && UmbHelper()
-                        .TypedMediaAtRoot()
+                        .TypedContentAtRoot()
                         .FirstOrDefault(x => x.DocumentTypeAlias == Categories.ModelTypeAlias).Children.Any())
             {
-                model.AddRange(UmbHelper().TypedMediaAtRoot().Where(x => x.DocumentTypeAlias == Categories.ModelTypeAlias).Select(category => category.Name));
+                model.AddRange(UmbHelper().TypedContentAtRoot().First(x => x.DocumentTypeAlias == Categories.ModelTypeAlias).Children.Select(category => category.Name));
             }
             return model;
         }

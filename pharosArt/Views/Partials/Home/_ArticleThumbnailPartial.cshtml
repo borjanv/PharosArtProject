@@ -6,57 +6,34 @@
 @if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
 {
     @Html.Partial("Home/_AudioPartial", new ContentMusic(Model))
-
-    <div class="text-wrapper">
-        <div class="article-title">
-            <a class="profile-link" href="/showprofile?id=@memberId"></a>
-        </div>
-        <div class="additional-info">
-            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-            <a href="/music">Music</a>
-
-        </div>
-    </div>
 }
 else if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
 {
-
     @Html.Partial("Home/_ThumbnailPartial", new ContentImage(Model))
-
-    <div class="text-wrapper">
-        <div class="article-title">
-            <a class="profile-link" href="/showprofile?id=@memberId"></a>
-        </div>
-        <div class="additional-info">
-            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-            @if (!Model.GetPropertyValue<string>("Category").Contains("No category"))
-            {
-                foreach (var category in Model.GetPropertyValue<string>("Category"))
-                {
-                    <a href="/@category">@category</a>
-                }
-            }
-        </div>
-    </div>
 }
 else if (Model.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
 {
     @Html.Partial("Home/_VideoPartial", new ContentVideo(Model))
     // do video
-    <div class="text-wrapper">
-        <div class="article-title">
-            <a class="profile-link" href="/showprofile?id=@memberId"></a>
-        </div>
-        <div class="additional-info">
-            @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-            @if (!Model.GetPropertyValue<string>("Category").Contains("No category"))
-            {
-                foreach (var category in Model.GetPropertyValue<string>("Category"))
-                {
-                    <a href="/@category">@category</a>
-                }
-            }
-        </div>
-    </div>
 }
+<div class="text-wrapper">
+    <div class="article-title">
+        <a class="profile-link" href="/showprofile?id=@memberId"></a>
+    </div>
+    <div class="additional-info">
+        <p>@((Model.HasValue("title")) ? Model.GetPropertyValue<string>("title").ToUpper() : Model.Name.ToUpper())</p>
+        @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+        @if (Model.HasValue("category"))
+        {
+            foreach (var category in Model.GetPropertyValue<IEnumerable<string>>("Category"))
+            {
+                <a href="/@category">@category.ToUpper()</a>
+            }
+        }
+    </div>
+</div>
+
+
+
+
 

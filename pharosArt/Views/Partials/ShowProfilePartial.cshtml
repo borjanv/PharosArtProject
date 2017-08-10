@@ -24,24 +24,13 @@
                              || x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
                              .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias))
         {
-            if (item.DocumentTypeAlias == ContentImage.ModelTypeAlias)
-            {
-                <div class="small-article">
-                    <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <div class="artcile">
-                        @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
-                    </div>
+            <div class="small-article">
+                <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                <div class="artcile">
+                    @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
                 </div>
-            }
-            else if (item.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
-            {
-                <div class="small-article">
-                    <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                    <div class="artcile">
-                        @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(item))
-                    </div>
-                </div>
-            }
+            </div>
+
         }
     </div>
 </div>

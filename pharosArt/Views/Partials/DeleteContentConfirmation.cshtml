@@ -1,7 +1,5 @@
 ﻿@model IPublishedContent
-@{
 
-}
 <div class="confirmation-delete">    
     <div class="row">
         @using (Html.BeginUmbracoForm("DeleteContentById", "GetContent", new { id = Model.Id }, FormMethod.Post))

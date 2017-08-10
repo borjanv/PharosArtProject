@@ -1,0 +1,19 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Umbraco.Web.Models
+@{ 
+    var description = Model.Content.GetPropertyValue<string>("description");
+    var title = Model.Content.GetPropertyValue<string>("title");
+    var keywords = Model.Content.GetPropertyValue<string>("keywords");
+    <meta property="og:title" content="@title" />
+    <meta property="og:description" content="@description" />
+    <meta property="og:keywords" content="@keywords" />
+    <meta name="twitter:card" content="summary" />
+    if (Model.Content.HasValue("image"))
+    {
+        <meta property="og:image" content="@Umbraco.Media(Model.Content.GetPropertyValue("image").ToString()).Url()" />
+        <meta property="twitter" content="@Umbraco.Media(Model.Content.GetPropertyValue("image").ToString()).Url()" />
+    }
+    <meta property="twitter:title" content="@title" />
+    <meta property="twitter:description" content="@title" />
+}
+

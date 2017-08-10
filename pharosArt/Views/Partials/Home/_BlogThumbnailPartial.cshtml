@@ -1,0 +1,32 @@
+﻿@using pharosArt.Controllers
+@model BlogPost
+
+<div class="blog-thumbnail col-sm-12">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="@Model.Url" title="@((Model.HasValue("title")) ? Model.Title : Model.Name)">
+                @if (Model.HasValue("image"))
+                {
+                    <img class="blog-image" src="@Model.Image.GetCropUrl("SearchThumbnail")" />
+                }
+            </a>
+          </div>
+        <div class="col-md-8">
+            <div class="post-content">
+                <div class="post-date">
+                    @Model.CreateDate.ToString("dddd, MMMM dd, yyyy")
+                </div>
+                <div class="post-title">
+                    <a href="@Model.Url" title="@Model.Name">
+                        <h2>
+                            @((Model.HasValue("title")) ? Model.Title : Model.Name)
+                        </h2>
+                    </a>
+                </div>
+                <div>
+                    <p>@AppHelper.UmbHelper().Truncate(library.StripHtml(Model.MainParagraph.ToString()), 350)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -22,7 +22,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>ProfileFolder</summary>
 	[PublishedContentModel("profileFolder")]
-	public partial class ProfileFolder : Folder
+	public partial class ProfileFolder : Folder, IImagesFolder
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "profileFolder";
@@ -43,6 +43,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<ProfileFolder, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// Contents
+		///</summary>
+		[ImplementPropertyType("contents")]
+		public object Contents
+		{
+			get { return Umbraco.Web.PublishedContentModels.ImagesFolder.GetContents(this); }
 		}
 	}
 }

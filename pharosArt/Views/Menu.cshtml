@@ -1,7 +1,6 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
     Layout = "Master.cshtml";
-    var bannerTitle = (CurrentPage.bannerTitle ?? CurrentPage.title);
 }
 @section scripts
 {
@@ -17,7 +16,8 @@
             $(".fancy-box-image").colorbox({
                 rel: 'fancy-box-image',
                 scalePhotos: true,
-                maxWidth: "90%"
+                maxWidth: "90%",
+                maxHeight: '90%'
             });
             // Increase view count for this item
             $(document).bind('cbox_complete', function () {
@@ -27,11 +27,12 @@
             // Stop the music when user closes the modal window
             $(document).bind('cbox_closed', function () {
                 $("#jquery_jplayer_1").jPlayer("stop");
+                $("#jquery_jplayer_2").jPlayer("stop");
                
             });
-            $(".ajax").colorbox();
-
-           
+            $(".ajax").colorbox({
+                rel: 'fancy-box-image'
+            });
         });
 
     </script>
@@ -41,9 +42,5 @@
     <link rel="stylesheet" href="/css/popup.css">
 }
 
-@if (Umbraco.MemberIsLoggedOn())
-{
-    @CurrentPage.bodyArt
-}
 @Html.Action("ShowUploadedImages", "CategoryPage")
 

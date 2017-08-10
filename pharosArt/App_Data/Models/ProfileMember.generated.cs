@@ -20,9 +20,17 @@ using Umbraco.ModelsBuilder.Umbraco;
 
 namespace Umbraco.Web.PublishedContentModels
 {
+	// Mixin content Type 5732 with alias "profileMember"
+	/// <summary>ProfileMember</summary>
+	public partial interface IProfileMember : IPublishedContent
+	{
+		/// <summary>Hide in navigation</summary>
+		bool UmbracoNaviHide { get; }
+	}
+
 	/// <summary>ProfileMember</summary>
 	[PublishedContentModel("profileMember")]
-	public partial class ProfileMember : PublishedContentModel
+	public partial class ProfileMember : PublishedContentModel, IProfileMember
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "profileMember";
@@ -51,7 +59,10 @@ namespace Umbraco.Web.PublishedContentModels
 		[ImplementPropertyType("umbracoNaviHide")]
 		public bool UmbracoNaviHide
 		{
-			get { return this.GetPropertyValue<bool>("umbracoNaviHide"); }
+			get { return GetUmbracoNaviHide(this); }
 		}
+
+		/// <summary>Static getter for Hide in navigation</summary>
+		public static bool GetUmbracoNaviHide(IProfileMember that) { return that.GetPropertyValue<bool>("umbracoNaviHide"); }
 	}
 }

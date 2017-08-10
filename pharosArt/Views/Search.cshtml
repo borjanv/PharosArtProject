@@ -1,0 +1,85 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Search>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    string word = Request["q"];
+}
+@section scripts
+{
+    <script src="~/scripts/site.js"></script>
+    <script src="/scripts/magnific-popup.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.transform2d.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.grab.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
+    <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
+    <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
+    <script src="~/scripts/mark.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".fancy-box-image").colorbox({
+                rel: 'fancy-box-image',
+                scalePhotos: true,
+                maxWidth: "90%",
+                maxHeight: '90%'
+            });
+            // Increase view count for this item
+            $(document).bind('cbox_complete', function () {
+                var id = $.colorbox.element()[0].id;
+                increaseStatistic(id);
+            });
+            // Stop the music when user closes the modal window
+            $(document).bind('cbox_closed', function () {
+                $("#jquery_jplayer_1").jPlayer("stop");
+                $("#jquery_jplayer_2").jPlayer("stop");
+            });
+            $(".ajax").colorbox({
+                rel: 'fancy-box-image'
+            });
+        });
+        $('#search-box2').on('keyup', function (e) {
+            var content = $(this).val();
+            var link = "/search" + "?q=" + content;
+            if (e.keyCode === 13) {
+                window.location.href = link;
+            }
+        });
+
+        //Get query parameter
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        var search = getParameterByName('q');
+
+        var res = document.querySelector(".results");
+        var instance = new Mark(res);
+        instance.mark(search);
+    </script>
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="owlCarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlCarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/video.css">
+}
+<h1>Search: @word</h1>
+<div class="row">
+    <div class="col-md-12 search search-input">
+        <i class="fa fa-search"></i>
+        <input type="search" placeholder="Search" value="@word" class="search-bar" id="search-box2">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        @Html.Partial("SearchResults")
+    </div>
+</div>
+

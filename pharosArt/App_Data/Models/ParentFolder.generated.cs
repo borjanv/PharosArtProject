@@ -22,7 +22,7 @@ namespace Umbraco.Web.PublishedContentModels
 {
 	/// <summary>ParentFolder</summary>
 	[PublishedContentModel("parentFolder")]
-	public partial class ParentFolder : Folder
+	public partial class ParentFolder : Folder, IImagesFolder
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "parentFolder";
@@ -52,6 +52,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public IPublishedContent Member
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("member"); }
+		}
+
+		///<summary>
+		/// Contents
+		///</summary>
+		[ImplementPropertyType("contents")]
+		public object Contents
+		{
+			get { return Umbraco.Web.PublishedContentModels.ImagesFolder.GetContents(this); }
 		}
 	}
 }

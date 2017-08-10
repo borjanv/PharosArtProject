@@ -1,0 +1,130 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using Examine.LuceneEngine.SearchCriteria;
+@using Umbraco.Web;
+<style>
+    .outer {
+        margin: 0 auto;
+    }
+
+    .first {
+        display: inline-block;
+        vertical-align: middle;
+        overflow: hidden;
+        width: 300px;
+        text-align: center;
+    }
+
+        .first img {
+            position: relative;
+        }
+
+    .second {
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+    .profile-picture {
+        border: solid 5px black;
+        max-width: 150px;
+    }
+
+    mark {
+        padding: 0;
+        background-color: #ff0;
+    }
+</style>
+@{
+    var keywords = Request.QueryString["q"];
+    var searcher = ExamineManager.Instance.SearchProviderCollection["SiteSearcher"];
+
+    var searchCriteria = ExamineManager.Instance.CreateSearchCriteria();
+
+    String[] fields = { "firstName", "lastName", "title", "nodeName", "umbracoExtension", "category", "gridContent", "shortDescription", "mainParagraph" };
+    var query = searchCriteria;
+    foreach (String keyword in keywords.Split(new Char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
+    {
+        query = query.GroupedOr(fields, keyword.Fuzzy(0.5f)).Compile();
+    }
+    IEnumerable<SearchResult> results = searcher.Search(query);
+
+    if (results.Any())
+    {
+        var list = new List<IPublishedContent>();
+        foreach (var result in results)
+        {
+            switch (result.Fields["__IndexType"])
+            {
+                case "media":
+                    list.Add(Umbraco.TypedMedia(result.Id));
+                    break;
+                case "content":
+                    list.Add(Umbraco.TypedContent(result.Id));
+                    break;
+            }
+        }
+
+        var mediaItems = list.Where(result => result.DocumentTypeAlias == ContentMusic.ModelTypeAlias ||
+                                              result.DocumentTypeAlias == ContentImage.ModelTypeAlias ||
+                                              result.DocumentTypeAlias == ContentVideo.ModelTypeAlias).ToList();
+        var eventList = list.Where(result => result.DocumentTypeAlias == EventPage.ModelTypeAlias).ToList();
+        var blogList = list.Where(result => result.DocumentTypeAlias == BlogPost.ModelTypeAlias).ToList();
+
+        <div class="results">
+            @if (mediaItems.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="search-title">Media results</h2>
+                        @foreach (var item in mediaItems)
+                        {
+                            <div class="small-article">
+                                <div class="artcile">
+                                    @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item)
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (blogList.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12"><h2 class="search-title">Blog results</h2></div>
+                        </div>
+
+                        @foreach (var item in blogList)
+                        {
+                            <div class="row">
+                                @Html.Partial("~/Views/Partials/Home/_BlogThumbnailPartial.cshtml", new BlogPost(item))
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+
+            @if (eventList.Any())
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="search-title">Events results</h2>
+                            </div>
+                        </div>
+
+                        @foreach (var item in eventList)
+                        {
+                            <div class="row">
+                                @Html.Partial("~/Views/Partials/Home/_BlogThumbnailPartial.cshtml", new BlogPost(item))
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

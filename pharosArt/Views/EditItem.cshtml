@@ -1,0 +1,14 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.EditItem>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var par = Request["id"];
+}
+@if (!string.IsNullOrEmpty(par))
+{
+    @Html.Action("Get", "EditItem", new { id = int.Parse(par) })
+}
+else
+{
+    <p>Content could not be found</p>
+}

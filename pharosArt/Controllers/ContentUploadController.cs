@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Umbraco.Web;
@@ -52,6 +49,7 @@ namespace pharosArt.Controllers
                         var mediaMap = Services.MediaService.CreateMedia(fileContent.FileName, folder, alias);
                         mediaMap.SetValue("category", cat);
                         mediaMap.SetValue("umbracoFile", fileContent);
+                        mediaMap.SetValue("title", CleanName(fileContent.FileName));
                         Services.MediaService.Save(mediaMap);
                     }
                 }
@@ -63,6 +61,15 @@ namespace pharosArt.Controllers
             }
 
             return Json("File uploaded successfully");
-        }       
+        }
+
+        private string CleanName(string inputString)
+        {
+            int index = inputString.LastIndexOf(".", StringComparison.Ordinal);
+            if (index > 0)
+                inputString =  inputString.Substring(0, index); // or index + 1 to keep slash
+
+            return inputString;
+        }
     }
 }

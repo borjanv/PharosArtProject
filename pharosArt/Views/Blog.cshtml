@@ -1,0 +1,103 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Blog>
+@using Umbraco.Web
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    int pageSize; // How many items per page
+    int page; // The page we are viewing
+    var root = Umbraco.TypedContentAtRoot().First();
+    if (Int32.Parse(root.GetPropertyValue<string>("pagesNumber")) > 0)
+    {
+        pageSize = Int32.Parse(root.GetPropertyValue<string>("pagesNumber"));
+    }
+    else
+    {
+        pageSize = 10;
+    }
+
+    var nodes = Model.Content.Children.OrderBy("CreateDate desc");
+
+    int totalNodes = nodes.Count();
+    int totalPages = (int)Math.Ceiling((double)totalNodes / (double)pageSize);
+
+    if (Request.QueryString["page"] == null)
+    {
+        page = 1;
+    }
+    else
+    {
+        page = Int32.Parse(Request.QueryString["page"]);
+    }
+
+    if (page > totalPages)
+    {
+        page = totalPages;
+    }
+    else if (page < 1)
+    {
+        page = 1;
+    }
+}
+@{
+    if (totalPages > 1)
+    {
+        <div class="paging">
+            <ul class="pagination">
+                @for (int p = 1; p < totalPages + 1; p++)
+                {
+                    string selected = (p == page) ? "active" : String.Empty;
+                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="row blog-grid">
+        @foreach (var post in nodes.Skip((page - 1) * pageSize).Take(pageSize))
+        {
+            var item = new BlogPost(post);
+
+            <div class="col-sm-6">
+                @if (item.HasValue("image"))
+                {
+                    <a href="@item.Url">
+
+                        <div class="post-image" style="background-image: url(@item.Image.GetCropUrl("EventBlogThumbnail"))">
+                        </div>
+                    </a>
+                }
+                <div class="post-content">
+                    <div class="post-date">
+                        @item.CreateDate.ToString("dddd, MMMM dd, yyyy")
+                    </div>
+                    <div class="post-title">
+                        <a href="@item.Url">
+                            <h2>
+                                @((item.HasValue("title") ? item.Title : item.Name))
+                            </h2>
+                        </a>
+                    </div>
+                    @if (item.HasValue("mainParagraph"))
+                    {
+                        <div>
+                            <p> @Umbraco.Truncate(library.StripHtml(item.MainParagraph.ToString()), 250)</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    if (totalPages > 1)
+    {
+        <div class="paging">
+            <ul class="pagination">
+                @for (int p = 1; p < totalPages + 1; p++)
+                {
+                    string selected = (p == page) ? "active" : String.Empty;
+                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
+                }
+            </ul>
+        </div>
+    }
+}

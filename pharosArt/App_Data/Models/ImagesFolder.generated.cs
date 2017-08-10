@@ -20,9 +20,17 @@ using Umbraco.ModelsBuilder.Umbraco;
 
 namespace Umbraco.Web.PublishedContentModels
 {
+	// Mixin content Type 5827 with alias "imagesFolder"
+	/// <summary>ImagesFolder</summary>
+	public partial interface IImagesFolder : IFolder
+	{
+		/// <summary>Contents</summary>
+		object Contents { get; }
+	}
+
 	/// <summary>ImagesFolder</summary>
 	[PublishedContentModel("imagesFolder")]
-	public partial class ImagesFolder : Folder
+	public partial class ImagesFolder : Folder, IImagesFolder
 	{
 #pragma warning disable 0109 // new is redundant
 		public new const string ModelTypeAlias = "imagesFolder";
@@ -44,5 +52,17 @@ namespace Umbraco.Web.PublishedContentModels
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
 		}
+
+		///<summary>
+		/// Contents
+		///</summary>
+		[ImplementPropertyType("contents")]
+		public object Contents
+		{
+			get { return GetContents(this); }
+		}
+
+		/// <summary>Static getter for Contents</summary>
+		public static object GetContents(IImagesFolder that) { return that.GetPropertyValue("contents"); }
 	}
 }

@@ -1,0 +1,49 @@
+﻿@using pharosArt.Controllers
+@model pharosArt.Models.EditItemModel
+@{
+    var item = AppHelper.UmbHelper().TypedMedia(Model.Id);
+}
+<div class="confirmation-delete">
+    <div class="row">
+        @using (Html.BeginUmbracoForm("Post", "EditItem", FormMethod.Post))
+        {
+            <div class="col-md-12"><h1>Please confirm</h1></div>
+            <div class="col-md-4">
+                <div class="confirm-item-container">
+
+                    <div class="small-article">
+                        <div class="artcile">
+                            @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>Fields</h2>
+                <p>
+                    @Html.LabelFor(x => x.Title)
+                </p>
+                <p>
+                    @Html.TextBoxFor(x => x.Title, new { @class = "reg-input" })
+                </p>
+                <p>
+                    @Html.LabelFor(x => x.Tags)
+                </p>
+                <p>
+                    @Html.TextBoxFor(x => x.Tags, new { @class = "reg-input" })
+                </p>
+                <p>
+                    @if (item.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                    {
+                        <span>VIDEO</span>
+                    }
+                    <button class="button" type="submit">Save</button>
+                    <button class="button" type="button" onclick="location.href='@AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
+                </p>
+               
+            </div>
+        }
+
+    </div>
+</div>

@@ -8,11 +8,10 @@
     <script src="/scripts/magnific-popup.js"></script>
     <script type="text/javascript" src="jPlayer/js/jquery.transform2d.js"></script>
     <script type="text/javascript" src="jPlayer/js/jquery.grab.js"></script>
-    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
+
     <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
     <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
     <script type="text/javascript" src="owlCarousel/owl.carousel.min.js"></script>
-
     <script>
         $(document).ready(function () {
             $(".fancy-box-image").colorbox({
@@ -53,6 +52,13 @@
             });
         });
 
+        $('#search-box').on('keyup', function (e) {
+            var content = $(this).val();
+            var link = "/search" + "?q=" + content;
+            if (e.keyCode === 13) {
+                window.location.href = link;
+            }
+        });
     </script>
 }
 @section header
@@ -61,13 +67,12 @@
     <link rel="stylesheet" href="owlCarousel/owl.carousel.min.css">
     <link rel="stylesheet" href="owlCarousel/owl.theme.default.min.css">
     <link rel="stylesheet" href="/css/video.css">
-
-
+    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
 }
 <div class="row">
     <div class="col-md-12 search search-input">
         <i class="fa fa-search"></i>
-        <input type="search" placeholder="Search" class="search-bar">
+        <input type="search" placeholder="Search" class="search-bar" id="search-box">
     </div>
 </div>
 

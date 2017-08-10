@@ -82,6 +82,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Pages Number
+		///</summary>
+		[ImplementPropertyType("pagesNumber")]
+		public int PagesNumber
+		{
+			get { return this.GetPropertyValue<int>("pagesNumber"); }
+		}
+
+		///<summary>
 		/// Profile Page
 		///</summary>
 		[ImplementPropertyType("profilePage")]

@@ -2,17 +2,17 @@
 @using Umbraco.Web.Models
 @{
     var currentImageNumber = 1;
+    var rootFolder = Model.MacroParameters["mediaFolder"];
+    var s = Umbraco.TypedMedia(rootFolder);
 }
 
-@if (CurrentPage.HasValue("slideImg"))
-{
-    var typedMultiMediaPicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("slideImg");
-    var numberOfImages = typedMultiMediaPicker.Count();
 
-    <div class="fotorama" data-nav="thumbs" data-loop="true" data-keyboard="true" data-fit="scaledown">
-        @foreach(var image in typedMultiMediaPicker)
+@if (s != null && s.Children.Any(x => x.DocumentTypeAlias == "Image"))
+{
+    <div class="fotorama" data-nav="thumbs" data-height="600" data-loop="true" data-keyboard="true" data-fit="scaledown">
+        @foreach (var image in s.Children.Where(x => x.DocumentTypeAlias == "Image"))
         {
-            <img src="@image.Url" data-caption="@currentImageNumber/@numberOfImages"/>
+            <img src="@image.Url" data-caption="@currentImageNumber/@s.Children.Count(x => x.DocumentTypeAlias == "Image")" />
             currentImageNumber++;
         }
     </div>
