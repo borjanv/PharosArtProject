@@ -1,10 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Web;
-using Umbraco.Core.Models;
-using Umbraco.Web.Media.ThumbnailProviders;
+using pharosArt.Models.Shared;
 
 namespace pharosArt.Models
 {
@@ -12,7 +10,9 @@ namespace pharosArt.Models
     {
         public string Title { get; set; }
         [Display(Name = "Categories (comma separated)")]
-        public string Tags { get; set; }
         public int Id { get; set; }
+        public int VideoThumbnailId { get; set; }
+        public HttpPostedFileBase File { get; set;}
+        public IEnumerable<CheckboxItemViewModel> Categories { get; set; }
     }
 }

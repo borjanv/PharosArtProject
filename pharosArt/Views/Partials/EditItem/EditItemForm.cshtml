@@ -28,20 +28,36 @@
                     @Html.TextBoxFor(x => x.Title, new { @class = "reg-input" })
                 </p>
                 <p>
-                    @Html.LabelFor(x => x.Tags)
+                    @Html.Label("Categories")
                 </p>
-                <p>
-                    @Html.TextBoxFor(x => x.Tags, new { @class = "reg-input" })
-                </p>
-                <p>
-                    @if (item.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
-                    {
-                        <span>VIDEO</span>
-                    }
-                    <button class="button" type="submit">Save</button>
-                    <button class="button" type="button" onclick="location.href='@AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
-                </p>
-               
+                <div class="checkboxes">
+                    @Html.EditorFor(x => x.Categories, "~/Views/Shared/EditorTemplates/CheckboxItemViewModel.cshtml")
+                </div>
+
+                @if (item.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+                {
+                    <p>
+                        @Html.Label("Video thumbnail")
+                    </p>
+                    <p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @if (Model.VideoThumbnailId != 0)
+                                {
+                                    <img src="@AppHelper.UmbHelper().TypedMedia(Model.VideoThumbnailId).GetCropUrl("Profile")" alt="Video thumbnail" />
+                                }
+                                else
+                                {
+                                    <img src="~/css/images/sound_thumbnail_red.png" alt="Video thumbnail" />
+                                }
+                            </div>
+                        </div><br/>
+                        <input type="file" name="file" id="file" />
+                    </p>
+                }
+                <button class="button" type="submit">Save</button>
+                <button class="button" type="button" onclick="location.href='@AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
+
             </div>
         }
 

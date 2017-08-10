@@ -12,6 +12,7 @@
     <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
     <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
     <script type="text/javascript" src="owlCarousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/scripts/InfiniteScroll.js"></script>
     <script>
         $(document).ready(function () {
             $(".fancy-box-image").colorbox({
@@ -59,6 +60,12 @@
                 window.location.href = link;
             }
         });
+
+        var moreRowsUrl = "@Url.Action("GetItems", "LandingPage")";
+        $("#load-more-items").on("click", function (event) {
+            event.preventDefault();
+            loadMoreToInfiniteScrollTable(moreRowsUrl);
+        });
     </script>
 }
 @section header
@@ -80,11 +87,15 @@
     @Umbraco.RenderMacro("FeaturedHomePageSmall")
 </div>
 
-
 <div class="large-posts-container">
     @Umbraco.RenderMacro("FeaturedHomePageLarge")
 </div>
+<div class="content articles-wrapper" id="home-grid">
+    @Html.Action("GetItems", "LandingPage")
+</div>
+<div class="button-container">
+    <button id="load-more-items" class="button">Load more items</button>    
+</div>
 
-@Html.Action("ShowUploadedImages", "LandingPage")
 
 

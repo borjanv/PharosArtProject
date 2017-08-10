@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
-using pharosArt.Controllers;
-using Umbraco.Core.Models;
-using Umbraco.Web.Models;
-using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Models
 {

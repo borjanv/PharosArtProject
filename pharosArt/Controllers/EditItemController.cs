@@ -3,8 +3,11 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using pharosArt.Models;
+using pharosArt.Models.Shared;
+using Umbraco.Core;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
+using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
 {
@@ -15,22 +18,31 @@ namespace pharosArt.Controllers
             if (Umbraco.TypedMedia(id) == null)
                 return Content("The content could not be found.");
 
-            var tags = Umbraco.TypedMedia(id).GetPropertyValue<IEnumerable<string>>("category").ToList();
-            var tagString = new StringBuilder();
-            if (tags.Any())
+            if (!Umbraco.MemberIsLoggedOn())
+                return Content("You have to be logged in to edit this item");
+
+            var content = Umbraco.TypedMedia(id);
+            var tags = content.GetPropertyValue<IEnumerable<string>>("category").ToList();
+            var catList = new List<CheckboxItemViewModel>();
+            var allTags = AppHelper.GetCategories().ToList().ConvertAll(x => x.ToLower());
+
+            foreach (var c in allTags)
             {
-                foreach (var tag in tags)
-                {
-                    tagString.Append(tag + ",");
-                }
+                catList.Add(new CheckboxItemViewModel { Checked = (tags.ConvertAll(x => x.ToLower()).Contains(c)), Name = c });
             }
 
             var model = new EditItemModel
             {
                 Id = id,
-                Tags = tagString.ToString(),
-                Title = Umbraco.TypedMedia(id).GetPropertyValue<string>("title")
+                Title = content.GetPropertyValue<string>("title"),
+                Categories = catList
             };
+            
+            if (content.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+            {
+                if (content.HasValue("thumbnail"))
+                    model.VideoThumbnailId = content.GetPropertyValue<int>("thumbnail");
+            }
 
             return PartialView("~/Views/Partials/EditItem/EditItemForm.cshtml", model);
         }
@@ -45,7 +57,27 @@ namespace pharosArt.Controllers
             var item = ms.GetById(model.Id);
 
             item.SetValue("title", model.Title);
-            item.SetValue("category", model.Tags);
+            if (model.Categories.Any(x => x.Checked))
+            {
+                var tagsToSave = new StringBuilder();
+                foreach (var t in model.Categories.Where(x => x.Checked))
+                    tagsToSave.Append(t.Name + ",");
+
+                item.SetValue("category", tagsToSave.ToString().TrimEnd(','));
+            }
+
+            if (item.ContentType.Alias == ContentVideo.ModelTypeAlias)
+            {
+                int thumbnailRoot = (AppHelper.GetHomeNode().HasValue("videoThumbnailsMediaFolder"))
+                    ? AppHelper.GetHomeNode().VideoThumbnailsMediaFolder.Id
+                    : -1;
+
+                var newMedia = ms.CreateMedia(model.Title + "-thumbnail", thumbnailRoot, "Image");
+                newMedia.SetValue("umbracoFile", model.File);
+                ms.Save(newMedia);
+
+                item.SetValue("thumbnail", newMedia.GetUdi().ToString());
+            }
 
             ms.Save(item);
 

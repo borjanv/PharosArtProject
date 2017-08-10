@@ -1,10 +1,5 @@
 @inherits System.Web.Mvc.WebViewPage<Umbraco.Forms.Mvc.Models.FormViewModel>
-@using System.Globalization
-@using Umbraco.Forms.Core
-@using Umbraco.Forms.Mvc.Models
-@using Umbraco.Forms.Mvc.BusinessLogic
 @using Umbraco.Forms.MVC.Extensions
-@using Umbraco.Forms.Core.Extensions
 @using Umbraco.Forms.Web
 
 <input type="hidden" id="fsConditions_@Model.FormClientId" value='@Html.Raw(Model.FieldsetConditionsAsJson())' />

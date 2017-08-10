@@ -2,63 +2,63 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Umbraco.Core.Models;
-using Umbraco.Web;
 using Umbraco.Web.Mvc;
-using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Controllers
 {
     public class LandingPageController : SurfaceController
     {
+        // Values for number of items per page
+        private const int _recordsPerPage = 6;
 
-        // GET: LandingPage
-        public ActionResult ShowUploadedImages()
+        public LandingPageController()
         {
-            var models = new List<LandingPageModel>();
-
-            var mediaFolder = Umbraco.TypedMedia(5830);
-            string mediaUrl = null;
-            DateTime date;
-            List<string> categories;
-            string category;
-
-            var mediaFiles = mediaFolder.Descendants().Where(x => x.DocumentTypeAlias == ContentImage.ModelTypeAlias ||
-                x.DocumentTypeAlias == ContentMusic.ModelTypeAlias || x.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
-                .OrderByDescending(x => x.CreateDate).ToList();
-
-            if (mediaFiles.Any())
-            {
-                foreach (var mediafile in mediaFiles)
-                {
-                    mediaUrl = mediafile.Url;
-                    date = mediafile.CreateDate;
-                    category = mediafile.GetPropertyValue<string>("category");
-                    categories = GetCategories(category);
-                    models.Add(new LandingPageModel { Media = mediafile, Author = mediafile.Ancestor<ParentFolder>().Member.Name, MediaUrl = mediaUrl, UploadDate = date, Categories = categories, MemberId = mediafile.Ancestor<ParentFolder>().Member.Id });
-                }
-            }
-
-            return PartialView("~/Views/Partials/Home/LandingPage.cshtml", models);
+            ViewBag.RecordsPerPage = _recordsPerPage;
         }
 
-        private List<string> GetCategories(string category)
+        public ActionResult Index()
         {
-            List<string> categories = new List<string>();
-            category = category.Replace(" ", string.Empty);
-            category = category.ToUpper();
-            if (category != null)
-            {
-                if (category.Contains(','))
-                {
-                    categories = category.Split(',').ToList();
-                    return categories;
-                }
-            }
-            categories.Add(category);
-            return categories;
+            return RedirectToAction("GetItems");
         }
+
+        public ActionResult GetItems(int? pageNum)
+        {
+            pageNum = pageNum ?? 0;
+            ViewBag.IsEndOfRecords = false;
+            if (Request.IsAjaxRequest())
+            {
+                var items = GetRecordsForPage(pageNum.Value);
+                ViewBag.IsEndOfRecords = (items.Any()) && ((pageNum.Value * _recordsPerPage) >= items.Last().Key);
+                return PartialView("~/Views/Partials/Home/LandingPageHome.cshtml", items);
+            }
+            else
+            {
+                LoadAllItemsToSession();
+                var items = GetRecordsForPage(pageNum.Value);
+                ViewBag.Items = items;
+                return PartialView("~/Views/Partials/Home/LandingPageHome.cshtml", items);
+            }
+        }
+
+        public void LoadAllItemsToSession()
+        {
+            var itemsRepo = new InfiniteItemRepositoryController();
+            var items = itemsRepo.ListGridItems();
+            Session["Items"] = items.ToDictionary(x => x.Key, x => x.Value);
+            ViewBag.TotalNumberItems = items.Count();
+        }
+
+        public Dictionary<int, LandingPageModel> GetRecordsForPage(int pageNum)
+        {
+            Dictionary<int, LandingPageModel> items = (Session["Items"] as Dictionary<int, LandingPageModel>);
+
+            int from = (pageNum * _recordsPerPage);
+            int to = from + _recordsPerPage;
+
+            return items
+                .Where(x => x.Key > from && x.Key <= to)
+                .OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+        }   
     }
 }

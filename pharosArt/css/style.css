@@ -13,15 +13,41 @@ body {
     transition-duration: 0.5s;
 }
 
+.button-container button[disabled] {
+    opacity: 0.35;
+}
+
+.button-container button[disabled]:hover {
+    background-color: transparent;
+    color: #000;
+}
+
     .button:hover {
         color: #fff;
         background: #000;
     }
-
+    .confirmation-delete button {
+        width: auto;
+        padding: 5px 20px;
+    }
 textarea {
     min-height: 100px;
 }
-
+.option {
+    float: left;
+    margin-right: 10px;
+}
+.option label {
+    font-weight: normal;
+    text-transform: capitalize;
+}
+.button-container {
+    text-align: center;
+}
+.button-container .button {
+    width: auto;
+    padding: 5px 50px;
+}
 footer {
     border-top: rgb(232,232,232) solid 1px;
 }
@@ -191,6 +217,10 @@ header nav {
     float: left;
     color: #777;
     padding: 0 17px 17px 17px;
+    animation: fadein 1s;
+    -moz-animation: fadein 1s; /* Firefox */
+    -webkit-animation: fadein 1s; /* Safari and Chrome */
+    -o-animation: fadein 1s; /* Opera */
 }
 
     .small-article img {
@@ -833,6 +863,8 @@ label {
     text-align: center;
 }
 
+
+
 @media (max-width: 1200px) {
     .small-article {
         width: 310px;
@@ -1030,6 +1062,39 @@ label {
     }
 
     100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-moz-keyframes fadein { /* Firefox */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+    from {
+        opacity:0;
+    }
+    to {
+        opacity:1;
+    }
+}
+@-o-keyframes fadein { /* Opera */
+    from {
+        opacity:0;
+    }
+    to {
         opacity: 1;
     }
 }

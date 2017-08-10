@@ -1,10 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
-using Umbraco.Web.Mvc;
-using System.Web.Mvc;
-using System;
-using System.Web.Security;
-using System.Collections.Generic;
 using Umbraco.Web.PublishedContentModels;
 
 namespace pharosArt.Models

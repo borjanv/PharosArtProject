@@ -1,4 +1,4 @@
-﻿@model List<pharosArt.Models.LandingPageModel>
+﻿@model IDictionary<int, pharosArt.Models.LandingPageModel>
 @{
     ViewBag.Title = "LandingPage";
 }
@@ -8,7 +8,7 @@
     {
         <div class="small-article">
             <div class="artcile">
-                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item.Media)
+                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item.Value.Media)
             </div>
         </div>
     }

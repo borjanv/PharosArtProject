@@ -25,7 +25,11 @@
                              .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias))
         {
             <div class="small-article">
-                <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
+                {
+                    <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a href="/edit-item?id=@item.Id" class="delete-item-icon" title="Edit this item"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                }
                 <div class="artcile">
                     @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(item))
                 </div>

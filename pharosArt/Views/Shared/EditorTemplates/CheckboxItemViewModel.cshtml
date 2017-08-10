@@ -1,0 +1,7 @@
+﻿@model pharosArt.Models.Shared.CheckboxItemViewModel
+           
+<div class="option">
+    @Html.HiddenFor(x => x.Name)
+    @Html.CheckBoxFor(x => x.Checked)
+    @Html.LabelFor(x => x.Checked, Model.Name)
+</div>

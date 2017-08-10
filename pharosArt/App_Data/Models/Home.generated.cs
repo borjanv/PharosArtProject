@@ -64,6 +64,33 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Delete item page
+		///</summary>
+		[ImplementPropertyType("deleteItemPage")]
+		public IPublishedContent DeleteItemPage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("deleteItemPage"); }
+		}
+
+		///<summary>
+		/// Edit item page
+		///</summary>
+		[ImplementPropertyType("editItemPage")]
+		public IPublishedContent EditItemPage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("editItemPage"); }
+		}
+
+		///<summary>
+		/// Edit profile page
+		///</summary>
+		[ImplementPropertyType("editProfilePage")]
+		public IPublishedContent EditProfilePage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("editProfilePage"); }
+		}
+
+		///<summary>
 		/// Featured small
 		///</summary>
 		[ImplementPropertyType("featuredSmall")]
@@ -79,6 +106,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public IPublishedContent Image
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Members media root folder
+		///</summary>
+		[ImplementPropertyType("membersMediaRootFolder")]
+		public IPublishedContent MembersMediaRootFolder
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("membersMediaRootFolder"); }
 		}
 
 		///<summary>
@@ -106,6 +142,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public string Title
 		{
 			get { return this.GetPropertyValue<string>("title"); }
+		}
+
+		///<summary>
+		/// Video thumbnails media folder
+		///</summary>
+		[ImplementPropertyType("videoThumbnailsMediaFolder")]
+		public IPublishedContent VideoThumbnailsMediaFolder
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("videoThumbnailsMediaFolder"); }
 		}
 	}
 }
