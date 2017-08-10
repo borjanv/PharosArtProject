@@ -73,6 +73,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Hide from navigation
+		///</summary>
+		[ImplementPropertyType("umbracoNaviHide")]
+		public bool UmbracoNaviHide
+		{
+			get { return this.GetPropertyValue<bool>("umbracoNaviHide"); }
+		}
+
+		///<summary>
 		/// upload2
 		///</summary>
 		[ImplementPropertyType("upload2")]

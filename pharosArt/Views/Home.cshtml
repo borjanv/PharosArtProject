@@ -1,81 +1,90 @@
 @inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
-	Layout = "Master.cshtml";
-	var root = CurrentPage;
-    @*var toHide = true;
-    if(root == "login")
-    {
-        toHide = false;
-    }*@
-    var ite = 0;
+    Layout = "Master.cshtml";
 }
-<script type="text/javascript">
-    function increaseStatistic(id)
-    {        
-        var imgor = '@Url.Action("updateStatistic", "Tracking")';
-        //var data = id.toString();
-        //alert(data);
-        $.ajax({
-            type: "GET",
-            url: imgor + "?idMedia=" + id.toString(),
-            contentType: false,
-            processData: false,
-            //data: data,
-            success: function (result) {
-                console.log(result);
-                $("#responseMessage").text("Successfully uploaded.")
-            },
-            error: function (xhr, status, p3, p4) {
-                alert('error: ' +id);
-                var err = "Error " + " " + status + " " + p3 + " " + p4;
-                if (xhr.responseText && xhr.responseText[0] == "{")
-                    err = JSON.parse(xhr.responseText).Message;
-                $("#responseMessage").text("Error - Couldn't uploaded.")
-                console.log(err);
+@section scripts
+{
+    <script src="~/scripts/site.js"></script>
+    <script src="/scripts/magnific-popup.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.transform2d.js"></script>
+    <script type="text/javascript" src="jPlayer/js/jquery.grab.js"></script>
+
+    <script type="text/javascript" src="jPlayer/js/mod.csstransforms.min.js"></script>
+    <script type="text/javascript" src="jPlayer/js/circle.player.js"></script>
+    <script type="text/javascript" src="owlCarousel/owl.carousel.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".fancy-box-image").colorbox({
+                rel: 'fancy-box-image',
+                scalePhotos: true,
+                maxWidth: "90%",
+                maxHeight: '90%'
+            });
+            // Increase view count for this item
+            $(document).bind('cbox_complete', function () {
+                var id = $.colorbox.element()[0].id;
+                increaseStatistic(id);
+            });
+            // Stop the music when user closes the modal window
+            $(document).bind('cbox_closed', function () {
+                $("#jquery_jplayer_1").jPlayer("stop");
+                $("#jquery_jplayer_2").jPlayer("stop");
+            });
+            $(".ajax").colorbox({
+                rel: 'fancy-box-image'
+            });
+
+            $(".owl-carousel").owlCarousel({
+                nav: true,
+                responsiveClass: true,
+                navText: ["<i class='fa fa-arrow-circle-left' aria-hidden='true'></i>", "<i class='fa fa-arrow-circle-right' aria-hidden='true'></i>"],
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    402: {
+                        items: 3
+                    },
+                    640: {
+                        items: 5
+                    }
+                }
+            });
+        });
+
+        $('#search-box').on('keyup', function (e) {
+            var content = $(this).val();
+            var link = "/search" + "?q=" + content;
+            if (e.keyCode === 13) {
+                window.location.href = link;
             }
         });
-    }
-
-    window.open("Google", "width=500,height=500");
-</script>
-
+    </script>
+}
+@section header
+{
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="owlCarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlCarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/css/video.css">
+    <script type="text/javascript" src="jPlayer/js/jquery.jplayer.js"></script>
+}
 <div class="row">
     <div class="col-md-12 search search-input">
-        <span style="margin-left:6em;" class="fa fa-search"></span>
-        <input type="search" placeholder="Search" id="search-box">
+        <i class="fa fa-search"></i>
+        <input type="search" placeholder="Search" class="search-bar" id="search-box">
     </div>
 </div>
 
-<div style="text-align:center;">
-    @{
-        var typedMultiNodeTreePicker = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("contentPicker");
-        foreach (var item in typedMultiNodeTreePicker)
-        {
-            var content = Umbraco.NiceUrl(Int32.Parse(item.ToString()));
-            var imgFront = Int32.Parse(item.GetPropertyValue("Thumbnail").ToString());
-            var img = Umbraco.Media(imgFront);
-            <a href="@content">
-                <img src="@img.url" /><br/>
-            </a>
-            <br/><br/>
-            @*mauro<p>name: @item.Name</p>
-            <p>title: @item.GetPropertyValue("title")</p>*@
-        }
-    }
+<div class="small-posts-container owl-carousel transition">
+    @Umbraco.RenderMacro("FeaturedHomePageSmall")
 </div>
-        @if(Umbraco.MemberIsLoggedOn())
-        {
-            @CurrentPage.body
-        }                               
-         @Html.Action("ShowUploadedImages", "LandingPage")
-              
 
-<script>
-    $('#search-box').on('keyup', function (e) {
-        var content = $(this).val();
-        var link = "/search" + "?q=" + content;
-        if (e.keyCode === 13) {
-            window.location.href = link;
-        }
-    });
-</script>
+
+<div class="large-posts-container">
+    @Umbraco.RenderMacro("FeaturedHomePageLarge")
+</div>
+
+@Html.Action("ShowUploadedImages", "LandingPage")
+
+

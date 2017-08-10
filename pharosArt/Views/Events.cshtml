@@ -41,126 +41,6 @@
     }
 }
 
-<style>
-    .title {
-        color: blue;
-    }
-
-    .blog-post-image {
-        max-width: initial;
-    }
-
-    div.events {
-        width: 400px;
-        height: 300px;
-        overflow: hidden;
-        margin: 5px;
-        border: 1px solid #ccc;
-        vertical-align: middle;
-        text-align: center;
-        padding: 0;
-    }
-
-        div.events:hover {
-            border: 1px solid #777;
-        }
-
-        div.events img {
-            max-height: 100%;
-            position: relative;
-        }
-
-    .clear {
-        clear: both;
-    }
-
-    .main-div {
-        width: 850px;
-        margin: auto;
-    }
-
-    .opacity-div {
-        background-color: black;
-        position: relative;
-        bottom: 300px;
-        height: 300px;
-        opacity: 0.6;
-        z-index: 1;
-    }
-
-    .event-name {
-        position: relative;
-        bottom: 600px;
-        z-index: 2;
-        opacity: 1;
-    }
-
-        .event-name a:hover, .button a:hover {
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-    .button {
-        position: relative;
-        bottom: 400px;
-        z-index: 2;
-        opacity: 1;
-        background-color: black;
-        height: 50px;
-        vertical-align: middle;
-        text-align: center;
-        line-height: 45px;
-        transition: bottom .5s, height .5s, line-height .5s;
-    }
-
-        .button .text {
-            font-size: 15px;
-        }
-
-    .text {
-        color: white;
-        font-size: 30px;
-    }
-
-    .find-out-more {
-        z-index: 3;
-        position: relative;
-        bottom: 375px;
-        transition: bottom .5s;
-    }
-
-        .find-out-more a {
-            text-decoration: none;
-            color: white;
-            transition: font-size .5s;
-        }
-
-        .find-out-more:hover {
-            bottom: 380px;
-        }
-
-            .find-out-more:hover + .button {
-                height: 55px;
-                bottom: 410px;
-                line-height: 55px
-            }
-
-            .find-out-more:hover a {
-                font-size: 17px;
-            }
-
-    .paging {
-        text-align: center;
-    }
-
-    .row {
-        text-align: center;
-    }
-</style>
-
-<!-- <h1 class = "title">test</h1><br /> -->
-
-
 @if (totalPages > 1)
 {
     <div class="paging">
@@ -173,22 +53,34 @@
         </ul>
     </div>
 }
-<div class="main-div row">
 
-    @foreach (var e in nodes.Skip((page - 1) * pageSize).Take(pageSize))
+<div class="row blog-grid">
+    @foreach (var post in nodes.Skip((page - 1) * pageSize).Take(pageSize))
     {
-        <div class="events col-md-6">
-            <img src="@e.image.Url" class="blog-post-image" />
-            <div class="opacity-div"></div>
-            <div class="event-name"><a href="@e.Url"><h class="text">@e.eventName</h></a></div>
-            <h class="find-out-more"><a href="@e.Url">Find out more ></a></h>
-            <div class="button"></div>
-
+        var item = new EventPage(post);
+        
+        <div class="col-sm-6">
+            <a href="@post.Url">
+                @if (post.HasValue("image"))
+                {
+                    <div class="post-image" style="background-image: url(@item.Image.GetCropUrl("EventBlogThumbnail"))">
+                    </div>
+                }
+            </a>
+            <div class="post-content">
+                <div class="post-date">
+                    @item.EventTime.ToString("dddd, MMMM dd, yyyy")
+                </div>
+                <div class="post-title">
+                    <a href="@item.Url">
+                        <h2>
+                            @((item.HasValue("title") ? item.Title : item.Name))
+                        </h2>
+                    </a>
+                </div>
+            </div>
         </div>
-
-
     }
-
 </div>
 
 @if (totalPages > 1)

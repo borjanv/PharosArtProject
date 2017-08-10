@@ -1,0 +1,15 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    if (Model.Content.HasValue("featuredSmall"))
+    {
+        var items = Model.Content.GetPropertyValue<IEnumerable<IPublishedContent>>("featuredSmall");
+        foreach (var post in items)
+        {
+            <div class="small-article">
+                <div class="artcile">
+                    @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", post)
+                </div>
+            </div>
+        }
+    }
+}

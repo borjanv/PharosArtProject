@@ -55,16 +55,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// body
-		///</summary>
-		[ImplementPropertyType("body")]
-		public IHtmlString Body
-		{
-			get { return this.GetPropertyValue<IHtmlString>("body"); }
-		}
-
-		///<summary>
-		/// contentPicker
+		/// Featured large
 		///</summary>
 		[ImplementPropertyType("contentPicker")]
 		public IEnumerable<IPublishedContent> ContentPicker
@@ -73,12 +64,30 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// leadImage
+		/// Featured small
+		///</summary>
+		[ImplementPropertyType("featuredSmall")]
+		public IEnumerable<IPublishedContent> FeaturedSmall
+		{
+			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("featuredSmall"); }
+		}
+
+		///<summary>
+		/// Banner Image
 		///</summary>
 		[ImplementPropertyType("image")]
 		public IPublishedContent Image
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Pages Number
+		///</summary>
+		[ImplementPropertyType("pagesNumber")]
+		public int PagesNumber
+		{
+			get { return this.GetPropertyValue<int>("pagesNumber"); }
 		}
 
 		///<summary>
@@ -91,7 +100,7 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// title
+		/// Title
 		///</summary>
 		[ImplementPropertyType("title")]
 		public string Title

@@ -5,11 +5,8 @@
     Layout = "Master.cshtml";
     int pageSize; // How many items per page
     int page; // The page we are viewing
-
-
-
     var root = Umbraco.TypedContentAtRoot().First();
-    if(Int32.Parse(root.GetPropertyValue<string>("pagesNumber")) > 0)
+    if (Int32.Parse(root.GetPropertyValue<string>("pagesNumber")) > 0)
     {
         pageSize = Int32.Parse(root.GetPropertyValue<string>("pagesNumber"));
     }
@@ -41,79 +38,7 @@
         page = 1;
     }
 }
-
-<style>
-    h2 {
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .post-content {
-        height: 200px;
-        width: 500px;
-        overflow: hidden;
-        word-wrap: break-word;
-        background-color: whitesmoke;
-        margin: auto;
-        padding: 10px;
-        border-radius: 0 0 20px 20px;
-    }
-
-        .post-content:hover {
-            background-color: #f2f2f2;
-        }
-
-    .post-title {
-        text-align: center;
-        bottom: 0px;
-        position: relative;
-    }
-
-    .post-content:hover .post-title {
-        position: relative;
-    }
-
-    .row a {
-        text-decoration: none;
-    }
-
-    .post-date {
-        margin: auto;
-        width: 100%;
-        text-align: right;
-    }
-
-    .col-sm-6 {
-        margin: 15px 0;
-    }
-
-    .post-image {
-        max-height: 150px;
-        height: 150px;
-        overflow: hidden;
-        width: 500px;
-        padding: 0;
-        border: 1px solid #ccc;
-        margin: 0 auto;
-        display: block;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        border-radius: 20px 20px 0 0;
-    }
-
-    .paging{
-        text-align: center;
-    }
-
-    .row{
-        text-align: center;
-    }
-
-</style>
-
 @{
-
     if (totalPages > 1)
     {
         <div class="paging">
@@ -127,48 +52,41 @@
         </div>
     }
 
-    <div class="row">
+    <div class="row blog-grid">
         @foreach (var post in nodes.Skip((page - 1) * pageSize).Take(pageSize))
         {
-            <a href="@post.Url">
-                <div class="col-sm-6">
-                    @if (post.HasValue("image"))
-                    {
-                        var image = Umbraco.TypedMedia(post.GetPropertyValue<string>("image"));
-                        <div class="post-image" style="background-image: url(@image.Url)">
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="post-image" style="background-color: #000">
-                        </div>
-                    }
+            var item = new BlogPost(post);
 
-                    <div class="post-content">
+            <div class="col-sm-6">
+                @if (item.HasValue("image"))
+                {
+                    <a href="@item.Url">
 
-
-                        <div class="post-date">
-                            @post.CreateDate.ToString("dddd, MMMM dd, yyyy")
+                        <div class="post-image" style="background-image: url(@item.Image.GetCropUrl("EventBlogThumbnail"))">
                         </div>
-                        <div class="post-title">
-
-                            <h2>
-                                @post.Name
-                            </h2>
-                        </div>
-                        <div>
-                            <p> @Umbraco.Truncate(library.StripHtml(post.GetPropertyValue("mainParagraph").ToString()), 250)</p>
-                        </div>
-
+                    </a>
+                }
+                <div class="post-content">
+                    <div class="post-date">
+                        @item.CreateDate.ToString("dddd, MMMM dd, yyyy")
                     </div>
-
+                    <div class="post-title">
+                        <a href="@item.Url">
+                            <h2>
+                                @((item.HasValue("title") ? item.Title : item.Name))
+                            </h2>
+                        </a>
+                    </div>
+                    @if (item.HasValue("mainParagraph"))
+                    {
+                        <div>
+                            <p> @Umbraco.Truncate(library.StripHtml(item.MainParagraph.ToString()), 250)</p>
+                        </div>
+                    }
                 </div>
-            </a>
-                        }
-
-        
+            </div>
+        }
     </div>
-
 
     if (totalPages > 1)
     {
@@ -182,19 +100,4 @@
             </ul>
         </div>
     }
-
-    @*<ul>
-        @foreach (var item in nodes.Skip((page - 1) * pageSize).Take(pageSize))
-        {
-            <a href="@item.Url">@item.Name</a>
-        }
-    </ul>
-
-    <ul class="paging">
-        @for(int p=1; p < totalPages + 1; p++)
-        {
-            string selected = (p == page) ? "selected" : String.Empty;
-            <li class="@selected"><a href="?page=@p">@p</a></li>
-        }
-    </ul>*@
 }

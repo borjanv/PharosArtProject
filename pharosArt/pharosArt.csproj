@@ -17,10 +17,10 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressSSLPort>44395</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <NuGetPackageImportStamp>c3c55f6f</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
   </PropertyGroup>
@@ -316,16 +316,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\Blog.generated.cs" />
+    <Compile Include="App_Data\Models\BlogPost.generated.cs" />
+    <Compile Include="App_Data\Models\Categories.generated.cs" />
+    <Compile Include="App_Data\Models\Category.generated.cs" />
+    <Compile Include="App_Data\Models\ContentImage.generated.cs" />
+    <Compile Include="App_Data\Models\ContentMusic.generated.cs" />
+    <Compile Include="App_Data\Models\ContentVideo.generated.cs" />
+    <Compile Include="App_Data\Models\EditItem.generated.cs" />
+    <Compile Include="App_Data\Models\EditProfile.generated.cs" />
     <Compile Include="App_Data\Models\EventPage.generated.cs" />
     <Compile Include="App_Data\Models\Events.generated.cs" />
     <Compile Include="App_Data\Models\File.generated.cs" />
     <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\GenericTextPage.generated.cs" />
     <Compile Include="App_Data\Models\Home.generated.cs" />
     <Compile Include="App_Data\Models\Image.generated.cs" />
     <Compile Include="App_Data\Models\ImagesFolder.generated.cs" />
     <Compile Include="App_Data\Models\Join.generated.cs" />
     <Compile Include="App_Data\Models\Login.generated.cs" />
-    <Compile Include="App_Data\Models\Media.generated.cs" />
+    <Compile Include="App_Data\Models\Master.generated.cs" />
     <Compile Include="App_Data\Models\Member.generated.cs" />
     <Compile Include="App_Data\Models\Menu.generated.cs" />
     <Compile Include="App_Data\Models\MusicFolder.generated.cs" />
@@ -334,21 +344,40 @@
     <Compile Include="App_Data\Models\PostContainer.generated.cs" />
     <Compile Include="App_Data\Models\ProfileFolder.generated.cs" />
     <Compile Include="App_Data\Models\ProfileMember.generated.cs" />
+    <Compile Include="App_Data\Models\Search.generated.cs" />
+    <Compile Include="App_Data\Models\ShowProfile.generated.cs" />
     <Compile Include="App_Data\Models\Slide2.generated.cs" />
     <Compile Include="App_Data\Models\Upload.generated.cs" />
     <Compile Include="App_Data\Models\Video.generated.cs" />
+    <Compile Include="App_Data\Models\VideoFile.generated.cs" />
+    <Compile Include="App_Data\Models\VideosFolder.generated.cs" />
     <Compile Include="Controllers\AppHelper.cs" />
+    <Compile Include="Controllers\CategoryPageController.cs" />
+    <Compile Include="Controllers\EditItemController.cs" />
     <Compile Include="Controllers\FacebookLoginController.cs" />
-    <Compile Include="Controllers\ImageUploadController.cs" />
+    <Compile Include="Controllers\GetContentController.cs" />
+    <Compile Include="Controllers\GooglePlusLoginController.cs" />
+    <Compile Include="Controllers\ContentUploadController.cs" />
     <Compile Include="Controllers\IRegister.cs" />
+    <Compile Include="Controllers\LandingPageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\ShowProfileController.cs" />
+    <Compile Include="Controllers\TrackingController.cs" />
     <Compile Include="Controllers\UploadmageController.cs" />
+    <Compile Include="Models\EditItemModel.cs" />
+    <Compile Include="Models\FacebookMember.cs" />
     <Compile Include="Models\FacebookObject.cs" />
     <Compile Include="Models\EditModel.cs" />
+    <Compile Include="Models\GooglePlusMember.cs" />
+    <Compile Include="Models\GooglePlusObject.cs" />
+    <Compile Include="Models\LandingPageModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\Statistics.cs" />
+    <Compile Include="Models\UmbracoMember.cs" />
     <Compile Include="Models\UploadImageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -375,8 +404,25 @@
     <Content Include="config\Lang\ru-RU.user.xml" />
     <Content Include="config\Lang\sv-SE.user.xml" />
     <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="css\dropzone.css" />
+    <Content Include="css\style.css" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="jPlayer\circle.skin\bgr.jpg" />
+    <Content Include="jPlayer\circle.skin\buffer.png" />
+    <Content Include="jPlayer\circle.skin\circle.player.css" />
+    <Content Include="jPlayer\circle.skin\controls.jpg" />
+    <Content Include="jPlayer\circle.skin\progress.png" />
+    <Content Include="jPlayer\circle.skin\progress_sprite.jpg" />
+    <Content Include="jPlayer\css\not.the.skin.css" />
+    <Content Include="jPlayer\js\circle.player.js" />
+    <Content Include="jPlayer\js\Jplayer.swf" />
+    <Content Include="jPlayer\js\jquery.grab.js" />
+    <Content Include="jPlayer\js\jquery.jplayer.js" />
+    <Content Include="jPlayer\js\jquery.transform2d.js" />
+    <Content Include="jPlayer\js\mod.csstransforms.min.js" />
+    <Content Include="scripts\mark.min.js" />
+    <Content Include="scripts\site.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -387,6 +433,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
+    <Folder Include="Views\Home\" />
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -494,16 +541,7 @@
     <Content Include="Views\Partials\_Logout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\_Login.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\MacroPartials\_Logout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\upload.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\one.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\Menu.cshtml" />
@@ -512,15 +550,11 @@
     <Content Include="Views\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home2.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Partials\basic.cshtml" />
     <Content Include="Views\Partials\Footer.cshtml" />
     <Content Include="Views\Partials\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\basic.cshtml" />
     <Content Include="Views\Master.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -595,9 +629,6 @@
     <Content Include="Views\Registration\RegistrationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MacroPartials\Profile.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -607,6 +638,90 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\UploadImage\UploadImagePartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\EventSlider.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\ShowProfilePartial.cshtml" />
+    <Content Include="Views\Partials\Slides.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EventPage1.cshtml" />
+    <Content Include="Views\Events.cshtml" />
+    <Content Include="Views\Gallery.cshtml" />
+    <Content Include="Views\Partials\Home\LandingPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_ThumbnailPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_AudioPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_ArticleThumbnailPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\MobileMenu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\SocialMediaIcons.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_AudioAjaxPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_AudioThumbnailAjax.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Banner.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Article.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\FeaturedHomePageLarge.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_LargePost.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\FeaturedHomePageSmall.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\GenericTextPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\DeleteContentConfirmation.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_VideoPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\_VideoAjaxPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MacroPartials\MetaTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Blog.cshtml" />
+    <Content Include="Views\BlogPost.cshtml" />
+    <Content Include="Views\Partials\SearchResults.cshtml" />
+    <Content Include="Views\Search.cshtml" />
+    <Content Include="Views\ShowProfile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\_BlogThumbnailPartial.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditItem.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\EditItem\EditItemForm.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -622,7 +737,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>62153</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

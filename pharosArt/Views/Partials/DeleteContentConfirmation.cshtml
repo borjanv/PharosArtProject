@@ -1,0 +1,39 @@
+﻿@model IPublishedContent
+
+<div class="confirmation-delete">    
+    <div class="row">
+        @using (Html.BeginUmbracoForm("DeleteContentById", "GetContent", new { id = Model.Id }, FormMethod.Post))
+        {
+            <div class="col-md-12"><h1>Please confirm</h1></div>
+            <div class="col-md-4">               
+                <div class="confirm-item-container">
+                    @if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+                    {
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", new ContentImage(Model))
+                            </div>
+                        </div>
+                    }
+                    else if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+                    {
+                        <div class="small-article">
+                            <div class="artcile">
+                                @Html.Partial("~/Views/Partials/Home/_ArticleAudioPartial.cshtml", new ContentMusic(Model))
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2>Are you sure you want to remove this item from your profile?</h2>
+                <p><strong>Warning: </strong>This action is irreversable. Once you confirm, you item will be gone for good.</p>
+                <br />
+                <button class="button" type="submit">Confirm</button>
+                <button class="button" type="button" onclick="location.href='@pharosArt.Controllers.AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
+            </div>            
+        }
+
+    </div>
+</div>
+

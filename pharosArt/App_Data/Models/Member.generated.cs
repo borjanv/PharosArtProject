@@ -82,6 +82,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Google Plus Id
+		///</summary>
+		[ImplementPropertyType("googlePlusId")]
+		public string GooglePlusId
+		{
+			get { return this.GetPropertyValue<string>("googlePlusId"); }
+		}
+
+		///<summary>
 		/// Last name
 		///</summary>
 		[ImplementPropertyType("lastName")]

@@ -3,23 +3,61 @@
 
 <div id="fb-root"></div>
 <div class="login-container row">
-    <div class="col-md-4">
+    <div class="col-md-4 login-div">
+        <h1>Sign in to Pharos</h1>
+        <br /><br /><br />
         @using (Html.BeginUmbracoForm("SubmitLogin", "Login", System.Web.Mvc.FormMethod.Post, new { id = "login" }))
         {
             @Html.AntiForgeryToken()
             @Html.LabelFor(m => m.Username)
-            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username", @style = "width:90%" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "reg-input" })
+            <p class="warning">
+                @Html.ValidationMessageFor(m => m.Username)
+            </p>
+
 
             @Html.LabelFor(m => m.Password)
-            @Html.PasswordFor(m => m.Password, new { placeholder = "Password", @style = "width:90%" })
+            @Html.PasswordFor(m => m.Password, new { @class = "reg-input" })
+            <p class="warning">
+                @Html.ValidationMessageFor(m => m.Password)
+            </p>
+    <button class="button" name="login" type="submit">Sign in</button>
 
-            @*Html.ValidationSummary()*@
-            <button name="login" type="submit">Login</button>
+            if (ViewData.ModelState["general-Error"] != null)
+            {
+                <p class="warning">@ViewData.ModelState["general-Error"].Errors.First().ErrorMessage</p>
+            }
+
         }
+
+
     </div>
+    <div class="col-md-6">
+        <h1>Join Pharos</h1>
+        <p>Want to see your work here?</p>
+        <p>Be featured online and represented as a contributor of Pharos.</p>
+        @Html.Action("GetRegistration", "Registration")
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="fb-login-button" autologoutlink="false" scope="email">Sign in with Facebook</div><br />
+                    <div class="google-plus-login-button" id="googleplus"></div><br /><br />
+                </div>
+                @*<div class="col-md-6">
+                    <div class="fb-login-button" autologoutlink="false" scope="email">Register with Facebook</div><br />
+                    <div class="google-plus-login-button" id="googleplus"></div><br /><br />
+                </div>*@
+            </div>
+            <p id="loading"></p> @*//replace with fancy radiating Logging in, please wait*@
+        </div>
+    </div>
+
 </div>
-<div class="fb-login-button" autologoutlink="false" scope="email">Login with Facebook</div>
-<span id="loading"></span> @*//replace with fancy radiating Logging in, please wait*@
+
 
 <script>
     $("document").ready(function () {
@@ -37,6 +75,10 @@
         // listen for and handle auth.statusChange events
 
         FB.Event.subscribe('auth.statusChange', OnLogin);
+
+        //google plus login/signup
+        var googleUser = {};
+        startAppA();
     });
 
     // This method will be called after the user login into facebook.
@@ -57,5 +99,52 @@
             });
         }
     }
-</script>
 
+    var startAppA = function () {
+        gapi.load('auth2', function () {
+            //Retrieve the singleton for the GoogleAuth library and set up the client.
+            auth2 = gapi.auth2.init({
+                client_id: '141486034349-mjv6j5d1161r8k8m5jdp3i89oe95dams.apps.googleusercontent.com',
+                secret_key: 'Q7cGP-e63fPoG3SR0FjiQoRk',
+                cookiepolicy: 'single_host_origin',
+            });
+            attachSignin(document.getElementById('googleplus'));
+        });
+    };
+
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {}, function (googleUser) {
+            debugger;
+            $("#loading").html("Loading...");
+            $(".se-pre-con").show();
+            console.log(googleUser);
+            var profiles = googleUser.getBasicProfile();
+            var ReturnUrl = 'http://localhost:62153/';
+            //Crate A Bunch Of Object for Search
+            var objData = {
+                Email: profiles.getEmail(),
+                LastName: profiles.getFamilyName(),
+                FirstName: profiles.getGivenName(),
+                GoogleID: profiles.getId(),
+                ProfileURL: profiles.getName(),
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LogUserIn", "GooglePlusLogin")',
+                data: objData,
+                datatype: "json",
+                success: function (data) {
+                    // will be redirtected to profile page
+                },
+                fail: function (jqXHR, textStatus, errorThrown) {
+                    $("#loading").htmlFor(errorThrown);
+                    alert(errorThrown);
+                }
+            });
+            $(".se-pre-con").hide();
+        }, function (error) {
+            $("#loading").htmlFor(errorThrown);
+            alert(errorThrown);
+        });
+    }
+</script>

@@ -1,5 +1,28 @@
-﻿
-@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@section scripts
+{
+<script src="~/scripts/site.js"></script>
+<script src="/scripts/magnific-popup.js"></script>
+
+<script>
+        $(document).ready(function () {
+            $(".fancy-box-image").colorbox({
+                rel: 'fancy-box-image',
+                scalePhotos: true,
+                maxWidth: "90%"
+            });
+            $(document).bind('cbox_complete', function () {
+                var id = $.colorbox.element()[0].id;
+                increaseStatistic(id);
+            });
+        });
+
+</script>
+}
+@section header
+{
+<link rel="stylesheet" href="/css/popup.css">
+}
 @{
 	Layout = "Master.cshtml";
     int userID = Int32.Parse(Request["id"]);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web;
 using Umbraco.Core.Models;
 using Umbraco.Web;
@@ -22,7 +23,22 @@ namespace pharosArt.Controllers
 
         public static Home GetHomeNode()
         {
-           return (Home)UmbHelper().TypedContentAtRoot().First(x => x.DocumentTypeAlias == Home.ModelTypeAlias);
+            return (Home)UmbHelper().TypedContentAtRoot().First(x => x.DocumentTypeAlias == Home.ModelTypeAlias);
+        }
+
+        public static IEnumerable<string> GetCategories()
+        {
+            var model = new List<string>();
+            if (
+                UmbHelper()
+                    .TypedContentAtRoot()
+                    .FirstOrDefault(x => x.DocumentTypeAlias == Categories.ModelTypeAlias) != null && UmbHelper()
+                        .TypedContentAtRoot()
+                        .FirstOrDefault(x => x.DocumentTypeAlias == Categories.ModelTypeAlias).Children.Any())
+            {
+                model.AddRange(UmbHelper().TypedContentAtRoot().First(x => x.DocumentTypeAlias == Categories.ModelTypeAlias).Children.Select(category => category.Name));
+            }
+            return model;
         }
     }
 }

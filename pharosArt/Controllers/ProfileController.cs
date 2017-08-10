@@ -23,7 +23,7 @@ namespace pharosArt.Controllers
             profile.RootMedia = new ProfileFolder(member.MediaRoot);
             profile.ProfileImage = member.HasValue("picture") ? new Image(member.Picture) : new Image(Umbraco.TypedMedia(6927));
 
-            return View("~/Views/MacroPartials/Profile.cshtml", profile);
+            return View("~/Views/Partials/ShowProfilePartial.cshtml", profile);
         }
 
         public ActionResult EditProfile(int id)

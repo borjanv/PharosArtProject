@@ -55,21 +55,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Event Name
+		/// Event time
 		///</summary>
-		[ImplementPropertyType("eventName")]
-		public string EventName
+		[ImplementPropertyType("eventTime")]
+		public DateTime EventTime
 		{
-			get { return this.GetPropertyValue<string>("eventName"); }
-		}
-
-		///<summary>
-		/// Grid Content
-		///</summary>
-		[ImplementPropertyType("gridContent")]
-		public Newtonsoft.Json.Linq.JToken GridContent
-		{
-			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("gridContent"); }
+			get { return this.GetPropertyValue<DateTime>("eventTime"); }
 		}
 
 		///<summary>
@@ -91,12 +82,12 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
-		/// Main Body
+		/// Main body
 		///</summary>
 		[ImplementPropertyType("mainBody")]
-		public IHtmlString MainBody
+		public Newtonsoft.Json.Linq.JToken MainBody
 		{
-			get { return this.GetPropertyValue<IHtmlString>("mainBody"); }
+			get { return this.GetPropertyValue<Newtonsoft.Json.Linq.JToken>("mainBody"); }
 		}
 
 		///<summary>
@@ -115,15 +106,6 @@ namespace Umbraco.Web.PublishedContentModels
 		public string PageKeywords
 		{
 			get { return this.GetPropertyValue<string>("pageKeywords"); }
-		}
-
-		///<summary>
-		/// slideImg
-		///</summary>
-		[ImplementPropertyType("slideImg")]
-		public IEnumerable<IPublishedContent> SlideImg
-		{
-			get { return this.GetPropertyValue<IEnumerable<IPublishedContent>>("slideImg"); }
 		}
 
 		///<summary>

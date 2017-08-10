@@ -49,9 +49,9 @@ namespace Umbraco.Web.PublishedContentModels
 		/// Category
 		///</summary>
 		[ImplementPropertyType("category")]
-		public string Category
+		public IEnumerable<string> Category
 		{
-			get { return this.GetPropertyValue<string>("category"); }
+			get { return this.GetPropertyValue<IEnumerable<string>>("category"); }
 		}
 
 		///<summary>

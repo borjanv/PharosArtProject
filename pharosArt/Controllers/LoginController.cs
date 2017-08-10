@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using pharosArt.Models;
+using Umbraco.Web.Mvc;
 
 namespace pharosArt.Controllers
 {
@@ -26,7 +27,7 @@ namespace pharosArt.Controllers
                 return RedirectToUmbracoPage(AppHelper.GetHomeNode().ProfilePage.Id);
             }
 
-            ModelState.AddModelError("", "The username or password provided is incorrect.");
+            ModelState.AddModelError("general-error", "The username or password provided is incorrect.");
             return CurrentUmbracoPage();
         }
 

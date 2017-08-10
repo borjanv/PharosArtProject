@@ -1,0 +1,16 @@
+﻿@using File = Umbraco.Web.PublishedContentModels.File
+@model List<pharosArt.Models.LandingPageModel>
+@{
+    ViewBag.Title = "LandingPage";
+}
+
+<div class="content articles-wrapper">
+    @foreach (var item in Model)
+    {
+        <div class="small-article">
+            <div class="artcile">
+                @Html.Partial("~/Views/Partials/Home/_ArticleThumbnailPartial.cshtml", item.Media)
+            </div>
+        </div>
+    }
+</div>

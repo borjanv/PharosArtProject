@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+using System;
 using System.Web.Mvc;
 using pharosArt.Models;
 using Umbraco.Core;
@@ -53,17 +50,18 @@ namespace pharosArt.Controllers
 
                     Services.MemberService.Save(member);
 
-                    return Json(new Tuple<string, string>("Success", result));
+                    return Json(new Tuple<string, string>("OK", result));
                 }
             }
             catch (Exception e)
             {
                 result = e.Message;
+                return Json(new Tuple<string, string>("Error", "Internal error."));
 
             }
-            return Content(result);
-       }
-       return Json(new Tuple<string, string>("Error", "Please select an image file."));
+            return Json(new Tuple<string, string>("Error", "Please select an image."));
+
         }
+
     }
 }

@@ -1,19 +1,23 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<EventPage>
 @{
 	Layout = "Master.cshtml";
 }
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+@section header{
+   <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+}
+@section scripts{
 <script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
-
-
-@* the fun starts here *@
-
-<h><b>@CurrentPage.title</b></h><br /><br />
-
-@if(string.IsNullOrWhiteSpace(CurrentPage.author) == false){
-    <p>Photography by @CurrentPage.author</p><br /><br />
 }
 
-@CurrentPage.GetGridHtml(Html, "gridContent")
+@CurrentPage.GetGridHtml(Html, "mainBody")
+<br/><br/>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (!string.IsNullOrEmpty(Model.Content.Author))
+        {
+            <p class="author">By @Model.Content.Author</p>
+        }
+        <p class="author">@Model.Content.EventTime.ToString("f")</p>
+    </div>
+</div>

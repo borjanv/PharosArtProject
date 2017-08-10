@@ -14,17 +14,20 @@
         @Html.Hidden("memberId", Model.MemberId)
 
         @Html.AntiForgeryToken()
+    <div class="row">
         @Html.LabelFor(m => m.FirstName)
-        @Html.TextBoxFor(m => m.FirstName, new {placeholder = "First Name", @style = "width:90%"})
-
+        @Html.TextBoxFor(m => m.FirstName, new {@class="editInput"})
+    </div>
+    <div class="row">
         @Html.LabelFor(m => m.LastName)
-        @Html.TextBoxFor(m => m.LastName, new {placeholder = "Last Name", @style = "width:90%"})
-
+        @Html.TextBoxFor(m => m.LastName, new { @class="editInput"})
+    </div>
+    <div class="row">
         @Html.LabelFor(m => m.Biography)
-        @Html.TextBoxFor(m => m.Biography, new {placeholder = "description", @style = "width:90%"})
-
+        @Html.TextAreaFor(m => m.Biography, new {@class= "editInput"})
+    </div>
         @Html.ValidationSummary()
-        <button name="edit" type="submit"><span>Save</span><i class="fa fa-arrow-right"></i></button>
+        <button class="button" name="edit" type="submit" style="padding:4px;margin:auto;font-weight:600;margin-top:3em;"><span>Save </span></button>
     </div>
 }
    

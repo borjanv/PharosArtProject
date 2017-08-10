@@ -10,10 +10,10 @@
         (function () {
             $('#upload-profile').ajaxForm({
                 complete: function (xhr) {
-                    $("#edit-image-result").attr("src", xhr.responseText);
                     var object = $.parseJSON(xhr.responseText);
                     if (object.Item1 == "OK") {
                         $("#edit-image-result").attr("src", object.Item2);
+                        $("#image-error").hide();
                     } else {
                         $("#image-error").html(object.Item2);
                     }
@@ -25,8 +25,14 @@
 }
 @if (Umbraco.MemberIsLoggedOn())
 {
-    @Html.Action("Get", "UploadImage", new { memberId = Members.GetCurrentMemberId() })
-    @Html.Action("EditProfile", "Profile", new { id = Members.GetCurrentMemberId() })
+    <div class="row">
+        <div class="col-md-4">
+            @Html.Action("Get", "UploadImage", new { memberId = Members.GetCurrentMemberId() })
+        </div>
+        <div class="col-md-6">
+            @Html.Action("EditProfile", "Profile", new { id = Members.GetCurrentMemberId() })
+        </div>
+    </div>
 }
 else
 {

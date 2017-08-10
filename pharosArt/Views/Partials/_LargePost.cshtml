@@ -1,0 +1,8 @@
+﻿@model Post
+
+<div class="large-post-container">
+    <a href="@Model.Url">
+        <h2 class="large-post-heading">@Model.Title</h2>
+        <img src="@Model.Thumbnail.GetCropUrl("LargePost")" />
+    </a>
+</div>

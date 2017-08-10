@@ -1,0 +1,13 @@
+﻿@model ContentMusic
+
+<a class="ajax" href="/umbraco/surface/GetContent/GetById?id=@Model.Id" id="@Model.Id">
+    <div class="thumbnail-hover-overlay">
+        <div class="animate-flicker">
+            <i class="fa fa-search-plus" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="image-wrapper">
+       @* <i class="fa fa-headphones" aria-hidden="true"></i>*@
+        <img src="~/css/images/sound_thumbnail_red.png" alt="Sound item"/>
+    </div>
+</a>

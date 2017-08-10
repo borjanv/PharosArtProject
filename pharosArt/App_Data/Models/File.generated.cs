@@ -46,6 +46,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Category
+		///</summary>
+		[ImplementPropertyType("category")]
+		public IEnumerable<string> Category
+		{
+			get { return this.GetPropertyValue<IEnumerable<string>>("category"); }
+		}
+
+		///<summary>
 		/// Size
 		///</summary>
 		[ImplementPropertyType("umbracoBytes")]
