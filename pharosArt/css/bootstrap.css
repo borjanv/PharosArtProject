@@ -3520,7 +3520,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     position: relative;
     float: left;
     padding: 6px 12px;
-    margin-left: -1px;
+    margin-left: 1px;
+    margin-right:1px;
     line-height: 1.42857143;
     color: #337ab7;
     text-decoration: none;
@@ -3556,8 +3557,8 @@ select[multiple].input-group-sm>.form-control, select[multiple].input-group-sm>.
     border-color: #ddd;
 }
 .pagination-lg>li>a, .pagination-lg>li>span {
-    padding: 10px 16px;
-    font-size: 18px;
+    padding: 8px 14px;
+    font-size: 14px;
     line-height: 1.3333333;
 }
 .pagination-lg>li:first-child>a, .pagination-lg>li:first-child>span {
