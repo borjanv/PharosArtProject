@@ -55,8 +55,8 @@
                         <input type="file" name="file" id="file" />
                     </p>
                 }
-                <button class="button" type="submit">Save</button>
-                <button class="button" type="button" onclick="location.href='@AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
+                <button class="button" ontouchend="this.onclick=hoverFix" type="submit">Save</button>
+                <button class="button" ontouchend="this.onclick=hoverFix" type="button" onclick="location.href='@AppHelper.GetHomeNode().ProfilePage.Url'">Back to profile</button>
 
             </div>
         }

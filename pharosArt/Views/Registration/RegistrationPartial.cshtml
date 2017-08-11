@@ -13,7 +13,7 @@
 
         @Html.LabelFor(m => m.Member.FirstName)
         @Html.TextBoxFor(m => m.Member.FirstName, new { @class = "reg-input" })
-    <p class="warning">@Html.ValidationMessageFor(model => model.Member.FirstName)</p>
+        <p class="warning">@Html.ValidationMessageFor(model => model.Member.FirstName)</p>
 
 
         @Html.LabelFor(m => m.Member.LastName)
@@ -34,7 +34,7 @@
         <p class="warning">
             @Html.ValidationMessageFor(model => model.Member.Password)
         </p>
-    <button class="button" name="login" type="submit">Submit</button>
+        <button class="button" ontouchend="this.onclick=hoverFix" name="login" type="submit">Submit</button>
 
         if (ViewData.ModelState["Email"] != null)
         {

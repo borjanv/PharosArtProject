@@ -21,7 +21,7 @@
             <p class="warning">
                 @Html.ValidationMessageFor(m => m.Password)
             </p>
-    <button class="button" name="login" type="submit">Sign in</button>
+    <button class="button" ontouchend="this.onclick=hoverFix" name="login" type="submit">Sign in</button>
 
             if (ViewData.ModelState["general-Error"] != null)
             {
@@ -29,8 +29,6 @@
             }
 
         }
-
-
     </div>
     <div class="col-md-6">
         <h1>Join Pharos</h1>

@@ -358,8 +358,10 @@
     <Compile Include="Controllers\GetContentController.cs" />
     <Compile Include="Controllers\GooglePlusLoginController.cs" />
     <Compile Include="Controllers\ContentUploadController.cs" />
+    <Compile Include="Controllers\InfiniteItemRepository.cs" />
     <Compile Include="Controllers\IRegister.cs" />
     <Compile Include="Controllers\LandingPageController.cs" />
+    <Compile Include="Controllers\PaginationController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
@@ -374,8 +376,10 @@
     <Compile Include="Models\GooglePlusObject.cs" />
     <Compile Include="Models\LandingPageModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PaginationModel.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\RegistrationModel.cs" />
+    <Compile Include="Models\Shared\CheckboxItemViewModel.cs" />
     <Compile Include="Models\Statistics.cs" />
     <Compile Include="Models\UmbracoMember.cs" />
     <Compile Include="Models\UploadImageModel.cs" />
@@ -722,6 +726,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\EditItem\EditItemForm.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\Home\LandingPageHome.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

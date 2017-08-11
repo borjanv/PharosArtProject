@@ -216,7 +216,7 @@ header nav {
     font-weight: 300;
     float: left;
     color: #777;
-    padding: 0 17px 17px 17px;
+    padding: 0 10px 10px 10px;
     animation: fadein 1s;
     -moz-animation: fadein 1s; /* Firefox */
     -webkit-animation: fadein 1s; /* Safari and Chrome */
@@ -242,7 +242,7 @@ header nav {
         }
 
     .small-article .text-wrapper {
-        margin-top: 15px;
+        margin-top: 10px;
     }
 
         .small-article .text-wrapper .article-title {
@@ -282,9 +282,6 @@ header nav {
     color: #777;
     padding-bottom: 17px;
 }
-
-    .medium-article .article {
-    }
 
     .medium-article .image-wrapper {
         width: 357px;
