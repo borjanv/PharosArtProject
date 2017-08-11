@@ -50,6 +50,7 @@
                     <div class="google-plus-login-button" id="googleplus"></div><br /><br />
                 </div>*@
             </div>
+            <div class="loader"></div>
             <p id="loading"></p> @*//replace with fancy radiating Logging in, please wait*@
         </div>
     </div>
@@ -82,6 +83,7 @@
     // This method will be called after the user login into facebook.
     function OnLogin(response) {
         if (response.authResponse) {
+            $(".loader").css("display", "block");
             $("#loading").html("Loading...");
             var data = { accessToken: response.authResponse.accessToken };
             $.ajax({
@@ -93,6 +95,7 @@
                 //alert("Success");
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 $("#loading").htmlFor(errorThrown);
+                $(".loader").hide();
                 alert(errorThrown);
             });
         }
@@ -113,6 +116,7 @@
     function attachSignin(element) {
         auth2.attachClickHandler(element, {}, function (googleUser) {
             debugger;
+            $(".loader").css("display", "block");
             $("#loading").html("Loading...");
             $(".se-pre-con").show();
             console.log(googleUser);
@@ -136,6 +140,7 @@
                 },
                 fail: function (jqXHR, textStatus, errorThrown) {
                     $("#loading").htmlFor(errorThrown);
+                    $(".loader").hide();
                     alert(errorThrown);
                 }
             });
