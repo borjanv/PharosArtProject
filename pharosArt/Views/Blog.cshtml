@@ -39,18 +39,9 @@
     }
 }
 @{
-    if (totalPages > 1)
-    {
-        <div class="paging">
-            <ul class="pagination">
-                @for (int p = 1; p < totalPages + 1; p++)
-                {
-                    string selected = (p == page) ? "active" : String.Empty;
-                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
-                }
-            </ul>
-        </div>
-    }
+
+    @Html.Action("ShowPages", "Pagination", new { _totalPages = totalPages, _currentPage = page })
+
 
     <div class="row blog-grid">
         @foreach (var post in nodes.Skip((page - 1) * pageSize).Take(pageSize))
@@ -58,10 +49,9 @@
             var item = new BlogPost(post);
 
             <div class="col-sm-6">
-                @if (item.HasValue("image"))
+                @if (item.Image != null)
                 {
                     <a href="@item.Url">
-
                         <div class="post-image" style="background-image: url(@item.Image.GetCropUrl("EventBlogThumbnail"))">
                         </div>
                     </a>
@@ -88,16 +78,5 @@
         }
     </div>
 
-    if (totalPages > 1)
-    {
-        <div class="paging">
-            <ul class="pagination">
-                @for (int p = 1; p < totalPages + 1; p++)
-                {
-                    string selected = (p == page) ? "active" : String.Empty;
-                    <li class="@selected"><a href="?page=@p" class="selected2">@p</a></li>
-                }
-            </ul>
-        </div>
-    }
+    @Html.Action("ShowPages", "Pagination", new { _totalPages = totalPages, _currentPage = page })
 }

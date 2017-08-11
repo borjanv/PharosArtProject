@@ -362,8 +362,8 @@ img {
     margin-top: 20px;
     border: none !important;
     cursor: pointer;
-    width: 54px;
-    height: 54px;
+    width: 54px !important;
+    height: 54px !important;
     float: right;
     position: relative;
     border: 0 solid transparent;
@@ -371,6 +371,7 @@ img {
     padding: .75vw;
     font-size: 20px;
     font-weight: bold;
+    margin-right: 0 !important;
 }
 
 .mobile-menu-list {
@@ -819,10 +820,13 @@ label {
 .post-date {
     margin: auto;
     width: 100%;
-    text-align: left;
+    text-align: center;
     margin-bottom: 5px;
+    color: rgba(0,0,0,.5);
 }
-
+.post-title a:hover{
+    text-decoration: none;
+}
 .col-sm-6 {
     margin: 15px 0;
 }
