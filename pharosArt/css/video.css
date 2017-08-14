@@ -36,7 +36,7 @@
 }
 
 .jp-video-360p {
-    width: 640px
+    width: 480px
 }
 
 .jp-video-full {
@@ -483,7 +483,7 @@ span.jp-artist {
     margin-left: -56px;
     margin-top: -50px;
     left: 50%;
-    top: 50%;
+    top: 60%;
     background: url(../image/jplayer.blue.monday.video.play.png) no-repeat;
     text-indent: -9999px;
     border: none;
@@ -608,4 +608,31 @@ span.jp-artist {
     display: block;
     text-align: center;
     font-weight: 700
+}
+@media(min-width: 640px){
+    /*.jp-jplayer {
+        width: 640px !Important;
+        height: 360px;
+    }*/
+}
+@media (max-width: 480px) {
+
+    .jp-video-360p {
+        width: 340px;
+    }
+
+    #jquery_jplayer_2 {
+        width: 338px !important;
+    }
+
+    .jp-video .jp-type-single .jp-controls {
+        margin-left: 125px;
+    }
+
+    .jp-controls-holder {
+        width: 338px;
+    }
+    .jp-video-play-icon{
+        top: 70% !important;
+    }
 }
