@@ -14,14 +14,11 @@
     <script type="text/javascript" src="/scripts/InfiniteScroll.js"></script>
     <script>
         $(document).ready(function () {
-            $("#container-wrapper").on("click", ".fancy-box-image", function (e) {
-                e.preventDefault();
-                $(this).colorbox({
-                    rel: 'fancy-box-image',
-                    scalePhotos: true,
-                    maxWidth: "90%",
-                    maxHeight: '90%'
-                });
+            $(".fancy-box-image").colorbox({
+                rel: 'gallery',
+                scalePhotos: true,
+                maxWidth: "90%",
+                maxHeight: '90%'
             });
             
             // Increase view count for this item
@@ -35,13 +32,10 @@
                 $("#jquery_jplayer_2").jPlayer("stop");
             });
 
-            $("#container-wrapper").on("click", ".ajax", function (e) {
-                e.preventDefault();
-                $(this).colorbox({
-                    rel: 'fancy-box-image'
-                });
-            })
-
+            $(".ajax").colorbox({
+                rel: 'gallery'
+            });
+          
             $(".owl-carousel").owlCarousel({
                 nav: true,
                 responsiveClass: true,
