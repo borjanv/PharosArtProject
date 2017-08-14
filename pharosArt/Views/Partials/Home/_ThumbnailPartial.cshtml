@@ -1,12 +1,13 @@
 ﻿@model ContentImage
 
-<a class="fancy-box-image" href="@Model.Url" id="@Model.Id">
+<a class="fancy-box-image" ontouchend="this.onclick=hoverFix" href="@Model.Url" id="@Model.Id">
     <div class="thumbnail-hover-overlay">
         <div class="animate-flicker">
-            <i class="fa fa-search-plus" aria-hidden="true"></i>
-        </div>      
+            <i class="fa fa-search-plus" aria-hidden="true"></i><span>&nbsp;&nbsp;Enlarge</span>
+        </div>
     </div>
     <div class="image-wrapper">
         <img src=@Model.GetCropUrl("Profile")>
+        <i class="fa fa-picture-o small-icon-type" aria-hidden="true"></i>
     </div>
 </a>

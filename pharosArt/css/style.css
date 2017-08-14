@@ -17,37 +17,56 @@ body {
     opacity: 0.35;
 }
 
-.button-container button[disabled]:hover {
-    background-color: transparent;
-    color: #000;
+    .button-container button[disabled]:hover {
+        background-color: transparent;
+        color: #000;
+    }
+
+.button:hover {
+    color: #fff;
+    background: #000;
 }
 
-    .button:hover {
-        color: #fff;
-        background: #000;
-    }
-    .confirmation-delete button {
-        width: auto;
-        padding: 5px 20px;
-    }
+.confirmation-delete button {
+    width: auto;
+    padding: 5px 20px;
+}
+
 textarea {
     min-height: 100px;
 }
+
 .option {
     float: left;
     margin-right: 10px;
 }
-.option label {
-    font-weight: normal;
-    text-transform: capitalize;
+
+    .option label {
+        font-weight: normal;
+        text-transform: capitalize;
+    }
+
+.small-icon-type {
+    position: absolute;
+    color: #fff;
+    right: 0;
+    bottom: 0;
+    padding: 15px;
+    background-color: #000;
+    z-index: 1;
+    opacity: 0.8;
+    font-size: 28px;
 }
+
 .button-container {
     text-align: center;
 }
-.button-container .button {
-    width: auto;
-    padding: 5px 50px;
-}
+
+    .button-container .button {
+        width: auto;
+        padding: 5px 50px;
+    }
+
 footer {
     border-top: rgb(232,232,232) solid 1px;
 }
@@ -115,9 +134,11 @@ footer {
 .fotorama {
     background-color: #f2f2f2;
 }
+
 .fotorama__wrap {
     margin: 0 auto;
 }
+
 .author {
     text-align: right;
     font-style: italic;
@@ -691,6 +712,10 @@ label {
     margin: 0 auto;
 }
 
+.owl-item .thumbnail-hover-overlay span {
+    display: none !important;
+}
+
 .profile-image {
     max-width: 200px;
 }
@@ -824,9 +849,11 @@ label {
     margin-bottom: 5px;
     color: rgba(0,0,0,.5);
 }
-.post-title a:hover{
+
+.post-title a:hover {
     text-decoration: none;
 }
+
 .col-sm-6 {
     margin: 15px 0;
 }
@@ -950,12 +977,17 @@ label {
     .post-content {
         height: auto;
     }
+
+    .animate-flicker span {
+        font-size: 20px !important;
+    }
 }
 
 @media (max-width: 640px) {
     .small-article, .results .small-article {
         width: 100%;
         max-width: 402px;
+        margin-bottom: 20px;
     }
 
     .thumbnail-hover-overlay {
@@ -1069,32 +1101,39 @@ label {
 
 @keyframes fadein {
     from {
-        opacity:0;
+        opacity: 0;
     }
+
     to {
-        opacity:1;
+        opacity: 1;
     }
 }
+
 @-moz-keyframes fadein { /* Firefox */
     from {
-        opacity:0;
+        opacity: 0;
     }
+
     to {
-        opacity:1;
+        opacity: 1;
     }
 }
+
 @-webkit-keyframes fadein { /* Safari and Chrome */
     from {
-        opacity:0;
+        opacity: 0;
     }
+
     to {
-        opacity:1;
+        opacity: 1;
     }
 }
+
 @-o-keyframes fadein { /* Opera */
     from {
-        opacity:0;
+        opacity: 0;
     }
+
     to {
         opacity: 1;
     }

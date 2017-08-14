@@ -1,12 +1,21 @@
 ﻿@model ContentVideo
 
-<a class="ajax" href="/umbraco/surface/GetContent/GetById?id=@Model.Id" id="@Model.Id">
+<a class="ajax" href="/umbraco/surface/GetContent/GetById?id=@Model.Id" ontouchend="this.onclick=hoverFix" id="@Model.Id">
     <div class="thumbnail-hover-overlay">
         <div class="animate-flicker">
             <i class="fa fa-search-plus" aria-hidden="true"></i><span>&nbsp;&nbsp;Enlarge</span>
         </div>
     </div>
     <div class="image-wrapper">
-        <img src="~/css/images/sound_thumbnail_red.png" alt="Sound item" />
+        @if (!Model.HasValue("thumbnail"))
+        {
+            <img src="~/css/images/video_thumbnail_red.png" alt="Sound item" />
+        }
+        else
+        {
+            <img src="@Model.Thumbnail.GetCropUrl("Profile")" alt="Sound item" />
+            <i class="fa fa-video-camera small-icon-type" aria-hidden="true"></i>
+        }
+
     </div>
 </a>
