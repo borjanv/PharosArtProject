@@ -5,9 +5,12 @@
 {
     @Html.HiddenFor(x => x.ProfileFolder)
     @Html.HiddenFor(x => x.MemberId)
+    @Html.HiddenFor(x => x.ProfileImage)
 
+    var image = new Image(AppHelper.UmbHelper().TypedMedia(Model.ProfileImage));
+    
     <p><input type="file" name="UploadFile" id="UploadFile"></p>
-    <p><img id="edit-image-result" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
+    <p><img id="edit-image-result" src="@image.GetCropUrl("Profile")" /></p>
 
     <p><button class="button" value="Upload image" type="submit" >Upload image</button></p>
     <p><span id="image-error"></span></p>

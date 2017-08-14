@@ -20,7 +20,7 @@ namespace pharosArt.Controllers
             {
                 ProfileFolder = member.MediaRoot.Descendant<ProfileFolder>().Id,
                 ProfileImage =
-                    member.HasValue("picture") ? new Image(member.Picture) : new Image(Umbraco.TypedMedia(6927)),
+                    member.HasValue("picture") ? new Image(member.Picture).Id : 6927,
                 MemberId = memberId
             });
         }
@@ -33,6 +33,7 @@ namespace pharosArt.Controllers
             {
                 if (model.UploadFile != null && model.UploadFile.ContentLength > 0)
                 {
+                    var ms = Services.MediaService;
                     var name = model.UploadFile.FileName;
 
                     if (!model.UploadFile.ContentType.Contains("image"))
@@ -41,11 +42,15 @@ namespace pharosArt.Controllers
                     }
                     var member = Services.MemberService.GetById(model.MemberId);
 
-                    var media = Services.MediaService.CreateMedia(name, model.ProfileFolder, "Image");
+                    var media = ms.CreateMedia(name, model.ProfileFolder, "Image");
                     media.SetValue("umbracoFile", model.UploadFile);
-                    Services.MediaService.Save(media);
-                    member.SetValue("picture", media.GetUdi().ToString());
+                    ms.Save(media);
 
+                    // delete old picture before sabing new one
+                    if (model.ProfileImage != 0 || model.ProfileImage != 6927)
+                        ms.Delete(ms.GetById(model.ProfileImage));
+
+                    member.SetValue("picture", media.GetUdi().ToString());                 
                     result = Umbraco.TypedMedia(media.Id).GetCropUrl("Profile");
 
                     Services.MemberService.Save(member);

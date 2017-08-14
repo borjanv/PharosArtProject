@@ -9,7 +9,7 @@ namespace pharosArt.Models
     {
         [Required(ErrorMessage = "Please select an image.")]
         public HttpPostedFileBase UploadFile { get; set; }
-        public Image ProfileImage { get; set; }
+        public int ProfileImage { get; set; }
         public int ProfileFolder { get; set; }
         public int MemberId { get; set; }
     }

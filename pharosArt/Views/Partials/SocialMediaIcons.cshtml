@@ -1,17 +1,36 @@
-﻿<ul id="socialmedia_menu">
-    <li>
-        <a href="https://twitter.com/pharoslondon" target="_blank">
-            <img src="http://pharoslondon.co.uk/media/1020/twitter_logo.png" height="20" width="20" />
-        </a>
-    </li>
-    <li>
-        <a href="https://www.facebook.com/Pharos-377810605733832/timeline/" target="_blank">
-            <img src="http://pharoslondon.co.uk/media/1021/facebook_logo.png" height="18" width="18" />
-        </a>
-    </li>
-    <li>
-        <a href="https://www.instagram.com/pharoslondon/" target="_blank">
-            <img src="http://pharoslondon.co.uk/media/1023/instagram_logo.png" height="18" width="18" />
-        </a>
-    </li>
-</ul>
+﻿@using pharosArt.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+
+    var twitter_icon = Umbraco.Media(7986);
+    var facebook_icon = Umbraco.Media(7984);
+    var instagram_icon = Umbraco.Media(7985);
+    var home = AppHelper.GetHomeNode();
+    
+    <ul id="socialmedia_menu">
+        @if (home.HasValue("twitterUrl"))
+        {
+            <li>
+                <a href="@home.TwitterUrl" target="_blank">
+                    <img src="@twitter_icon.Url" height="18" width="18" />
+                </a>
+            </li>
+        }
+        @if (home.HasValue("facebookUrl"))
+        {
+            <li>
+                <a href="@home.FacebookUrl" target="_blank">
+                    <img src="@facebook_icon.Url" height="18" width="18" />
+                </a>
+            </li>
+        }
+        @if (home.HasValue("instagramUrl"))
+        {
+            <li>
+                <a href="@home.InstagramUrl" target="_blank">
+                    <img src="@instagram_icon.Url" height="18" width="18" />
+                </a>
+            </li>
+        }
+    </ul>
+}

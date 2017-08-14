@@ -37,7 +37,7 @@ namespace pharosArt.Controllers
                 Title = content.GetPropertyValue<string>("title"),
                 Categories = catList
             };
-            
+
             if (content.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
             {
                 if (content.HasValue("thumbnail"))
@@ -75,6 +75,10 @@ namespace pharosArt.Controllers
                 var newMedia = ms.CreateMedia(model.Title + "-thumbnail", thumbnailRoot, "Image");
                 newMedia.SetValue("umbracoFile", model.File);
                 ms.Save(newMedia);
+
+                // delete old thumbnail before setting new one
+                if (model.VideoThumbnailId != 0)
+                    ms.Delete(ms.GetById(model.VideoThumbnailId));
 
                 item.SetValue("thumbnail", newMedia.GetUdi().ToString());
             }

@@ -556,7 +556,6 @@
   <ItemGroup>
     <Content Include="Views\Partials\basic.cshtml" />
     <Content Include="Views\Partials\Footer.cshtml" />
-    <Content Include="Views\Partials\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Master.cshtml" />
@@ -564,7 +563,6 @@
   <ItemGroup>
     <Content Include="Views\MacroPartials\InsertUmbracoFormWithTheme.cshtml" />
     <Content Include="Views\MacroPartials\RenderUmbracoFormScripts.cshtml" />
-    <Content Include="Views\Partials\UploadImagePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Partials\Forms\DatePicker.cshtml" />

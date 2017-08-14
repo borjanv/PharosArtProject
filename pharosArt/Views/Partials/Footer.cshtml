@@ -1,4 +1,5 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@using pharosArt.Controllers
+@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 <style>
     .foot {
         text-align: center;
@@ -43,23 +44,33 @@
     var twitter_icon = Umbraco.Media(7986);
     var facebook_icon = Umbraco.Media(7984);
     var instagram_icon = Umbraco.Media(7985);
+    var home = AppHelper.GetHomeNode();
 }
 <div class="socialmedia_accounts" align="center">
     <ul id="socialmedia_footer">
-        <li class="socialmedia_item">
-            <a href="https://twitter.com/pharoslondon" target="_blank" class="socialmedia_link">
-                <img src="@twitter_icon.Url" height="30" width="30" />
-            </a>
-        </li>
-        <li class="socialmedia_item">
-            <a href="https://www.facebook.com/Pharos-377810605733832/timeline/" target="_blank" class="socialmedia_link">
-                <img src="@facebook_icon.Url" height="30" width="30" />
-            </a>
-        </li>
-        <li class="socialmedia_item">
-            <a href="https://www.instagram.com/pharoslondon/" target="_blank" class="socialmedia_link">
-                <img src="@instagram_icon.Url" height="30" width="30" />
-            </a>
-        </li>
+        @if (home.HasValue("twitterUrl"))
+        {
+            <li class="socialmedia_item">
+                <a href="@home.TwitterUrl" target="_blank" class="socialmedia_link">
+                    <img src="@twitter_icon.Url" height="30" width="30" />
+                </a>
+            </li>
+        }
+        @if (home.HasValue("facebookUrl"))
+        {
+            <li class="socialmedia_item">
+                <a href="@home.FacebookUrl" target="_blank" class="socialmedia_link">
+                    <img src="@facebook_icon.Url" height="30" width="30" />
+                </a>
+            </li>
+        }
+        @if (home.HasValue("instagramUrl"))
+        {
+            <li class="socialmedia_item">
+                <a href="@home.InstagramUrl" target="_blank" class="socialmedia_link">
+                    <img src="@instagram_icon.Url" height="30" width="30" />
+                </a>
+            </li>
+        }
     </ul>
 </div>

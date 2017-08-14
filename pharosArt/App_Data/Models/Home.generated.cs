@@ -91,6 +91,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Facebook url: Enter the full url for your facebook page (including the http/ https)
+		///</summary>
+		[ImplementPropertyType("facebookUrl")]
+		public string FacebookUrl
+		{
+			get { return this.GetPropertyValue<string>("facebookUrl"); }
+		}
+
+		///<summary>
 		/// Featured small
 		///</summary>
 		[ImplementPropertyType("featuredSmall")]
@@ -106,6 +115,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public IPublishedContent Image
 		{
 			get { return this.GetPropertyValue<IPublishedContent>("image"); }
+		}
+
+		///<summary>
+		/// Instagram url: Enter the full url for your instagram page (including the http/ https)
+		///</summary>
+		[ImplementPropertyType("instagramUrl")]
+		public string InstagramUrl
+		{
+			get { return this.GetPropertyValue<string>("instagramUrl"); }
 		}
 
 		///<summary>
@@ -142,6 +160,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public string Title
 		{
 			get { return this.GetPropertyValue<string>("title"); }
+		}
+
+		///<summary>
+		/// Twitter url: Enter the full url for your twitter page (including the http/ https)
+		///</summary>
+		[ImplementPropertyType("twitterUrl")]
+		public string TwitterUrl
+		{
+			get { return this.GetPropertyValue<string>("twitterUrl"); }
 		}
 
 		///<summary>
