@@ -10,10 +10,14 @@ namespace pharosArt.Controllers
     public class ShowProfileController : SurfaceController
     {
         // GET: ShowProfile
-        public ActionResult ShowProfile(int memberID)
+        public ActionResult ShowProfile(int memberId)
         {
+
             var profile = new EditModel();
-            var member = new Member(Members.GetById(memberID));
+            var member = new Member(Members.GetById(memberId));
+            if (member.MediaRoot == null)
+                return Content("Media folder not found. Please contact administrator.");
+
             profile.MemberId = member.Id;
             profile.Biography = member.Biography;
             profile.FirstName = member.FirstName;

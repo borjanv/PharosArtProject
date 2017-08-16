@@ -1,37 +1,45 @@
 ﻿@model IPublishedContent
 @{
-    var memberId = Model.Ancestor<ParentFolder>().Member.Id;
+    if (Model.Ancestor<ParentFolder>().Member != null)
+    {
+        var memberId = Model.Ancestor<ParentFolder>().Member.Id;
+
+        if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
+        {
+            @Html.Partial("Home/_AudioPartial", new ContentMusic(Model))
+        }
+        else if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
+        {
+            @Html.Partial("Home/_ThumbnailPartial", new ContentImage(Model))
+        }
+        else if (Model.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
+        {
+            @Html.Partial("Home/_VideoPartial", new ContentVideo(Model))
+            // do video
+        }
+        <div class="text-wrapper">
+            <div class="article-title">
+                <a class="profile-link" href="/showprofile?id=@memberId"></a>
+            </div>
+            <div class="additional-info">
+                <p>@((Model.HasValue("title")) ? Model.GetPropertyValue<string>("title").ToUpper() : Model.Name.ToUpper())</p>
+                @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
+                @if (Model.HasValue("category"))
+                {
+                    foreach (var category in Model.GetPropertyValue<IEnumerable<string>>("Category"))
+                    {
+                        <a href="/@category">@category.ToUpper()</a>
+                    }
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Member doesnt exist</p>
+    }
 }
 
-@if (Model.DocumentTypeAlias == ContentMusic.ModelTypeAlias)
-{
-    @Html.Partial("Home/_AudioPartial", new ContentMusic(Model))
-}
-else if (Model.DocumentTypeAlias == ContentImage.ModelTypeAlias)
-{
-    @Html.Partial("Home/_ThumbnailPartial", new ContentImage(Model))
-}
-else if (Model.DocumentTypeAlias == ContentVideo.ModelTypeAlias)
-{
-    @Html.Partial("Home/_VideoPartial", new ContentVideo(Model))
-    // do video
-}
-<div class="text-wrapper">
-    <div class="article-title">
-        <a class="profile-link" href="/showprofile?id=@memberId"></a>
-    </div>
-    <div class="additional-info">
-        <p>@((Model.HasValue("title")) ? Model.GetPropertyValue<string>("title").ToUpper() : Model.Name.ToUpper())</p>
-        @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
-        @if (Model.HasValue("category"))
-        {
-            foreach (var category in Model.GetPropertyValue<IEnumerable<string>>("Category"))
-            {
-                <a href="/@category">@category.ToUpper()</a>
-            }
-        }
-    </div>
-</div>
 
 
 
