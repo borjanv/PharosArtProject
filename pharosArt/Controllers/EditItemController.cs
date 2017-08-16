@@ -66,7 +66,7 @@ namespace pharosArt.Controllers
                 item.SetValue("category", tagsToSave.ToString().TrimEnd(','));
             }
 
-            if (item.ContentType.Alias == ContentVideo.ModelTypeAlias)
+            if (item.ContentType.Alias == ContentVideo.ModelTypeAlias && model.File != null)
             {
                 int thumbnailRoot = (AppHelper.GetHomeNode().HasValue("videoThumbnailsMediaFolder"))
                     ? AppHelper.GetHomeNode().VideoThumbnailsMediaFolder.Id
