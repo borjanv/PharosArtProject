@@ -39,8 +39,8 @@
 }
 @{
 	Layout = "Master.cshtml";
-    int userID = Int32.Parse(Request["id"]);
+    int userId = Int32.Parse(Request["id"]);
 
 }
 
-@Html.Action("ShowProfile", "ShowProfile", new { memberId = userID })
+@Html.Action("GetProfile", "Profile", new { memberId = userId })

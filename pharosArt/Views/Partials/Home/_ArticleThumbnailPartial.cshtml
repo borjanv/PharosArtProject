@@ -1,4 +1,5 @@
-﻿@model IPublishedContent
+﻿@using pharosArt.Controllers
+@model IPublishedContent
 @{
     if (Model.Ancestor<ParentFolder>().Member != null)
     {
@@ -18,10 +19,8 @@
             // do video
         }
         <div class="text-wrapper">
-            <div class="article-title">
-                <a class="profile-link" href="/showprofile?id=@memberId"></a>
-            </div>
             <div class="additional-info">
+                <a class="additional-info" href="@AppHelper.GetHomeNode().PublicProfilePage.Url?id=@memberId">@AppHelper.UmbHelper().MembershipHelper.GetById(memberId).Name</a>
                 <p>@((Model.HasValue("title")) ? Model.GetPropertyValue<string>("title").ToUpper() : Model.Name.ToUpper())</p>
                 @Model.UpdateDate.ToString("dd MMM yyyy") &#183;
                 @if (Model.HasValue("category"))

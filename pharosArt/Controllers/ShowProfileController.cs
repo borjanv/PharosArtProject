@@ -12,7 +12,6 @@ namespace pharosArt.Controllers
         // GET: ShowProfile
         public ActionResult ShowProfile(int memberId)
         {
-
             var profile = new EditModel();
             var member = new Member(Members.GetById(memberId));
             if (member.MediaRoot == null)

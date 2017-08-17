@@ -50,7 +50,9 @@
 }
 @if (Umbraco.MemberIsLoggedOn())
 {
-    @Html.Action("GetProfile", "Profile", new { username = Members.CurrentUserName })
+    var id = Members.GetCurrentMemberId();
+    
+    @Html.Action("GetProfile", "Profile", new { memberId = Members.GetCurrentMemberId() })
 }
 else
 {

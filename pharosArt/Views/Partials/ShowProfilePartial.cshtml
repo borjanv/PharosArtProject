@@ -3,10 +3,10 @@
 
 <div style="width:100%">
     <div style="width:100%; text-align:center; margin-bottom:25px;">
-        <p><img class="profile-image" style="border-radius:50%;" src="@Model.ProfileImage.GetCropUrl("Profile")" /></p>
+        <p><img class="profile-image" style="border-radius:50%;" src="@((Model.ProfileImage != null) ? Model.ProfileImage.GetCropUrl("Profile") : "/image/user1.png")" /></p>
         <p><h1 style="text-transform:uppercase;">@Model.FirstName @Model.LastName</h1></p>
         <p>@Model.Biography</p><br />
-        @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
+        @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn() && AppHelper.UmbHelper().MembershipHelper.GetCurrentMemberId() == Model.MemberId)
         {
             <div class="row">
                 <div class="col-md-4">
@@ -25,7 +25,7 @@
                              .Where(x => x.Parent.DocumentTypeAlias != ProfileFolder.ModelTypeAlias))
         {
             <div class="small-article">
-                @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn())
+                @if (AppHelper.UmbHelper().MembershipHelper.IsLoggedIn() && AppHelper.UmbHelper().MembershipHelper.GetCurrentMemberId() == Model.MemberId)
                 {
                     <a href="/confirm-delete?id=@item.Id" class="delete-item-icon" title="Remove this item"><i class="fa fa-trash" aria-hidden="true"></i></a>
                     <a href="/edit-item?id=@item.Id" class="delete-item-icon" title="Edit this item"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>

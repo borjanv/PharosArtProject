@@ -154,6 +154,15 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// Public profile page
+		///</summary>
+		[ImplementPropertyType("publicProfilePage")]
+		public IPublishedContent PublicProfilePage
+		{
+			get { return this.GetPropertyValue<IPublishedContent>("publicProfilePage"); }
+		}
+
+		///<summary>
 		/// Title
 		///</summary>
 		[ImplementPropertyType("title")]

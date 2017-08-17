@@ -11,17 +11,19 @@ namespace pharosArt.Controllers
     public class ProfileController : SurfaceController
     {
         [HttpGet]
-        public ActionResult GetProfile(string userName)
+        public ActionResult GetProfile(int memberId)
         {
             var profile = new EditModel();
-            var member = new Member(Members.GetByUsername(userName));
+            var member = new Member(Members.GetById(memberId));
+            if (member.MediaRoot == null)
+                return Content("Media folder not found. Please contact administrator.");
+
             profile.MemberId = member.Id;
             profile.Biography = member.Biography;
             profile.FirstName = member.FirstName;
             profile.LastName = member.LastName;
-            profile.UserName = userName;
             profile.RootMedia = new ProfileFolder(member.MediaRoot);
-            profile.ProfileImage = member.HasValue("picture") ? new Image(member.Picture) : new Image(Umbraco.TypedMedia(6927));
+            profile.ProfileImage = member.HasValue("picture") ? new Image(member.Picture) : null;
 
             return View("~/Views/Partials/ShowProfilePartial.cshtml", profile);
         }
